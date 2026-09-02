@@ -1,314 +1,314 @@
 {
   "sesi": [
-    { "nomor": 1, "nama": "Pengantar Kecerdasan Buatan" },
-    { "nomor": 2, "nama": "Agen Cerdas dan Ruang Keadaan" },
-    { "nomor": 3, "nama": "Ketidakpastian dan Certainty Factor" },
-    { "nomor": 4, "nama": "Probabilitas Bayesian" },
-    { "nomor": 5, "nama": "Logika Fuzzy I" },
-    { "nomor": 6, "nama": "Logika Fuzzy II" },
-    { "nomor": 7, "nama": "Representasi Pengetahuan" },
-    { "nomor": 8, "nama": "Teknik Pencarian dan Heuristik" },
-    { "nomor": 9, "nama": "Jaringan Syaraf Tiruan" },
-    { "nomor": 10, "nama": "Pemrosesan Bahasa Alami" },
-    { "nomor": 11, "nama": "Sistem Pakar" },
-    { "nomor": 12, "nama": "Sains Data dan Big Data" },
-    { "nomor": 13, "nama": "Pembelajaran Mesin" },
-    { "nomor": 14, "nama": "Robotika" }
+    { "nomor": 1, "nama": { "id": "Pengantar Kecerdasan Buatan", "en": "Introduction to Artificial Intelligence" } },
+    { "nomor": 2, "nama": { "id": "Agen Cerdas dan Ruang Keadaan", "en": "Intelligent Agents and State Spaces" } },
+    { "nomor": 3, "nama": { "id": "Ketidakpastian dan Certainty Factor", "en": "Uncertainty and the Certainty Factor" } },
+    { "nomor": 4, "nama": { "id": "Probabilitas Bayesian", "en": "Bayesian Probability" } },
+    { "nomor": 5, "nama": { "id": "Logika Fuzzy I", "en": "Fuzzy Logic I" } },
+    { "nomor": 6, "nama": { "id": "Logika Fuzzy II", "en": "Fuzzy Logic II" } },
+    { "nomor": 7, "nama": { "id": "Representasi Pengetahuan", "en": "Knowledge Representation" } },
+    { "nomor": 8, "nama": { "id": "Teknik Pencarian dan Heuristik", "en": "Search Techniques and Heuristics" } },
+    { "nomor": 9, "nama": { "id": "Jaringan Syaraf Tiruan", "en": "Artificial Neural Networks" } },
+    { "nomor": 10, "nama": { "id": "Pemrosesan Bahasa Alami", "en": "Natural Language Processing" } },
+    { "nomor": 11, "nama": { "id": "Sistem Pakar", "en": "Expert Systems" } },
+    { "nomor": 12, "nama": { "id": "Sains Data dan Big Data", "en": "Data Science and Big Data" } },
+    { "nomor": 13, "nama": { "id": "Pembelajaran Mesin", "en": "Machine Learning" } },
+    { "nomor": 14, "nama": { "id": "Robotika", "en": "Robotics" } }
   ],
   "soal": [
     {
       "kode": "S01-01", "sesi": 1, "topik": "Uji Turing", "tingkat": 1,
-      "pertanyaan": "Uji Turing menyatakan sebuah mesin dianggap cerdas bila…",
-      "bentuk": "pilihan", "pilihan": ["penanya manusia tidak bisa membedakannya dari manusia lewat percakapan teks", "mesin itu bisa menyelesaikan soal matematika lebih cepat daripada manusia", "mesin itu bisa mengalahkan juara dunia catur", "mesin itu punya kesadaran dan perasaan"], "benar": 0,
-      "pembahasan": "Turing sengaja mengganti pertanyaan “apakah mesin bisa berpikir” dengan pertanyaan yang bisa diuji: apakah penanya bisa membedakannya. Kecepatan berhitung dan kemenangan catur bukan bagian dari ujinya, dan kesadaran justru pertanyaan yang dihindari Turing karena tidak bisa diperiksa dari luar."
+      "pertanyaan": { "id": "Uji Turing menyatakan sebuah mesin dianggap cerdas bila…", "en": "The Turing test holds that a machine counts as intelligent when…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "penanya manusia tidak bisa membedakannya dari manusia lewat percakapan teks", "en": "a human questioner cannot tell it from a human through a text conversation" }, { "id": "mesin itu bisa menyelesaikan soal matematika lebih cepat daripada manusia", "en": "it can solve mathematical problems faster than a human" }, { "id": "mesin itu bisa mengalahkan juara dunia catur", "en": "it can beat the world chess champion" }, { "id": "mesin itu punya kesadaran dan perasaan", "en": "it possesses consciousness and feelings" }], "benar": 0,
+      "pembahasan": { "id": "Turing sengaja mengganti pertanyaan “apakah mesin bisa berpikir” dengan pertanyaan yang bisa diuji: apakah penanya bisa membedakannya. Kecepatan berhitung dan kemenangan catur bukan bagian dari ujinya, dan kesadaran justru pertanyaan yang dihindari Turing karena tidak bisa diperiksa dari luar.", "en": "Turing deliberately replaced the question “can a machine think” with one that can actually be tested: can the questioner tell the difference. Arithmetic speed and chess victories are no part of the test, and consciousness is precisely the question Turing avoided, because it cannot be examined from outside." }
     },
     {
       "kode": "S01-02", "sesi": 1, "topik": "ELIZA", "tingkat": 1,
-      "pertanyaan": "ELIZA memahami makna kalimat yang diketik penggunanya.",
+      "pertanyaan": { "id": "ELIZA memahami makna kalimat yang diketik penggunanya.", "en": "ELIZA understands the meaning of the sentences its user types." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "ELIZA hanya mencocokkan kata kunci lalu memantulkan potongan kalimat dengan kata ganti ditukar. Tidak ada pemahaman sama sekali. Justru kesenjangan antara kesederhanaan mesinnya dan kuatnya kesan yang ditimbulkannya itulah pelajaran utamanya."
+      "pembahasan": { "id": "ELIZA hanya mencocokkan kata kunci lalu memantulkan potongan kalimat dengan kata ganti ditukar. Tidak ada pemahaman sama sekali. Justru kesenjangan antara kesederhanaan mesinnya dan kuatnya kesan yang ditimbulkannya itulah pelajaran utamanya.", "en": "ELIZA only matches keywords and reflects fragments back with the pronouns swapped. There is no understanding at all. The gap between how simple the machine is and how strong an impression it leaves is the whole lesson." }
     },
     {
       "kode": "S01-03", "sesi": 1, "topik": "Efek ELIZA", "tingkat": 2,
-      "pertanyaan": "Apa yang disebut “efek ELIZA”?",
-      "bentuk": "pilihan", "pilihan": ["kecenderungan manusia menganggap program komputer memahami dirinya padahal tidak", "kesalahan program saat memproses kalimat yang terlalu panjang", "penurunan mutu jawaban setelah percakapan berlangsung lama", "kemampuan program belajar dari percakapan sebelumnya"], "benar": 0,
-      "pembahasan": "Weizenbaum terkejut mendapati sekretarisnya sendiri meminta privasi saat berbicara dengan ELIZA. Efek ini menjelaskan kenapa uji Turing lebih banyak berbicara tentang manusia yang menilai daripada tentang mesin yang dinilai."
+      "pertanyaan": { "id": "Apa yang disebut “efek ELIZA”?", "en": "What is known as the “ELIZA effect”?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "kecenderungan manusia menganggap program komputer memahami dirinya padahal tidak", "en": "the human tendency to assume a computer program understands them when it does not" }, { "id": "kesalahan program saat memproses kalimat yang terlalu panjang", "en": "a program failure when a sentence is too long to process" }, { "id": "penurunan mutu jawaban setelah percakapan berlangsung lama", "en": "a decline in answer quality once a conversation runs long" }, { "id": "kemampuan program belajar dari percakapan sebelumnya", "en": "a program's ability to learn from earlier conversations" }], "benar": 0,
+      "pembahasan": { "id": "Weizenbaum terkejut mendapati sekretarisnya sendiri meminta privasi saat berbicara dengan ELIZA. Efek ini menjelaskan kenapa uji Turing lebih banyak berbicara tentang manusia yang menilai daripada tentang mesin yang dinilai.", "en": "Weizenbaum was startled to find his own secretary asking for privacy while talking to ELIZA. The effect explains why the Turing test says more about the humans doing the judging than about the machine being judged." }
     },
     {
       "kode": "S02-01", "sesi": 2, "topik": "Jenis agen", "tingkat": 2,
-      "pertanyaan": "Apa yang membedakan agen refleks sederhana dari agen berbasis model?",
-      "bentuk": "pilihan", "pilihan": ["agen berbasis model menyimpan keadaan dunia yang tidak sedang diinderanya", "agen berbasis model bekerja lebih cepat", "agen refleks sederhana tidak punya aturan sama sekali", "agen berbasis model tidak memerlukan sensor"], "benar": 0,
-      "pembahasan": "Bedanya ingatan, bukan kecanggihan. Agen tanpa ingatan tidak punya cara mengetahui bahwa pekerjaannya sudah selesai, jadi ia terus bergerak sampai dihentikan paksa — dan itulah sebabnya biayanya hampir selalu paling besar."
+      "pertanyaan": { "id": "Apa yang membedakan agen refleks sederhana dari agen berbasis model?", "en": "What distinguishes a simple reflex agent from a model-based agent?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "agen berbasis model menyimpan keadaan dunia yang tidak sedang diinderanya", "en": "a model-based agent keeps track of the parts of the world it is not currently sensing" }, { "id": "agen berbasis model bekerja lebih cepat", "en": "a model-based agent runs faster" }, { "id": "agen refleks sederhana tidak punya aturan sama sekali", "en": "a simple reflex agent has no rules at all" }, { "id": "agen berbasis model tidak memerlukan sensor", "en": "a model-based agent needs no sensors" }], "benar": 0,
+      "pembahasan": { "id": "Bedanya ingatan, bukan kecanggihan. Agen tanpa ingatan tidak punya cara mengetahui bahwa pekerjaannya sudah selesai, jadi ia terus bergerak sampai dihentikan paksa — dan itulah sebabnya biayanya hampir selalu paling besar.", "en": "The difference is memory, not sophistication. An agent without memory has no way of knowing its work is finished, so it keeps moving until something stops it — which is why its cost is nearly always the highest." }
     },
     {
       "kode": "S02-02", "sesi": 2, "topik": "PEAS", "tingkat": 2,
-      "pertanyaan": "Dalam kerangka PEAS, huruf P yang pertama menyatakan…",
-      "bentuk": "pilihan", "pilihan": ["Performance measure — ukuran keberhasilan agen", "Perception — apa yang bisa diindera agen", "Planning — bagaimana agen menyusun rencana", "Probability — peluang agen berhasil"], "benar": 0,
-      "pembahasan": "PEAS adalah Performance, Environment, Actuators, Sensors. Ukuran keberhasilan diletakkan pertama karena ia yang menentukan sisanya: agen yang dinilai dari kebersihan akan berperilaku berbeda dari agen yang dinilai dari hemat energi."
+      "pertanyaan": { "id": "Dalam kerangka PEAS, huruf P yang pertama menyatakan…", "en": "In the PEAS framework, the first P stands for…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "Performance measure — ukuran keberhasilan agen", "en": "Performance measure — how the agent's success is judged" }, { "id": "Perception — apa yang bisa diindera agen", "en": "Perception — what the agent is able to sense" }, { "id": "Planning — bagaimana agen menyusun rencana", "en": "Planning — how the agent builds a plan" }, { "id": "Probability — peluang agen berhasil", "en": "Probability — how likely the agent is to succeed" }], "benar": 0,
+      "pembahasan": { "id": "PEAS adalah Performance, Environment, Actuators, Sensors. Ukuran keberhasilan diletakkan pertama karena ia yang menentukan sisanya: agen yang dinilai dari kebersihan akan berperilaku berbeda dari agen yang dinilai dari hemat energi.", "en": "PEAS is Performance, Environment, Actuators, Sensors. The performance measure comes first because it determines everything else: an agent judged on cleanliness behaves differently from one judged on energy saved." }
     },
     {
       "kode": "S02-03", "sesi": 2, "topik": "Ruang keadaan", "tingkat": 3,
-      "pertanyaan": "Pada masalah teko air berkapasitas 3 dan 5 liter, sasaran 4 liter dapat dicapai.",
+      "pertanyaan": { "id": "Pada masalah teko air berkapasitas 3 dan 5 liter, sasaran 4 liter dapat dicapai.", "en": "In the water-jug problem with 3-litre and 5-litre jugs, a target of 4 litres is reachable." },
       "bentuk": "benarSalah", "benar": true,
-      "pembahasan": "Menurut teorema Bézout, sasaran hanya bisa dicapai bila ia kelipatan pembagi bersama terbesar kedua kapasitas. FPB(3, 5) = 1, dan 4 kelipatan 1, jadi bisa. Memeriksanya di muka jauh lebih jujur daripada membiarkan pencarian berjalan lalu melaporkan “tidak ditemukan”."
+      "pembahasan": { "id": "Menurut teorema Bézout, sasaran hanya bisa dicapai bila ia kelipatan pembagi bersama terbesar kedua kapasitas. FPB(3, 5) = 1, dan 4 kelipatan 1, jadi bisa. Memeriksanya di muka jauh lebih jujur daripada membiarkan pencarian berjalan lalu melaporkan “tidak ditemukan”.", "en": "By Bézout's theorem, a target is reachable only if it is a multiple of the greatest common divisor of the two capacities. GCD(3, 5) = 1, and 4 is a multiple of 1, so it is. Checking that up front is far more honest than letting the search run and then reporting “not found”." }
     },
     {
       "kode": "S03-01", "sesi": 3, "topik": "Certainty Factor", "tingkat": 1,
-      "pertanyaan": "Diketahui MB = 0,8 dan MD = 0,01. Berapa nilai CF-nya?",
-      "bentuk": "angka", "jawaban": 0.79, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "CF = MB − MD = 0,8 − 0,01 = 0,79. Ini soal Tugas Sesi 3 pada modul. Perhatikan MD ditulis positif; tanda negatifnya sudah ada di rumus."
+      "pertanyaan": { "id": "Diketahui MB = 0,8 dan MD = 0,01. Berapa nilai CF-nya?", "en": "Given MB = 0.8 and MD = 0.01, what is the CF?" },
+      "bentuk": "angka", "jawaban": 0.79, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "CF = MB − MD = 0,8 − 0,01 = 0,79. Ini soal Tugas Sesi 3 pada modul. Perhatikan MD ditulis positif; tanda negatifnya sudah ada di rumus.", "en": "CF = MB − MD = 0.8 − 0.01 = 0.79. This is the Session 3 exercise from the course notes. Note that MD is written positive; the minus sign is already in the formula." }
     },
     {
       "kode": "S03-02", "sesi": 3, "topik": "Certainty Factor", "tingkat": 2,
-      "pertanyaan": "Dua bukti masing-masing ber-CF 0,8 dan 0,6 mendukung hipotesis yang sama. Berapa CF gabungannya?",
-      "bentuk": "angka", "jawaban": 0.92, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Keduanya positif, jadi dipakai CF₁ + CF₂ × (1 − CF₁) = 0,8 + 0,6 × 0,2 = 0,92. Bukti kedua hanya menggarap sisa keyakinan yang belum terpakai; itulah sebabnya hasilnya tidak pernah melewati 1."
+      "pertanyaan": { "id": "Dua bukti masing-masing ber-CF 0,8 dan 0,6 mendukung hipotesis yang sama. Berapa CF gabungannya?", "en": "Two pieces of evidence with CF 0.8 and 0.6 support the same hypothesis. What is the combined CF?" },
+      "bentuk": "angka", "jawaban": 0.92, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Keduanya positif, jadi dipakai CF₁ + CF₂ × (1 − CF₁) = 0,8 + 0,6 × 0,2 = 0,92. Bukti kedua hanya menggarap sisa keyakinan yang belum terpakai; itulah sebabnya hasilnya tidak pernah melewati 1.", "en": "Both are positive, so CF₁ + CF₂ × (1 − CF₁) = 0.8 + 0.6 × 0.2 = 0.92. The second piece works only on the belief the first has not already claimed, which is why the result never passes 1." }
     },
     {
       "kode": "S03-03", "sesi": 3, "topik": "Certainty Factor", "tingkat": 3,
-      "pertanyaan": "Sebuah aturan ber-CF 0,9 dinyalakan bukti ber-CF −0,5. Berapa CF kesimpulannya?",
-      "bentuk": "angka", "jawaban": 0.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Bukti dengan CF negatif tidak menyalakan aturan sama sekali, jadi hasilnya nol — bukan −0,45. Rumusnya CF_aturan × max(CF_bukti, 0)."
+      "pertanyaan": { "id": "Sebuah aturan ber-CF 0,9 dinyalakan bukti ber-CF −0,5. Berapa CF kesimpulannya?", "en": "A rule with CF 0.9 is fired by evidence with CF −0.5. What is the CF of the conclusion?" },
+      "bentuk": "angka", "jawaban": 0.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Bukti dengan CF negatif tidak menyalakan aturan sama sekali, jadi hasilnya nol — bukan −0,45. Rumusnya CF_aturan × max(CF_bukti, 0).", "en": "Evidence with a negative CF does not fire the rule at all, so the result is zero — not −0.45. The formula is CF_rule × max(CF_evidence, 0)." }
     },
     {
       "kode": "S03-04", "sesi": 3, "topik": "Certainty Factor", "tingkat": 2,
-      "pertanyaan": "Nilai CF dapat ditafsirkan sebagai probabilitas hipotesis benar.",
+      "pertanyaan": { "id": "Nilai CF dapat ditafsirkan sebagai probabilitas hipotesis benar.", "en": "A CF value can be read as the probability that the hypothesis is true." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "CF bukan probabilitas dan tidak memenuhi aturannya: CF sebuah hipotesis dan ingkarannya tidak harus berjumlah satu. Ia hanya bisa dibandingkan dengan CF lain di sistem yang sama."
+      "pembahasan": { "id": "CF bukan probabilitas dan tidak memenuhi aturannya: CF sebuah hipotesis dan ingkarannya tidak harus berjumlah satu. Ia hanya bisa dibandingkan dengan CF lain di sistem yang sama.", "en": "A CF is not a probability and does not obey the probability axioms: the CF of a hypothesis and of its negation need not sum to one. It can only be compared against other CFs in the same system." }
     },
     {
       "kode": "S03-05", "sesi": 3, "topik": "Certainty Factor", "tingkat": 1,
-      "pertanyaan": "Dua premis ber-CF 0,9 dan 0,3 dihubungkan dengan DAN. Berapa CF premis gabungannya?",
-      "bentuk": "angka", "jawaban": 0.3, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Premis DAN diambil nilai terkecilnya, yaitu 0,3. Alasannya sama seperti rantai: kekuatannya ditentukan mata rantai terlemah."
+      "pertanyaan": { "id": "Dua premis ber-CF 0,9 dan 0,3 dihubungkan dengan DAN. Berapa CF premis gabungannya?", "en": "Two premises with CF 0.9 and 0.3 are joined by AND. What is the CF of the combined premise?" },
+      "bentuk": "angka", "jawaban": 0.3, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Premis DAN diambil nilai terkecilnya, yaitu 0,3. Alasannya sama seperti rantai: kekuatannya ditentukan mata rantai terlemah.", "en": "An AND premise takes the smallest value, 0.3. The reasoning is the chain's: its strength is set by the weakest link." }
     },
     {
       "kode": "S04-01", "sesi": 4, "topik": "Teorema Bayes", "tingkat": 3,
-      "pertanyaan": "20% berita adalah hoaks. 90% hoaks berjudul provokatif, dan 30% berita non-hoaks juga. Sebuah berita berjudul provokatif — berapa peluang ia hoaks?",
-      "bentuk": "angka", "jawaban": 0.4286, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "P(E) = 0,9×0,2 + 0,3×0,8 = 0,42. P(H|E) = 0,9×0,2 / 0,42 = 3/7 ≈ 0,4286. Ini soal Tugas Pertemuan 5. Perhatikan jawabannya di bawah setengah meski 90% hoaks berjudul provokatif — karena hoaksnya sendiri hanya 20%."
+      "pertanyaan": { "id": "20% berita adalah hoaks. 90% hoaks berjudul provokatif, dan 30% berita non-hoaks juga. Sebuah berita berjudul provokatif — berapa peluang ia hoaks?", "en": "20% of articles are hoaxes. 90% of hoaxes carry a provocative headline, and so do 30% of non-hoaxes. An article has a provocative headline — how likely is it a hoax?" },
+      "bentuk": "angka", "jawaban": 0.4286, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "P(E) = 0,9×0,2 + 0,3×0,8 = 0,42. P(H|E) = 0,9×0,2 / 0,42 = 3/7 ≈ 0,4286. Ini soal Tugas Pertemuan 5. Perhatikan jawabannya di bawah setengah meski 90% hoaks berjudul provokatif — karena hoaksnya sendiri hanya 20%.", "en": "P(E) = 0.9×0.2 + 0.3×0.8 = 0.42. P(H|E) = 0.9×0.2 / 0.42 = 3/7 ≈ 0.4286. This is the Session 5 exercise. Note the answer is below one half even though 90% of hoaxes carry such a headline — because hoaxes are only 20% to begin with." }
     },
     {
       "kode": "S04-02", "sesi": 4, "topik": "Teorema Bayes", "tingkat": 2,
-      "pertanyaan": "Dengan data soal sebelumnya, berapa P(E), yaitu peluang sebuah berita berjudul provokatif?",
-      "bentuk": "angka", "jawaban": 0.42, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "P(E) = P(E|H)×P(H) + P(E|¬H)×P(¬H) = 0,9×0,2 + 0,3×0,8 = 0,18 + 0,24 = 0,42. Bukti bisa muncul lewat dua jalan, dan keduanya harus dijumlahkan."
+      "pertanyaan": { "id": "Dengan data soal sebelumnya, berapa P(E), yaitu peluang sebuah berita berjudul provokatif?", "en": "With the data from the previous question, what is P(E) — the probability an article has a provocative headline?" },
+      "bentuk": "angka", "jawaban": 0.42, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "P(E) = P(E|H)×P(H) + P(E|¬H)×P(¬H) = 0,9×0,2 + 0,3×0,8 = 0,18 + 0,24 = 0,42. Bukti bisa muncul lewat dua jalan, dan keduanya harus dijumlahkan.", "en": "P(E) = P(E|H)×P(H) + P(E|¬H)×P(¬H) = 0.9×0.2 + 0.3×0.8 = 0.18 + 0.24 = 0.42. The evidence can arise by two routes, and both must be added." }
     },
     {
       "kode": "S04-03", "sesi": 4, "topik": "Teorema Bayes", "tingkat": 3,
-      "pertanyaan": "P(E|¬H) dapat dihitung sebagai 1 − P(E|H).",
+      "pertanyaan": { "id": "P(E|¬H) dapat dihitung sebagai 1 − P(E|H).", "en": "P(E|¬H) can be computed as 1 − P(E|H)." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Keduanya sama sekali tidak berhubungan: yang satu tentang kelompok yang hipotesisnya benar, yang lain tentang kelompok yang hipotesisnya salah. Keduanya harus diketahui terpisah, dan menukarnya adalah salah satu kekeliruan paling umum."
+      "pembahasan": { "id": "Keduanya sama sekali tidak berhubungan: yang satu tentang kelompok yang hipotesisnya benar, yang lain tentang kelompok yang hipotesisnya salah. Keduanya harus diketahui terpisah, dan menukarnya adalah salah satu kekeliruan paling umum.", "en": "The two are unrelated: one concerns the group for which the hypothesis holds, the other the group for which it does not. Both must be known separately, and confusing them is among the most common errors of all." }
     },
     {
       "kode": "S04-04", "sesi": 4, "topik": "Teorema Bayes", "tingkat": 3,
-      "pertanyaan": "Sebuah penyakit menimpa 1 dari 1000 orang. Tesnya mendeteksi 99% yang sakit dan salah pada 5% yang sehat. Berapa peluang seseorang benar-benar sakit bila tesnya positif?",
-      "bentuk": "angka", "jawaban": 0.0194, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Sekitar 0,0194 — di bawah 2 persen. Bukan tesnya yang buruk; priornya yang sangat kecil. Dari 1000 orang, sekitar 1 positif benar dan 50 positif palsu. Inilah kekeliruan mengabaikan laju dasar."
+      "pertanyaan": { "id": "Sebuah penyakit menimpa 1 dari 1000 orang. Tesnya mendeteksi 99% yang sakit dan salah pada 5% yang sehat. Berapa peluang seseorang benar-benar sakit bila tesnya positif?", "en": "A disease affects 1 in 1000 people. The test detects 99% of the ill and errs on 5% of the healthy. How likely is someone actually ill given a positive test?" },
+      "bentuk": "angka", "jawaban": 0.0194, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Sekitar 0,0194 — di bawah 2 persen. Bukan tesnya yang buruk; priornya yang sangat kecil. Dari 1000 orang, sekitar 1 positif benar dan 50 positif palsu. Inilah kekeliruan mengabaikan laju dasar.", "en": "About 0.0194 — under 2 per cent. The test is not bad; the prior is simply tiny. Among 1000 people there is roughly 1 true positive and 50 false ones. This is the base-rate fallacy." }
     },
     {
       "kode": "S04-05", "sesi": 4, "topik": "Rasio kemungkinan", "tingkat": 2,
-      "pertanyaan": "Berapa rasio kemungkinan bila P(E|H) = 0,9 dan P(E|¬H) = 0,3?",
-      "bentuk": "angka", "jawaban": 3.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "LR = 0,9 / 0,3 = 3. Rasio kemungkinan tidak bergantung prior sama sekali, sehingga ia mengukur kekuatan bukti itu sendiri. Nilai 1 berarti buktinya tidak memberi tahu apa pun."
+      "pertanyaan": { "id": "Berapa rasio kemungkinan bila P(E|H) = 0,9 dan P(E|¬H) = 0,3?", "en": "What is the likelihood ratio when P(E|H) = 0.9 and P(E|¬H) = 0.3?" },
+      "bentuk": "angka", "jawaban": 3.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "LR = 0,9 / 0,3 = 3. Rasio kemungkinan tidak bergantung prior sama sekali, sehingga ia mengukur kekuatan bukti itu sendiri. Nilai 1 berarti buktinya tidak memberi tahu apa pun.", "en": "LR = 0.9 / 0.3 = 3. The likelihood ratio does not depend on the prior at all, so it measures the strength of the evidence itself. A value of 1 means the evidence tells you nothing." }
     },
     {
       "kode": "S05-01", "sesi": 5, "topik": "Keanggotaan kabur", "tingkat": 1,
-      "pertanyaan": "Himpunan segitiga (0, 5, 10). Berapa derajat keanggotaan x = 2,5?",
-      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "x berada di kaki kiri, jadi μ = (x − a)/(b − a) = 2,5/5 = 0,5. Setengah jalan menuju puncak berarti derajat keanggotaan setengah."
+      "pertanyaan": { "id": "Himpunan segitiga (0, 5, 10). Berapa derajat keanggotaan x = 2,5?", "en": "A triangular set (0, 5, 10). What is the degree of membership at x = 2.5?" },
+      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "x berada di kaki kiri, jadi μ = (x − a)/(b − a) = 2,5/5 = 0,5. Setengah jalan menuju puncak berarti derajat keanggotaan setengah.", "en": "x sits on the left leg, so μ = (x − a)/(b − a) = 2.5/5 = 0.5. Halfway to the peak means a membership of one half." }
     },
     {
       "kode": "S05-02", "sesi": 5, "topik": "Keanggotaan kabur", "tingkat": 3,
-      "pertanyaan": "Himpunan trapesium (5, 8, 10, 10). Berapa derajat keanggotaan x = 10?",
-      "bentuk": "angka", "jawaban": 1.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Jawabannya 1, bukan 0. Bahu datarnya membentang dari 8 sampai 10, dan x = 10 masih di dalamnya. Inilah bentuk yang paling sering salah dihitung: himpunan berkaki berimpit di tepi semesta."
+      "pertanyaan": { "id": "Himpunan trapesium (5, 8, 10, 10). Berapa derajat keanggotaan x = 10?", "en": "A trapezoidal set (5, 8, 10, 10). What is the degree of membership at x = 10?" },
+      "bentuk": "angka", "jawaban": 1.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Jawabannya 1, bukan 0. Bahu datarnya membentang dari 8 sampai 10, dan x = 10 masih di dalamnya. Inilah bentuk yang paling sering salah dihitung: himpunan berkaki berimpit di tepi semesta.", "en": "The answer is 1, not 0. The flat shoulder runs from 8 to 10, and x = 10 is still inside it. This is the shape most often got wrong: a set with a coincident leg at the edge of the universe." }
     },
     {
       "kode": "S05-03", "sesi": 5, "topik": "Derajat keanggotaan", "tingkat": 2,
-      "pertanyaan": "Derajat keanggotaan seluruh himpunan kabur pada satu nilai harus berjumlah satu.",
+      "pertanyaan": { "id": "Derajat keanggotaan seluruh himpunan kabur pada satu nilai harus berjumlah satu.", "en": "The degrees of membership across all fuzzy sets at one value must sum to one." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Itu berlaku untuk probabilitas, bukan untuk derajat keanggotaan. Suhu 26 derajat bisa “sejuk” sebesar 0,4 dan “hangat” sebesar 0,7 sekaligus; jumlahnya 1,1 dan itu sah."
+      "pembahasan": { "id": "Itu berlaku untuk probabilitas, bukan untuk derajat keanggotaan. Suhu 26 derajat bisa “sejuk” sebesar 0,4 dan “hangat” sebesar 0,7 sekaligus; jumlahnya 1,1 dan itu sah.", "en": "That holds for probabilities, not for memberships. A temperature of 26 degrees can be “cool” to degree 0.4 and “warm” to degree 0.7 at once; they sum to 1.1, and that is perfectly valid." }
     },
     {
       "kode": "S06-01", "sesi": 6, "topik": "Inferensi kabur", "tingkat": 1,
-      "pertanyaan": "Aturan berpremis “A DAN B” dengan derajat 0,7 dan 0,4. Berapa kekuatan penyalaannya?",
-      "bentuk": "angka", "jawaban": 0.4, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Premis DAN diambil minimumnya, yaitu 0,4. Aturan hanya sekuat premis terlemahnya, persis seperti rantai yang putus di mata rantai terlemah."
+      "pertanyaan": { "id": "Aturan berpremis “A DAN B” dengan derajat 0,7 dan 0,4. Berapa kekuatan penyalaannya?", "en": "A rule with premises “A AND B” at degrees 0.7 and 0.4. What is its firing strength?" },
+      "bentuk": "angka", "jawaban": 0.4, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Premis DAN diambil minimumnya, yaitu 0,4. Aturan hanya sekuat premis terlemahnya, persis seperti rantai yang putus di mata rantai terlemah.", "en": "An AND premise takes the minimum, 0.4. A rule is only as strong as its weakest premise, exactly like a chain breaking at its weakest link." }
     },
     {
       "kode": "S06-02", "sesi": 6, "topik": "Defuzzifikasi", "tingkat": 2,
-      "pertanyaan": "Metode defuzzifikasi mana yang tidak perlu menggambar kurva keluaran sama sekali?",
-      "bentuk": "pilihan", "pilihan": ["Sugeno", "Mamdani", "Centroid", "Mean of Maximum"], "benar": 0,
-      "pembahasan": "Sugeno langsung memakai satu angka per aturan, sehingga jauh lebih murah dihitung. Itulah alasan ia lebih sering dipakai di sistem kendali tertanam, sementara Mamdani dipakai ketika bentuk keluarannya perlu ditafsirkan manusia."
+      "pertanyaan": { "id": "Metode defuzzifikasi mana yang tidak perlu menggambar kurva keluaran sama sekali?", "en": "Which defuzzification method never has to draw the output curve at all?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "Sugeno", "en": "Sugeno" }, { "id": "Mamdani", "en": "Mamdani" }, { "id": "Centroid", "en": "Centroid" }, { "id": "Mean of Maximum", "en": "Mean of Maximum" }], "benar": 0,
+      "pembahasan": { "id": "Sugeno langsung memakai satu angka per aturan, sehingga jauh lebih murah dihitung. Itulah alasan ia lebih sering dipakai di sistem kendali tertanam, sementara Mamdani dipakai ketika bentuk keluarannya perlu ditafsirkan manusia.", "en": "Sugeno uses one number per rule directly, which makes it far cheaper. That is why it is the more common choice in embedded control, while Mamdani is used when the shape of the output has to be interpreted by a person." }
     },
     {
       "kode": "S06-03", "sesi": 6, "topik": "Defuzzifikasi", "tingkat": 3,
-      "pertanyaan": "Mamdani, Sugeno, dan Tsukamoto akan memberi jawaban yang sama bila aturannya sama.",
+      "pertanyaan": { "id": "Mamdani, Sugeno, dan Tsukamoto akan memberi jawaban yang sama bila aturannya sama.", "en": "Mamdani, Sugeno, and Tsukamoto give the same answer when the rules are the same." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Aturannya hanya menentukan kekuatan penyalaan; yang berbeda adalah cara mengubah kekuatan itu menjadi satu angka. Perbedaan hasilnya bukan kesalahan melainkan konsekuensi definisi masing-masing."
+      "pembahasan": { "id": "Aturannya hanya menentukan kekuatan penyalaan; yang berbeda adalah cara mengubah kekuatan itu menjadi satu angka. Perbedaan hasilnya bukan kesalahan melainkan konsekuensi definisi masing-masing.", "en": "The rules only fix the firing strengths; what differs is how those strengths become one number. The difference is not an error but a consequence of each definition." }
     },
     {
       "kode": "S07-01", "sesi": 7, "topik": "Tabel kebenaran", "tingkat": 1,
-      "pertanyaan": "Berapa baris tabel kebenaran untuk rumus dengan 5 proposisi?",
-      "bentuk": "angka", "jawaban": 32.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "2⁵ = 32. Tiap proposisi baru melipatduakan barisnya, sehingga sepuluh proposisi sudah berarti 1.024 baris — dan itulah alasan pembuktian yang tidak perlu memeriksa semua baris jauh lebih berharga."
+      "pertanyaan": { "id": "Berapa baris tabel kebenaran untuk rumus dengan 5 proposisi?", "en": "How many rows does a truth table have for a formula with 5 propositions?" },
+      "bentuk": "angka", "jawaban": 32.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "2⁵ = 32. Tiap proposisi baru melipatduakan barisnya, sehingga sepuluh proposisi sudah berarti 1.024 baris — dan itulah alasan pembuktian yang tidak perlu memeriksa semua baris jauh lebih berharga.", "en": "2⁵ = 32. Each new proposition doubles the rows, so ten propositions already mean 1,024 — which is why a proof that avoids checking every row is worth so much more." }
     },
     {
       "kode": "S07-02", "sesi": 7, "topik": "Resolusi", "tingkat": 2,
-      "pertanyaan": "Pembuktian dengan resolusi bekerja dengan cara…",
-      "bentuk": "pilihan", "pilihan": ["menyangkal kesimpulan lalu mencari kontradiksi", "mencoba seluruh kemungkinan nilai kebenaran", "menghitung peluang kesimpulan benar", "menyusun tabel kebenaran yang lebih ringkas"], "benar": 0,
-      "pembahasan": "Resolusi menambahkan ingkaran kesimpulan ke basis pengetahuan lalu mencari klausa kosong. Kalau klausa kosong ditemukan, ingkarannya mustahil benar — jadi kesimpulannya pasti mengikuti."
+      "pertanyaan": { "id": "Pembuktian dengan resolusi bekerja dengan cara…", "en": "Proof by resolution works by…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "menyangkal kesimpulan lalu mencari kontradiksi", "en": "negating the conclusion and then looking for a contradiction" }, { "id": "mencoba seluruh kemungkinan nilai kebenaran", "en": "trying every possible assignment of truth values" }, { "id": "menghitung peluang kesimpulan benar", "en": "computing how likely the conclusion is to be true" }, { "id": "menyusun tabel kebenaran yang lebih ringkas", "en": "building a more compact truth table" }], "benar": 0,
+      "pembahasan": { "id": "Resolusi menambahkan ingkaran kesimpulan ke basis pengetahuan lalu mencari klausa kosong. Kalau klausa kosong ditemukan, ingkarannya mustahil benar — jadi kesimpulannya pasti mengikuti.", "en": "Resolution adds the negated conclusion to the knowledge base and searches for the empty clause. If the empty clause turns up, the negation cannot hold — so the conclusion must follow." }
     },
     {
       "kode": "S07-03", "sesi": 7, "topik": "Jaringan semantik", "tingkat": 2,
-      "pertanyaan": "Pada jaringan semantik, sifat yang dituliskan pada simpul induk berlaku juga bagi seluruh turunannya.",
+      "pertanyaan": { "id": "Pada jaringan semantik, sifat yang dituliskan pada simpul induk berlaku juga bagi seluruh turunannya.", "en": "In a semantic network, a property written on a parent node also holds for all of its descendants." },
       "bentuk": "benarSalah", "benar": true,
-      "pembahasan": "Itulah gunanya jaringan semantik: menuliskan bahwa hewan punya sel satu kali sudah cukup untuk seluruh turunannya. Pengecualian ditangani dengan menuliskan sifat yang berbeda langsung pada simpul turunannya."
+      "pembahasan": { "id": "Itulah gunanya jaringan semantik: menuliskan bahwa hewan punya sel satu kali sudah cukup untuk seluruh turunannya. Pengecualian ditangani dengan menuliskan sifat yang berbeda langsung pada simpul turunannya.", "en": "That is the point of a semantic network: writing once that animals have cells is enough for every descendant. Exceptions are handled by writing the differing property directly on the descendant node." }
     },
     {
       "kode": "S08-01", "sesi": 8, "topik": "Pencarian", "tingkat": 3,
-      "pertanyaan": "Algoritma A* dijamin menemukan jalur terpendek bila heuristiknya…",
-      "bentuk": "pilihan", "pilihan": ["tidak pernah menaksir lebih besar daripada biaya sebenarnya", "selalu menaksir tepat sama dengan biaya sebenarnya", "selalu bernilai nol", "menaksir lebih besar agar pencariannya lebih cepat"], "benar": 0,
-      "pembahasan": "Heuristik yang tidak pernah menaksir berlebihan disebut admissible. Heuristik yang menaksir berlebihan bisa membuat A* melewatkan jalur terpendek — ia jadi lebih cepat tetapi berhenti menjamin apa pun."
+      "pertanyaan": { "id": "Algoritma A* dijamin menemukan jalur terpendek bila heuristiknya…", "en": "A* is guaranteed to find the shortest path when its heuristic…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "tidak pernah menaksir lebih besar daripada biaya sebenarnya", "en": "never overestimates the true remaining cost" }, { "id": "selalu menaksir tepat sama dengan biaya sebenarnya", "en": "always estimates exactly the true remaining cost" }, { "id": "selalu bernilai nol", "en": "is always zero" }, { "id": "menaksir lebih besar agar pencariannya lebih cepat", "en": "overestimates in order to search faster" }], "benar": 0,
+      "pembahasan": { "id": "Heuristik yang tidak pernah menaksir berlebihan disebut admissible. Heuristik yang menaksir berlebihan bisa membuat A* melewatkan jalur terpendek — ia jadi lebih cepat tetapi berhenti menjamin apa pun.", "en": "A heuristic that never overestimates is called admissible. One that does overestimate can make A* miss the shortest path — it becomes faster but stops guaranteeing anything." }
     },
     {
       "kode": "S08-02", "sesi": 8, "topik": "Pencarian", "tingkat": 2,
-      "pertanyaan": "Manakah yang benar tentang BFS dan DFS pada graf berbobot seragam?",
-      "bentuk": "pilihan", "pilihan": ["BFS menjamin jalur terpendek, DFS tidak", "keduanya menjamin jalur terpendek", "DFS menjamin jalur terpendek, BFS tidak", "keduanya tidak menjamin apa pun"], "benar": 0,
-      "pembahasan": "BFS menelusuri lapis demi lapis, jadi simpul tujuan pertama yang ditemuinya pasti yang terdekat. DFS menelusuri sedalam mungkin lebih dulu dan bisa menemukan jalur panjang yang berputar-putar."
+      "pertanyaan": { "id": "Manakah yang benar tentang BFS dan DFS pada graf berbobot seragam?", "en": "Which is true of BFS and DFS on a uniformly weighted graph?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "BFS menjamin jalur terpendek, DFS tidak", "en": "BFS guarantees the shortest path, DFS does not" }, { "id": "keduanya menjamin jalur terpendek", "en": "both guarantee the shortest path" }, { "id": "DFS menjamin jalur terpendek, BFS tidak", "en": "DFS guarantees the shortest path, BFS does not" }, { "id": "keduanya tidak menjamin apa pun", "en": "neither guarantees anything" }], "benar": 0,
+      "pembahasan": { "id": "BFS menelusuri lapis demi lapis, jadi simpul tujuan pertama yang ditemuinya pasti yang terdekat. DFS menelusuri sedalam mungkin lebih dulu dan bisa menemukan jalur panjang yang berputar-putar.", "en": "BFS explores layer by layer, so the first goal node it meets must be the nearest. DFS goes as deep as it can first and may find a long, winding path." }
     },
     {
       "kode": "S08-03", "sesi": 8, "topik": "Heuristik", "tingkat": 1,
-      "pertanyaan": "Jarak Manhattan dari (2, 3) ke (7, 8) adalah berapa?",
-      "bentuk": "angka", "jawaban": 10.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "|7−2| + |8−3| = 5 + 5 = 10. Jarak Manhattan dipakai sebagai heuristik pada peta berpetak yang gerakannya hanya empat arah, karena di sana ia tidak pernah menaksir berlebihan."
+      "pertanyaan": { "id": "Jarak Manhattan dari (2, 3) ke (7, 8) adalah berapa?", "en": "What is the Manhattan distance from (2, 3) to (7, 8)?" },
+      "bentuk": "angka", "jawaban": 10.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "|7−2| + |8−3| = 5 + 5 = 10. Jarak Manhattan dipakai sebagai heuristik pada peta berpetak yang gerakannya hanya empat arah, karena di sana ia tidak pernah menaksir berlebihan.", "en": "|7−2| + |8−3| = 5 + 5 = 10. Manhattan distance is used as a heuristic on grid maps with four-way movement, because there it never overestimates." }
     },
     {
       "kode": "S09-01", "sesi": 9, "topik": "Perceptron", "tingkat": 2,
-      "pertanyaan": "Perceptron satu lapis dapat memisahkan fungsi XOR.",
+      "pertanyaan": { "id": "Perceptron satu lapis dapat memisahkan fungsi XOR.", "en": "A single-layer perceptron can separate the XOR function." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "XOR tidak terpisahkan secara linear, dan perceptron satu lapis hanya bisa menarik satu garis lurus. Temuan Minsky dan Papert tentang ini menghentikan penelitian jaringan syaraf hampir dua dekade, sampai perambatan balik ditemukan."
+      "pembahasan": { "id": "XOR tidak terpisahkan secara linear, dan perceptron satu lapis hanya bisa menarik satu garis lurus. Temuan Minsky dan Papert tentang ini menghentikan penelitian jaringan syaraf hampir dua dekade, sampai perambatan balik ditemukan.", "en": "XOR is not linearly separable, and a single-layer perceptron can only draw one straight line. Minsky and Papert's finding on this halted neural-network research for nearly two decades, until backpropagation arrived." }
     },
     {
       "kode": "S09-02", "sesi": 9, "topik": "Pelatihan", "tingkat": 3,
-      "pertanyaan": "Apa yang terjadi bila laju belajar disetel terlalu besar?",
-      "bentuk": "pilihan", "pilihan": ["galat berhenti menurun lalu melompat-lompat tanpa mengecil", "pelatihan menjadi lebih cepat tanpa efek samping", "jaringan pasti berhenti belajar sama sekali", "galat menurun lebih halus daripada biasanya"], "benar": 0,
-      "pembahasan": "Langkah yang terlalu besar melewati titik terendah lalu memantul ke sisi seberang. Cirinya khas: kurva galatnya berayun dan tidak pernah mengecil, berbeda dari laju yang terlalu kecil yang menurun tetapi sangat lambat."
+      "pertanyaan": { "id": "Apa yang terjadi bila laju belajar disetel terlalu besar?", "en": "What happens when the learning rate is set too high?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "galat berhenti menurun lalu melompat-lompat tanpa mengecil", "en": "the error stops falling and bounces around without shrinking" }, { "id": "pelatihan menjadi lebih cepat tanpa efek samping", "en": "training simply goes faster with no side effects" }, { "id": "jaringan pasti berhenti belajar sama sekali", "en": "the network certainly stops learning altogether" }, { "id": "galat menurun lebih halus daripada biasanya", "en": "the error falls more smoothly than usual" }], "benar": 0,
+      "pembahasan": { "id": "Langkah yang terlalu besar melewati titik terendah lalu memantul ke sisi seberang. Cirinya khas: kurva galatnya berayun dan tidak pernah mengecil, berbeda dari laju yang terlalu kecil yang menurun tetapi sangat lambat.", "en": "Too large a step overshoots the minimum and bounces to the far side. The signature is distinctive: the error curve oscillates and never shrinks — unlike too small a rate, which falls but very slowly." }
     },
     {
       "kode": "S09-03", "sesi": 9, "topik": "Fungsi aktivasi", "tingkat": 2,
-      "pertanyaan": "Berapa nilai fungsi sigmoid pada masukan 0?",
-      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "σ(0) = 1/(1 + e⁰) = 1/2 = 0,5. Sigmoid selalu bernilai setengah tepat di titik tengahnya, dan itulah sebabnya ia dipakai sebagai penggolong dua kelas dengan ambang 0,5."
+      "pertanyaan": { "id": "Berapa nilai fungsi sigmoid pada masukan 0?", "en": "What is the value of the sigmoid function at input 0?" },
+      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "σ(0) = 1/(1 + e⁰) = 1/2 = 0,5. Sigmoid selalu bernilai setengah tepat di titik tengahnya, dan itulah sebabnya ia dipakai sebagai penggolong dua kelas dengan ambang 0,5.", "en": "σ(0) = 1/(1 + e⁰) = 1/2 = 0.5. The sigmoid is always one half exactly at its midpoint, which is why it serves as a two-class classifier with a threshold of 0.5." }
     },
     {
       "kode": "S10-01", "sesi": 10, "topik": "Stemming", "tingkat": 2,
-      "pertanyaan": "Kata dasar dari “menyapu” adalah…",
-      "bentuk": "pilihan", "pilihan": ["sapu", "nyapu", "menyapu", "apu"], "benar": 0,
-      "pembahasan": "Awalan meny- meluluhkan huruf s pada kata dasarnya, sehingga “menyapu” berasal dari “sapu”, bukan “nyapu”. Tidak ada algoritma stemming Bahasa Inggris yang mengetahui aturan peluluhan ini."
+      "pertanyaan": { "id": "Kata dasar dari “menyapu” adalah…", "en": "The root of the Indonesian word “menyapu” (to sweep) is…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "sapu", "en": "sapu" }, { "id": "nyapu", "en": "nyapu" }, { "id": "menyapu", "en": "menyapu" }, { "id": "apu", "en": "apu" }], "benar": 0,
+      "pembahasan": { "id": "Awalan meny- meluluhkan huruf s pada kata dasarnya, sehingga “menyapu” berasal dari “sapu”, bukan “nyapu”. Tidak ada algoritma stemming Bahasa Inggris yang mengetahui aturan peluluhan ini.", "en": "The prefix meny- absorbs the initial s of the root, so “menyapu” comes from “sapu”, not “nyapu”. No English stemming algorithm knows this assimilation rule." }
     },
     {
       "kode": "S10-02", "sesi": 10, "topik": "Stemming", "tingkat": 3,
-      "pertanyaan": "Kenapa pencari kata dasar Bahasa Indonesia perlu memeriksa kamus sebelum mengupas imbuhan?",
-      "bentuk": "pilihan", "pilihan": ["agar kata seperti “beruang” tidak dikupas menjadi “uang”", "agar prosesnya berjalan lebih cepat", "agar hasilnya selalu berupa kata benda", "agar imbuhan yang dikupas bisa dikembalikan"], "benar": 0,
-      "pembahasan": "“Beruang” sudah ada di kamus, jadi pengupasan harus berhenti. Tanpa pemeriksaan itu, aturan pengupasan akan tetap berjalan dan menghasilkan “uang” — kata yang sah tetapi maknanya sama sekali lain."
+      "pertanyaan": { "id": "Kenapa pencari kata dasar Bahasa Indonesia perlu memeriksa kamus sebelum mengupas imbuhan?", "en": "Why must an Indonesian stemmer check a dictionary before stripping affixes?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "agar kata seperti “beruang” tidak dikupas menjadi “uang”", "en": "so that a word like “beruang” (bear) is not stripped down to “uang” (money)" }, { "id": "agar prosesnya berjalan lebih cepat", "en": "so that the process runs faster" }, { "id": "agar hasilnya selalu berupa kata benda", "en": "so that the result is always a noun" }, { "id": "agar imbuhan yang dikupas bisa dikembalikan", "en": "so that stripped affixes can be restored" }], "benar": 0,
+      "pembahasan": { "id": "“Beruang” sudah ada di kamus, jadi pengupasan harus berhenti. Tanpa pemeriksaan itu, aturan pengupasan akan tetap berjalan dan menghasilkan “uang” — kata yang sah tetapi maknanya sama sekali lain.", "en": "“Beruang” is already in the dictionary, so stripping must stop. Without that check the rules keep going and produce “uang” — a valid word with an entirely different meaning." }
     },
     {
       "kode": "S10-03", "sesi": 10, "topik": "TF-IDF", "tingkat": 2,
-      "pertanyaan": "Kata yang muncul di seluruh dokumen akan mendapat bobot IDF yang tinggi.",
+      "pertanyaan": { "id": "Kata yang muncul di seluruh dokumen akan mendapat bobot IDF yang tinggi.", "en": "A word appearing in every document receives a high IDF weight." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Sebaliknya: IDF-nya paling rendah. Kata yang muncul di mana-mana tidak membedakan apa pun, dan itulah seluruh gagasan TF-IDF — yang sering muncul di semua tempat justru tidak informatif."
+      "pembahasan": { "id": "Sebaliknya: IDF-nya paling rendah. Kata yang muncul di mana-mana tidak membedakan apa pun, dan itulah seluruh gagasan TF-IDF — yang sering muncul di semua tempat justru tidak informatif.", "en": "The opposite: its IDF is the lowest possible. A word that appears everywhere distinguishes nothing, and that is the whole idea of TF-IDF — what is common everywhere carries no information." }
     },
     {
       "kode": "S11-01", "sesi": 11, "topik": "Sistem pakar", "tingkat": 2,
-      "pertanyaan": "Runut maju (forward chaining) menjawab pertanyaan…",
-      "bentuk": "pilihan", "pilihan": ["apa yang bisa disimpulkan dari fakta yang ada", "benarkah dugaan tertentu ini", "berapa peluang kesimpulan benar", "aturan mana yang paling sering dipakai"], "benar": 0,
-      "pembahasan": "Runut maju berangkat dari fakta menuju kesimpulan; runut mundur berangkat dari dugaan lalu mencari bukti pendukungnya. Keduanya memakai basis aturan yang sama persis, hanya arah penelusurannya berbeda."
+      "pertanyaan": { "id": "Runut maju (forward chaining) menjawab pertanyaan…", "en": "Forward chaining answers the question…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "apa yang bisa disimpulkan dari fakta yang ada", "en": "what can be concluded from the facts on hand" }, { "id": "benarkah dugaan tertentu ini", "en": "is this particular hypothesis true" }, { "id": "berapa peluang kesimpulan benar", "en": "how likely the conclusion is to be true" }, { "id": "aturan mana yang paling sering dipakai", "en": "which rule is used most often" }], "benar": 0,
+      "pembahasan": { "id": "Runut maju berangkat dari fakta menuju kesimpulan; runut mundur berangkat dari dugaan lalu mencari bukti pendukungnya. Keduanya memakai basis aturan yang sama persis, hanya arah penelusurannya berbeda.", "en": "Forward chaining runs from facts to conclusions; backward chaining starts from a hypothesis and looks for supporting evidence. Both use exactly the same rule base; only the direction of travel differs." }
     },
     {
       "kode": "S11-02", "sesi": 11, "topik": "Sistem pakar", "tingkat": 2,
-      "pertanyaan": "Fasilitas penjelasan pada sistem pakar berguna untuk…",
-      "bentuk": "pilihan", "pilihan": ["menunjukkan aturan mana yang dipakai sehingga kesimpulannya bisa diperiksa", "mempercepat proses inferensi", "menghemat memori basis pengetahuan", "menggantikan peran pakar sepenuhnya"], "benar": 0,
-      "pembahasan": "Sistem pakar yang tidak bisa menjawab “kenapa” hanyalah tebakan bercangkang komputer. Fasilitas penjelasan bukan hiasan; ia yang membuat kesimpulannya bisa dipertanggungjawabkan."
+      "pertanyaan": { "id": "Fasilitas penjelasan pada sistem pakar berguna untuk…", "en": "The explanation facility in an expert system exists to…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "menunjukkan aturan mana yang dipakai sehingga kesimpulannya bisa diperiksa", "en": "show which rules were used so the conclusion can be checked" }, { "id": "mempercepat proses inferensi", "en": "speed up the inference process" }, { "id": "menghemat memori basis pengetahuan", "en": "save memory in the knowledge base" }, { "id": "menggantikan peran pakar sepenuhnya", "en": "replace the expert entirely" }], "benar": 0,
+      "pembahasan": { "id": "Sistem pakar yang tidak bisa menjawab “kenapa” hanyalah tebakan bercangkang komputer. Fasilitas penjelasan bukan hiasan; ia yang membuat kesimpulannya bisa dipertanggungjawabkan.", "en": "An expert system that cannot answer “why” is only a guess in a computer's shell. The explanation facility is not decoration; it is what makes the conclusion answerable for." }
     },
     {
       "kode": "S11-03", "sesi": 11, "topik": "Basis pengetahuan", "tingkat": 3,
-      "pertanyaan": "Sebuah fakta yang dipakai sebagai premis tetapi tidak bisa disimpulkan maupun ditanyakan akan menyebabkan galat saat sistem dijalankan.",
+      "pertanyaan": { "id": "Sebuah fakta yang dipakai sebagai premis tetapi tidak bisa disimpulkan maupun ditanyakan akan menyebabkan galat saat sistem dijalankan.", "en": "A fact used as a premise but which can be neither inferred nor asked will raise an error when the system runs." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Justru tidak — dan di situlah bahayanya. Fakta seperti itu diam-diam dianggap tidak berlaku, sehingga aturannya tidak pernah menyala dan tidak ada pesan galat apa pun. Ini jenis cacat yang paling sulit ditemukan pada sistem pakar."
+      "pembahasan": { "id": "Justru tidak — dan di situlah bahayanya. Fakta seperti itu diam-diam dianggap tidak berlaku, sehingga aturannya tidak pernah menyala dan tidak ada pesan galat apa pun. Ini jenis cacat yang paling sulit ditemukan pada sistem pakar.", "en": "It will not — and that is exactly the danger. Such a fact is quietly treated as false, so its rule never fires and no error appears at all. This is the hardest class of defect to find in an expert system." }
     },
     {
       "kode": "S12-01", "sesi": 12, "topik": "Big data", "tingkat": 1,
-      "pertanyaan": "Manakah yang bukan bagian dari “tiga V” pada big data?",
-      "bentuk": "pilihan", "pilihan": ["Validity", "Volume", "Velocity", "Variety"], "benar": 0,
-      "pembahasan": "Tiga V aslinya adalah Volume, Velocity, dan Variety. Veracity sering ditambahkan sebagai V keempat, tetapi Validity bukan bagian dari kerangka aslinya."
+      "pertanyaan": { "id": "Manakah yang bukan bagian dari “tiga V” pada big data?", "en": "Which is not one of the “three Vs” of big data?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "Validity", "en": "Validity" }, { "id": "Volume", "en": "Volume" }, { "id": "Velocity", "en": "Velocity" }, { "id": "Variety", "en": "Variety" }], "benar": 0,
+      "pembahasan": { "id": "Tiga V aslinya adalah Volume, Velocity, dan Variety. Veracity sering ditambahkan sebagai V keempat, tetapi Validity bukan bagian dari kerangka aslinya.", "en": "The original three Vs are Volume, Velocity, and Variety. Veracity is often added as a fourth, but Validity was never part of the original framing." }
     },
     {
       "kode": "S13-01", "sesi": 13, "topik": "Entropi", "tingkat": 1,
-      "pertanyaan": "Berapa entropi sebuah himpunan berisi dua kelas yang jumlahnya berimbang sempurna?",
-      "bentuk": "angka", "jawaban": 1.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Tepat 1 bit. Entropi mengukur berapa banyak pertanyaan ya-tidak yang dibutuhkan untuk memastikan jawabannya, dan dua kelas berimbang butuh tepat satu pertanyaan."
+      "pertanyaan": { "id": "Berapa entropi sebuah himpunan berisi dua kelas yang jumlahnya berimbang sempurna?", "en": "What is the entropy of a set holding two perfectly balanced classes?" },
+      "bentuk": "angka", "jawaban": 1.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Tepat 1 bit. Entropi mengukur berapa banyak pertanyaan ya-tidak yang dibutuhkan untuk memastikan jawabannya, dan dua kelas berimbang butuh tepat satu pertanyaan.", "en": "Exactly 1 bit. Entropy measures how many yes-or-no questions are needed to pin down the answer, and two balanced classes need exactly one." }
     },
     {
       "kode": "S13-02", "sesi": 13, "topik": "Entropi", "tingkat": 1,
-      "pertanyaan": "Berapa entropi himpunan yang seluruh anggotanya satu kelas?",
-      "bentuk": "angka", "jawaban": 0.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "Nol. Tidak ada ketidakpastian sama sekali, jadi tidak ada pertanyaan yang perlu diajukan. Inilah keadaan yang dicari ID3 saat membentuk daun."
+      "pertanyaan": { "id": "Berapa entropi himpunan yang seluruh anggotanya satu kelas?", "en": "What is the entropy of a set whose members all share one class?" },
+      "bentuk": "angka", "jawaban": 0.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "Nol. Tidak ada ketidakpastian sama sekali, jadi tidak ada pertanyaan yang perlu diajukan. Inilah keadaan yang dicari ID3 saat membentuk daun.", "en": "Zero. There is no uncertainty at all, so no question needs asking. This is the state ID3 is looking for when it forms a leaf." }
     },
     {
       "kode": "S13-03", "sesi": 13, "topik": "Ketakmurnian Gini", "tingkat": 2,
-      "pertanyaan": "Berapa ketakmurnian Gini himpunan berisi dua kelas berimbang?",
-      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "1 − (0,5² + 0,5²) = 0,5. Berbeda dengan entropi yang bernilai 1 pada keadaan yang sama, karena keduanya memakai skala yang berbeda. Gini lebih murah dihitung karena tidak memakai logaritma."
+      "pertanyaan": { "id": "Berapa ketakmurnian Gini himpunan berisi dua kelas berimbang?", "en": "What is the Gini impurity of a set with two balanced classes?" },
+      "bentuk": "angka", "jawaban": 0.5, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "1 − (0,5² + 0,5²) = 0,5. Berbeda dengan entropi yang bernilai 1 pada keadaan yang sama, karena keduanya memakai skala yang berbeda. Gini lebih murah dihitung karena tidak memakai logaritma.", "en": "1 − (0.5² + 0.5²) = 0.5. Different from entropy, which is 1 in the same situation, because the two use different scales. Gini is cheaper because it uses no logarithm." }
     },
     {
       "kode": "S13-04", "sesi": 13, "topik": "Pohon keputusan", "tingkat": 2,
-      "pertanyaan": "ID3 memilih atribut pemecah berdasarkan…",
-      "bentuk": "pilihan", "pilihan": ["perolehan informasi tertinggi", "jumlah nilai berbeda terbanyak", "urutan kolom pada data", "ketakmurnian Gini tertinggi"], "benar": 0,
-      "pembahasan": "Perolehan informasi tertinggi, yaitu yang paling banyak mengurangi ketidakpastian. Memilih menurut jumlah nilai terbanyak justru jebakan: kolom beridentitas unik memberi perolehan maksimum padahal tidak meramalkan apa pun."
+      "pertanyaan": { "id": "ID3 memilih atribut pemecah berdasarkan…", "en": "ID3 chooses its splitting attribute by…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "perolehan informasi tertinggi", "en": "the highest information gain" }, { "id": "jumlah nilai berbeda terbanyak", "en": "the largest number of distinct values" }, { "id": "urutan kolom pada data", "en": "the column order in the data" }, { "id": "ketakmurnian Gini tertinggi", "en": "the highest Gini impurity" }], "benar": 0,
+      "pembahasan": { "id": "Perolehan informasi tertinggi, yaitu yang paling banyak mengurangi ketidakpastian. Memilih menurut jumlah nilai terbanyak justru jebakan: kolom beridentitas unik memberi perolehan maksimum padahal tidak meramalkan apa pun.", "en": "The highest information gain — the attribute that removes the most uncertainty. Choosing by the number of distinct values is a trap: an identifier column yields maximum gain while predicting nothing." }
     },
     {
       "kode": "S13-05", "sesi": 13, "topik": "kNN", "tingkat": 1,
-      "pertanyaan": "Berapa jarak Euclidean antara titik (0, 0) dan (3, 4)?",
-      "bentuk": "angka", "jawaban": 5.0, "toleransi": 0.005, "satuan": "",
-      "pembahasan": "√(3² + 4²) = √25 = 5. Segitiga siku-siku 3-4-5 yang paling terkenal. Jarak Euclidean hanya memakai operasi yang dibulatkan tepat menurut IEEE-754, sehingga hasilnya identik di bahasa mana pun."
+      "pertanyaan": { "id": "Berapa jarak Euclidean antara titik (0, 0) dan (3, 4)?", "en": "What is the Euclidean distance between (0, 0) and (3, 4)?" },
+      "bentuk": "angka", "jawaban": 5.0, "toleransi": 0.005, "satuan": { "id": "", "en": "" },
+      "pembahasan": { "id": "√(3² + 4²) = √25 = 5. Segitiga siku-siku 3-4-5 yang paling terkenal. Jarak Euclidean hanya memakai operasi yang dibulatkan tepat menurut IEEE-754, sehingga hasilnya identik di bahasa mana pun.", "en": "√(3² + 4²) = √25 = 5 — the most famous right triangle of all. Euclidean distance uses only operations IEEE-754 requires to be correctly rounded, so the result is identical in any language." }
     },
     {
       "kode": "S13-06", "sesi": 13, "topik": "kNN", "tingkat": 2,
-      "pertanyaan": "Kenapa k ganjil lebih disukai pada kNN dengan dua kelas?",
-      "bentuk": "pilihan", "pilihan": ["agar suaranya tidak pernah imbang", "agar perhitungannya lebih cepat", "agar jaraknya lebih akurat", "agar tidak perlu menyamakan skala fitur"], "benar": 0,
-      "pembahasan": "Dengan k genap pada dua kelas, suaranya bisa imbang dan pemecah serinya menjadi sewenang-wenang. k ganjil menjamin selalu ada pemenang."
+      "pertanyaan": { "id": "Kenapa k ganjil lebih disukai pada kNN dengan dua kelas?", "en": "Why is an odd k preferred for kNN with two classes?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "agar suaranya tidak pernah imbang", "en": "so the vote can never tie" }, { "id": "agar perhitungannya lebih cepat", "en": "so the computation runs faster" }, { "id": "agar jaraknya lebih akurat", "en": "so the distances are more accurate" }, { "id": "agar tidak perlu menyamakan skala fitur", "en": "so the features need not be put on a common scale" }], "benar": 0,
+      "pembahasan": { "id": "Dengan k genap pada dua kelas, suaranya bisa imbang dan pemecah serinya menjadi sewenang-wenang. k ganjil menjamin selalu ada pemenang.", "en": "With an even k over two classes the vote can tie, and the tie-break becomes arbitrary. An odd k guarantees a winner." }
     },
     {
       "kode": "S13-07", "sesi": 13, "topik": "k-means", "tingkat": 3,
-      "pertanyaan": "Inersia dapat dipakai untuk memilih jumlah kelompok k yang terbaik.",
+      "pertanyaan": { "id": "Inersia dapat dipakai untuk memilih jumlah kelompok k yang terbaik.", "en": "Inertia can be used to choose the best number of clusters k." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Inersia selalu turun saat k dinaikkan, dan mencapai nol ketika k sama dengan jumlah data. Yang dicari adalah titik sikunya pada grafik, bukan nilai terkecilnya."
+      "pembahasan": { "id": "Inersia selalu turun saat k dinaikkan, dan mencapai nol ketika k sama dengan jumlah data. Yang dicari adalah titik sikunya pada grafik, bukan nilai terkecilnya.", "en": "Inertia always falls as k rises, reaching zero when k equals the number of points. What you look for is the elbow on the graph, not the smallest value." }
     },
     {
       "kode": "S13-08", "sesi": 13, "topik": "Evaluasi", "tingkat": 3,
-      "pertanyaan": "Sebuah model berketepatan 95% pada data yang 95% anggotanya satu kelas. Apa artinya?",
-      "bentuk": "pilihan", "pilihan": ["modelnya belum tentu mempelajari apa pun; menebak kelas mayoritas memberi hasil sama", "modelnya sangat baik", "modelnya mengalami overfitting", "datanya terlalu sedikit"], "benar": 0,
-      "pembahasan": "Ketepatan harus selalu dibandingkan dengan tebakan kelas terbanyak. Ketepatan yang tidak melampaui tebakan bukanlah pembelajaran, meski angkanya terlihat tinggi."
+      "pertanyaan": { "id": "Sebuah model berketepatan 95% pada data yang 95% anggotanya satu kelas. Apa artinya?", "en": "A model is 95% accurate on data in which 95% of rows share one class. What does that mean?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "modelnya belum tentu mempelajari apa pun; menebak kelas mayoritas memberi hasil sama", "en": "the model may have learned nothing; guessing the majority class scores the same" }, { "id": "modelnya sangat baik", "en": "the model is very good" }, { "id": "modelnya mengalami overfitting", "en": "the model is overfitting" }, { "id": "datanya terlalu sedikit", "en": "there is too little data" }], "benar": 0,
+      "pembahasan": { "id": "Ketepatan harus selalu dibandingkan dengan tebakan kelas terbanyak. Ketepatan yang tidak melampaui tebakan bukanlah pembelajaran, meski angkanya terlihat tinggi.", "en": "Accuracy must always be compared against guessing the majority class. Accuracy that does not beat the guess is not learning, however high the number looks." }
     },
     {
       "kode": "S14-01", "sesi": 14, "topik": "Kendali PID", "tingkat": 3,
-      "pertanyaan": "Bagian mana dari kendali PID yang menghilangkan galat tunak?",
-      "bentuk": "pilihan", "pilihan": ["Integral", "Proporsional", "Derivatif", "ketiganya sama"], "benar": 0,
-      "pembahasan": "Bagian integral menumpuk galat sepanjang waktu, sehingga galat kecil yang menetap pun akhirnya menghasilkan koreksi. Bagian proporsional sendirian selalu menyisakan galat tunak."
+      "pertanyaan": { "id": "Bagian mana dari kendali PID yang menghilangkan galat tunak?", "en": "Which part of a PID controller removes steady-state error?" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "Integral", "en": "Integral" }, { "id": "Proporsional", "en": "Proportional" }, { "id": "Derivatif", "en": "Derivative" }, { "id": "ketiganya sama", "en": "all three equally" }], "benar": 0,
+      "pembahasan": { "id": "Bagian integral menumpuk galat sepanjang waktu, sehingga galat kecil yang menetap pun akhirnya menghasilkan koreksi. Bagian proporsional sendirian selalu menyisakan galat tunak.", "en": "The integral term accumulates error over time, so even a small persistent error eventually produces a correction. The proportional term alone always leaves a steady-state error behind." }
     },
     {
       "kode": "S14-02", "sesi": 14, "topik": "Kinematika", "tingkat": 2,
-      "pertanyaan": "Kinematika maju pada lengan robot menghitung…",
-      "bentuk": "pilihan", "pilihan": ["posisi ujung lengan dari sudut tiap sendinya", "sudut sendi yang dibutuhkan untuk mencapai posisi tertentu", "gaya yang dibutuhkan tiap sendi", "lintasan tercepat menuju sasaran"], "benar": 0,
-      "pembahasan": "Kinematika maju: dari sudut ke posisi, dan jawabannya selalu tunggal. Kinematika balik sebaliknya, dan jawabannya bisa lebih dari satu atau tidak ada sama sekali."
+      "pertanyaan": { "id": "Kinematika maju pada lengan robot menghitung…", "en": "Forward kinematics on a robot arm computes…" },
+      "bentuk": "pilihan", "pilihan": [{ "id": "posisi ujung lengan dari sudut tiap sendinya", "en": "the position of the end effector from each joint angle" }, { "id": "sudut sendi yang dibutuhkan untuk mencapai posisi tertentu", "en": "the joint angles needed to reach a given position" }, { "id": "gaya yang dibutuhkan tiap sendi", "en": "the force required at each joint" }, { "id": "lintasan tercepat menuju sasaran", "en": "the fastest path to the target" }], "benar": 0,
+      "pembahasan": { "id": "Kinematika maju: dari sudut ke posisi, dan jawabannya selalu tunggal. Kinematika balik sebaliknya, dan jawabannya bisa lebih dari satu atau tidak ada sama sekali.", "en": "Forward kinematics goes from angles to position, and its answer is always unique. Inverse kinematics goes the other way, and may have several answers or none at all." }
     },
     {
       "kode": "S14-03", "sesi": 14, "topik": "Kendali PID", "tingkat": 2,
-      "pertanyaan": "Menaikkan penguatan proporsional selalu membuat sistem lebih stabil.",
+      "pertanyaan": { "id": "Menaikkan penguatan proporsional selalu membuat sistem lebih stabil.", "en": "Raising the proportional gain always makes the system more stable." },
       "bentuk": "benarSalah", "benar": false,
-      "pembahasan": "Sebaliknya. Penguatan proporsional yang terlalu besar membuat sistem berayun dan akhirnya tidak stabil. Yang membuatnya stabil bukan penguatan yang besar melainkan yang seimbang antara ketiga bagiannya."
+      "pembahasan": { "id": "Sebaliknya. Penguatan proporsional yang terlalu besar membuat sistem berayun dan akhirnya tidak stabil. Yang membuatnya stabil bukan penguatan yang besar melainkan yang seimbang antara ketiga bagiannya.", "en": "The opposite. Too much proportional gain makes the system oscillate and eventually go unstable. What brings stability is not a large gain but a balanced one across all three terms." }
     }
   ]
 }
