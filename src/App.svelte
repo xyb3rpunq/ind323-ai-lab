@@ -345,16 +345,13 @@
         }}>Sesi baru</button
       >
       <button type="button" class="tombol" onclick={() => (layar = "beranda")}>
-        Kembali
+        {pilih(T.kembali)}
       </button>
     </div>
   {:else}
     <header style="margin-bottom: 1.4rem">
-      <h1>Ringkasan materi per sesi</h1>
-      <p style="color: var(--teks-2); max-width: 60ch">
-        Bukan salinan modul. Tiap sesi diringkas menjadi satu gagasan pokok, hal yang
-        paling sering keliru dipahami, dan apa yang sebenarnya diuji.
-      </p>
+      <h1>{pilih(T.judulMateri)}</h1>
+      <p style="color: var(--teks-2); max-width: 60ch">{pilih(T.ringkasMateri)}</p>
     </header>
 
     <div class="kartu">
@@ -373,26 +370,29 @@
 
     {#each MATERI.filter((m) => m.sesi === sesiMateri) as m (m.sesi)}
       <div class="kartu">
-        <div class="langkah-nomor">Sesi {String(m.sesi).padStart(2, "0")}</div>
-        <h2 style="margin: 0.2rem 0 0.8rem">{m.judul}</h2>
-        <p>{m.inti}</p>
+        <div class="langkah-nomor">
+          {pilih(T.sesi)}
+          {String(m.sesi).padStart(2, "0")}
+        </div>
+        <h2 style="margin: 0.2rem 0 0.8rem">{pilih(m.judul)}</h2>
+        <p>{pilih(m.inti)}</p>
 
-        <h3 style="margin-top: 1.2rem; font-size: 0.95rem">Yang paling sering keliru</h3>
-        <p class="catatan">{m.keliru}</p>
+        <h3 style="margin-top: 1.2rem; font-size: 0.95rem">{pilih(T.seringKeliru)}</h3>
+        <p class="catatan">{pilih(m.keliru)}</p>
 
-        <h3 style="margin-top: 1.2rem; font-size: 0.95rem">Yang biasanya diuji</h3>
-        <p class="catatan">{m.diuji}</p>
+        <h3 style="margin-top: 1.2rem; font-size: 0.95rem">{pilih(T.biasanyaDiuji)}</h3>
+        <p class="catatan">{pilih(m.diuji)}</p>
 
         {#if m.rumus.length > 0}
-          <h3 style="margin-top: 1.2rem; font-size: 0.95rem">Rumus yang perlu diingat</h3>
+          <h3 style="margin-top: 1.2rem; font-size: 0.95rem">{pilih(T.rumusDiingat)}</h3>
           <div class="gulir-x">
             <table>
               <thead>
-                <tr><th>Nama</th><th>Rumus</th></tr>
+                <tr><th>{pilih(T.nama)}</th><th>{pilih(T.rumus)}</th></tr>
               </thead>
               <tbody>
-                {#each m.rumus as r (r.nama)}
-                  <tr><td>{r.nama}</td><td><code>{r.ekspresi}</code></td></tr>
+                {#each m.rumus as r (r.ekspresi)}
+                  <tr><td>{pilih(r.nama)}</td><td><code>{r.ekspresi}</code></td></tr>
                 {/each}
               </tbody>
             </table>
@@ -409,7 +409,8 @@
               layar = "ujian";
             }}
           >
-            Latihan sesi ini — {BANK.filter((x) => x.sesi === m.sesi).length} soal
+            {pilih(T.latihanSesiIni)} — {BANK.filter((x) => x.sesi === m.sesi).length}
+            {pilih(T.soal)}
           </button>
         </div>
       </div>
@@ -419,8 +420,8 @@
 
 <footer class="kaki">
   <div class="kaki__isi">
-    <span>Dibuat oleh <strong>.Deckyx</strong> — Daniel Hutajulu</span>
-    <span>Mesin dan kunci jawabannya ditulis dalam Swift.</span>
-    <a href="https://github.com/xyb3rpunq/ind323-ai-lab" rel="noopener">Kode sumber</a>
+    <span>{pilih(T.dibuatOleh)} <strong>.Deckyx</strong> — Daniel Hutajulu</span>
+    <span>{pilih(T.mesinSwift)}</span>
+    <a href="https://github.com/xyb3rpunq/ind323-ai-lab" rel="noopener">{pilih(T.kodeSumber)}</a>
   </div>
 </footer>

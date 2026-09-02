@@ -137,16 +137,16 @@
   <button class="deck__bidang" type="button" onclick={maju} aria-label={pilih(T.salindiaBerikutnya)}>
     <article class="salindia salindia--{sekarang.jenis}" aria-live="polite">
       {#if sekarang.kaki}
-        <p class="salindia__kaki">{sekarang.kaki}</p>
+        <p class="salindia__kaki">{pilih(sekarang.kaki)}</p>
       {/if}
 
-      <h2 class="salindia__judul">{sekarang.judul}</h2>
+      <h2 class="salindia__judul">{pilih(sekarang.judul)}</h2>
 
       {#if sekarang.jenis === "rumus" && sekarang.rumus}
         <ul class="rumus">
-          {#each sekarang.rumus as r (r.nama)}
+          {#each sekarang.rumus as r (r.ekspresi)}
             <li>
-              <span class="rumus__nama">{r.nama}</span>
+              <span class="rumus__nama">{pilih(r.nama)}</span>
               <code class="rumus__ekspresi">{r.ekspresi}</code>
             </li>
           {/each}
@@ -160,7 +160,7 @@
           {/if}
         </div>
       {:else if sekarang.isi}
-        <p class="salindia__isi">{sekarang.isi}</p>
+        <p class="salindia__isi">{pilih(sekarang.isi)}</p>
       {/if}
     </article>
   </button>
@@ -168,7 +168,7 @@
   {#if catatanTampil && sekarang.catatan}
     <aside class="catatan-pengajar">
       <h3>{pilih(T.catatanPengajar)}</h3>
-      <p>{sekarang.catatan}</p>
+      <p>{pilih(sekarang.catatan)}</p>
     </aside>
   {/if}
 
@@ -215,7 +215,7 @@
             <li>
               <button type="button" onclick={() => keSalindia(p.indeks)}>
                 <span class="daftar-sesi__nomor">{String(p.sesi).padStart(2, "0")}</span>
-                {p.judul}
+                {pilih(p.judul)}
               </button>
             </li>
           {/each}

@@ -329,12 +329,50 @@ describe("isi materi", () => {
     expect(MATERI.map((m) => m.sesi)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
   });
 
-  it("setiap sesi punya tiga bagian yang benar-benar terisi", () => {
+  it("setiap sesi punya tiga bagian yang benar-benar terisi, di kedua bahasa", () => {
+    // Diperiksa untuk `id` dan `en` sekaligus.
+    //
+    // Terjemahan yang hilang tidak pernah menabrak: ia muncul sebagai teks
+    // kosong di tempat yang seharusnya berisi satu paragraf, dan yang hilang
+    // hampir selalu bahasa yang tidak dipakai penulisnya sehari-hari — jadi
+    // penulisnya sendiri tidak akan pernah melihatnya.
+    for (const bahasa of ["id", "en"] as const) {
+      for (const m of MATERI) {
+        const di = `sesi ${m.sesi} (${bahasa})`;
+        expect(m.judul[bahasa].length, di).toBeGreaterThan(5);
+        expect(m.inti[bahasa].length, di).toBeGreaterThan(150);
+        expect(m.keliru[bahasa].length, di).toBeGreaterThan(120);
+        expect(m.diuji[bahasa].length, di).toBeGreaterThan(80);
+        for (const r of m.rumus) {
+          expect(r.nama[bahasa].length, `${di} rumus`).toBeGreaterThan(2);
+        }
+      }
+    }
+  });
+
+  it("kedua bahasa benar-benar berbeda, bukan salinan", () => {
+    // Menyalin teks Indonesia ke kolom Inggris akan lolos setiap pemeriksaan
+    // panjang di atas, dan menghasilkan situs yang mengaku dwibahasa padahal
+    // hanya menampilkan satu bahasa dua kali.
+    //
+    // Judul sengaja dikecualikan: sebagian memang sama di kedua bahasa
+    // ("Robotika" versus "Robotics" berbeda, tetapi "TF-IDF" tidak), dan
+    // memaksanya berbeda akan menuntut terjemahan yang mengada-ada.
     for (const m of MATERI) {
-      expect(m.judul.length, `sesi ${m.sesi}`).toBeGreaterThan(5);
-      expect(m.inti.length, `sesi ${m.sesi}`).toBeGreaterThan(150);
-      expect(m.keliru.length, `sesi ${m.sesi}`).toBeGreaterThan(120);
-      expect(m.diuji.length, `sesi ${m.sesi}`).toBeGreaterThan(80);
+      expect(m.inti.id, `sesi ${m.sesi}`).not.toBe(m.inti.en);
+      expect(m.keliru.id, `sesi ${m.sesi}`).not.toBe(m.keliru.en);
+      expect(m.diuji.id, `sesi ${m.sesi}`).not.toBe(m.diuji.en);
+    }
+  });
+
+  it("rumusnya tidak ikut diterjemahkan", () => {
+    // Notasi matematika sama di kedua bahasa. Kalau `ekspresi` suatu saat
+    // menjadi dwibahasa, itu dua salinan yang bisa menyimpang tanpa satu pun
+    // alasan yang bisa dibenarkan.
+    for (const m of MATERI) {
+      for (const r of m.rumus) {
+        expect(typeof r.ekspresi, `sesi ${m.sesi}`).toBe("string");
+      }
     }
   });
 
