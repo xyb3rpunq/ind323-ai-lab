@@ -440,11 +440,50 @@ struct UjiBank {
     @Test("Setiap soal punya pembahasan yang benar-benar menjelaskan")
     func pembahasan() {
         for s in Bank.semua {
-            #expect(s.pertanyaan.count > 20, "\(s.kode)")
-            // Soal tanpa pembahasan hanya menguji, tidak mengajari.
-            #expect(s.pembahasan.count > 80, "\(s.kode)")
+            // Diperiksa di kedua bahasa dengan ambang yang sama. Terjemahan
+            // yang berhenti di tengah lolos setiap pemeriksaan lain, dan yang
+            // membaca separuhnya justru orang yang tidak bisa membaca
+            // separuh satunya.
+            for teks in [s.pertanyaan.id, s.pertanyaan.en] {
+                #expect(teks.count > 20, "\(s.kode)")
+            }
+            for teks in [s.pembahasan.id, s.pembahasan.en] {
+                // Soal tanpa pembahasan hanya menguji, tidak mengajari.
+                #expect(teks.count > 80, "\(s.kode)")
+            }
             #expect(s.tingkat >= 1 && s.tingkat <= 3, "\(s.kode)")
             #expect(s.sesi >= 1 && s.sesi <= 14, "\(s.kode)")
+        }
+    }
+
+    @Test("Prosa tiap soal benar-benar diterjemahkan, bukan disalin")
+    func dwibahasa() {
+        // Menyalin kolom Indonesia ke kolom Inggris lolos setiap pemeriksaan
+        // panjang di atas: ia menghasilkan bank yang mengaku dwibahasa
+        // padahal menampilkan satu bahasa dua kali.
+        //
+        // Yang diperiksa prosanya saja. Sebagian pilihan memang sama di kedua
+        // bahasa — nama metode seperti "Sugeno", satuan seperti "km", dan kata
+        // Indonesia yang justru sedang diuji pada soal stemming.
+        for s in Bank.semua {
+            #expect(s.pertanyaan.id != s.pertanyaan.en, "\(s.kode) pertanyaan")
+            #expect(s.pembahasan.id != s.pembahasan.en, "\(s.kode) pembahasan")
+        }
+    }
+
+    @Test("Tiap pilihan dan tiap nama sesi terisi di kedua bahasa")
+    func pilihanDwibahasa() {
+        for s in Bank.semua {
+            guard case let .pilihan(pilihan, _) = s.bentuk else { continue }
+            for p in pilihan {
+                #expect(!p.id.isEmpty, "\(s.kode)")
+                #expect(!p.en.isEmpty, "\(s.kode)")
+            }
+        }
+        for x in Bank.sesi {
+            #expect(!x.nama.id.isEmpty, "sesi \(x.nomor)")
+            #expect(!x.nama.en.isEmpty, "sesi \(x.nomor)")
+            #expect(x.nama.id != x.nama.en, "sesi \(x.nomor)")
         }
     }
 
@@ -454,7 +493,15 @@ struct UjiBank {
             if case let .pilihan(pilihan, benar) = s.bentuk {
                 #expect(pilihan.count >= 3, "\(s.kode)")
                 #expect(benar >= 0 && benar < pilihan.count, "\(s.kode)")
-                #expect(Set(pilihan).count == pilihan.count, "\(s.kode) punya pilihan kembar")
+                // Diperiksa per bahasa, bukan per pasang. Dua pilihan yang
+                // berbeda dalam bahasa Indonesia tetapi jatuh pada kalimat
+                // Inggris yang sama adalah soal yang rusak bagi yang
+                // membacanya dalam bahasa Inggris — dan pasangannya tetap
+                // berbeda, sehingga membandingkan pasangan tidak melihatnya.
+                let idSaja = pilihan.map(\.id)
+                let enSaja = pilihan.map(\.en)
+                #expect(Set(idSaja).count == idSaja.count, "\(s.kode) punya pilihan kembar (id)")
+                #expect(Set(enSaja).count == enSaja.count, "\(s.kode) punya pilihan kembar (en)")
             }
         }
     }
@@ -495,15 +542,15 @@ struct UjiBank {
 struct UjiPenilaian {
     let soalPilihan = Soal(
         kode: "T1", sesi: 1, topik: "uji",
-        pertanyaan: "Pertanyaan uji yang cukup panjang untuk lolos",
-        bentuk: .pilihan(pilihan: ["a", "b", "c"], benar: 1),
-        pembahasan: "Pembahasan uji.")
+        pertanyaan: bi("Pertanyaan uji yang cukup panjang", "A test question, long enough"),
+        bentuk: .pilihan(pilihan: [bi("a", "a"), bi("b", "b"), bi("c", "c")], benar: 1),
+        pembahasan: bi("Pembahasan uji.", "Test explanation."))
 
     let soalAngka = Soal(
         kode: "T2", sesi: 1, topik: "uji",
-        pertanyaan: "Pertanyaan uji yang cukup panjang untuk lolos",
-        bentuk: .angka(jawaban: 0.79, toleransi: 0.005, satuan: ""),
-        pembahasan: "Pembahasan uji.")
+        pertanyaan: bi("Pertanyaan uji yang cukup panjang", "A test question, long enough"),
+        bentuk: .angka(jawaban: 0.79, toleransi: 0.005, satuan: bi("", "")),
+        pembahasan: bi("Pembahasan uji.", "Test explanation."))
 
     @Test("Pilihan ganda dinilai menurut indeksnya")
     func pilihan() {
@@ -619,7 +666,7 @@ struct UjiRingkasan {
     func nilai() {
         let sesi = PenyusunSesi.susun(bank: Bank.semua, banyak: 4, benih: 11)
         let penilaian = sesi.soal.enumerated().map { i, s in
-            Penilaian(kode: s.kode, benar: i < 3, selisih: nil, pembahasan: "")
+            Penilaian(kode: s.kode, benar: i < 3, selisih: nil, pembahasan: bi("", ""))
         }
         let r = Perangkum.rangkum(soal: sesi.soal, penilaian: penilaian)
         #expect(r.benar == 3)
@@ -641,7 +688,7 @@ struct UjiRingkasan {
         // diulang tenggelam di tengah daftar.
         let sesi = PenyusunSesi.susun(bank: Bank.semua, banyak: 20, benih: 13)
         let penilaian = sesi.soal.enumerated().map { i, s in
-            Penilaian(kode: s.kode, benar: i % 3 != 0, selisih: nil, pembahasan: "")
+            Penilaian(kode: s.kode, benar: i % 3 != 0, selisih: nil, pembahasan: bi("", ""))
         }
         let r = Perangkum.rangkum(soal: sesi.soal, penilaian: penilaian)
         let ketepatan = r.perTopik.map { Double($0.benar) / Double($0.total) }

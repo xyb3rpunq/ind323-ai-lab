@@ -61,14 +61,57 @@ yang menyimpang akan mengajarkan algoritma yang bukan algoritma situs ini.
 ```swift
 Soal(
     kode: "S03-01", sesi: 3, topik: "Certainty Factor",
-    pertanyaan: "Diketahui MB = 0,8 dan MD = 0,01. Berapa nilai CF-nya?",
+    pertanyaan: bi("Diketahui MB = 0,8 dan MD = 0,01. Berapa nilai CF-nya?",
+                   "Given MB = 0.8 and MD = 0.01, what is the CF?"),
     bentuk: angka(try CertaintyFactor.dariMbMd(0.8, 0.01)),   // ← bukan 0.79
-    pembahasan: "CF = MB − MD = 0,8 − 0,01 = 0,79. …")
+    pembahasan: bi("CF = MB − MD = 0,8 − 0,01 = 0,79. …",
+                   "CF = MB − MD = 0.8 − 0.01 = 0.79. …"))
 ```
 
 Alasannya sederhana: **kunci yang diketik tangan pasti menyimpang dari algoritmanya cepat atau lambat, dan menyimpangnya tidak akan pernah terlihat.** Soalnya tetap terbaca masuk akal, dan mahasiswa yang menjawab benar justru dinyatakan salah. Kunci yang dihitung tidak bisa menyimpang tanpa menggagalkan konformansi.
 
 Konsekuensinya disengaja: menambah soal berhitung menuntut algoritmanya sudah ada di `Sources/AIKit/Inti.swift`, bukan sekadar jawabannya diketahui penulis soal.
+
+---
+
+## Dwibahasa sampai ke dalam bank soalnya
+
+Seluruh 49 soal, pilihan, dan pembahasannya ada dalam Bahasa Indonesia dan Bahasa Inggris — bukan hanya antarmukanya. Keduanya ditulis **di baris yang sama**, sebagai pasangan:
+
+```swift
+public struct Dwibahasa: Hashable, Sendable { public let id, en: String }
+public func bi(_ id: String, _ en: String) -> Dwibahasa { Dwibahasa(id, en) }
+```
+
+Bentuk pasangan dipilih dengan sengaja, bukan kamus berkunci. Kamus berkunci selalu berakhir sama: yang satu diperbaiki, yang lain tertinggal — dan yang tertinggal hampir selalu bahasa yang tidak dipakai penulisnya sehari-hari, sehingga penulisnya sendiri tidak akan pernah melihatnya. Di sini terjemahan yang hilang menjadi **galat kompilasi**, bukan soal yang tampil kosong di tengah ujian.
+
+Tiga hal yang sengaja **tidak** ikut berganti bahasa:
+
+- **`kode` dan `topik`** — keduanya kunci, bukan teks yang dibaca. `topik` dipakai mengelompokkan ketepatan, dan kunci yang ikut berganti bahasa menghasilkan dua ringkasan yang tidak bisa dibandingkan satu sama lain. Nama topik yang dibaca manusia ada di `NAMA_TOPIK` sisi antarmuka.
+- **Indeks jawaban benar** — kuncinya menunjuk posisi, bukan teks. Menerjemahkan pilihan tidak bisa menggesernya.
+- **Komentar kode** — pembacanya pengembang, bukan pengunjung.
+
+Dan satu pasangan yang tidak akan pernah ketahuan dengan membaca kode: **"Benar/Salah" pada tombol pernyataan berarti True/False, sedangkan "Benar/Salah" pada lencana hasil berarti Correct/Incorrect.** Dalam Bahasa Indonesia keduanya kebetulan memakai kata yang sama. Satu entri kamus untuk keduanya akan menawarkan tombol "Correct" sebagai jawaban atas pernyataan yang belum dijawab siapa pun.
+
+### Yang menjaganya tetap begitu
+
+Uji di `uji-web/dwibahasa.test.ts` **membaca markupnya sendiri** dan menolak teks yang tidak lewat kamus: simpul teks yang ditulis langsung, untai di dalam ekspresi yang tampil, dan atribut yang dibaca manusia (`placeholder`, `title`, `alt`, `aria-label`). Saat pertama dijalankan ia menemukan 20 bocoran yang lolos seluruh uji sebelumnya — judul kolom peta cakupan, kunci topik yang tampil mentah di layar ujian, tuts "spasi", dan seluruh tombol layar ujian.
+
+Kegagalan seperti itu tidak bisa dilihat dari dalam kamus, karena teks yang bocor memang bukan bagian darinya.
+
+---
+
+## Pembahasan diunduh terpisah
+
+Pembahasan 49 soal dalam dua bahasa berukuran **8,1 KB terkompresi dari 14,1 KB seluruh bank** — lebih dari separuhnya, dan seluruhnya teks yang tidak dibaca siapa pun sebelum satu soal pun dijawab.
+
+Jadi ia potongan tersendiri. `scripts/pisah-bank.mjs` menurunkan dua berkas dari `bank.json`: `bank-inti.json` yang dimuat di muka, dan `bank-pembahasan.json` yang diunduh saat sesi dimulai — sesudah tombol ditekan, sebelum layar ujian tampil. Berkas utama turun dari 58,3 KB menjadi **52,2 KB**.
+
+Pemisahannya **diturunkan**, bukan dihasilkan Swift, supaya Swift tetap menulis satu berkas yang dibandingkan CI. Turunan seperti itu justru bisa diperiksa jauh lebih kuat daripada apa pun yang bisa dilakukan Swift:
+
+> Menyatukan kembali hasil pemisahan harus menghasilkan bank yang **sama persis** dengan yang masuk.
+
+Itu yang diuji, dan ia tidak mungkin lolos sementara satu pembahasan hilang, tertukar, atau tergeser.
 
 ---
 
@@ -164,15 +207,18 @@ docker run --rm -v "$PWD":/w -w /w swift:6.2 bash -c \
 |---|---:|---:|
 | `Sources/AIKit/Fx.swift` | 8 | 14 |
 | `Sources/AIKit/Inti.swift` | 21 | 24 |
-| `Sources/AIKit/Ujian.swift` | 9 | 24 |
+| `Sources/AIKit/Ujian.swift` | 10 | 26 |
 | `Sources/AIKit/Bank.swift` | 3 | 6 |
-| `src/bank.ts` | 8 | 31 |
+| `src/bank.ts` | 9 | 34 |
+| `src/pembahasan.ts` | 3 | 7 |
 | `src/materi.ts` | 1 | 5 |
 | `src/jadwal.ts` | 3 | 9 |
 | `src/ekspor.ts` | 5 | 13 |
-| **Total** | **58** | **126** |
+| `src/i18n.ts` + markup | — | 9 |
+| `scripts/pisah-bank.mjs` | 3 | 5 |
+| **Total** | **66** | **147** |
 
-Ditambah **3.796 pernyataan konformansi**. Angka itu bukan bagian dari 126 di atas: uji unit membuktikan Swift konsisten dengan dirinya sendiri, konformansi membuktikan ia sepakat dengan empat implementasi lain — dan hanya yang kedua yang bisa menangkap rumus yang salah tetapi konsisten.
+Ditambah **3.796 pernyataan konformansi**. Angka itu bukan bagian dari 147 di atas: uji unit membuktikan Swift konsisten dengan dirinya sendiri, konformansi membuktikan ia sepakat dengan empat implementasi lain — dan hanya yang kedua yang bisa menangkap rumus yang salah tetapi konsisten.
 
 Beberapa uji yang menahan proyek ini tetap jujur:
 
@@ -191,6 +237,9 @@ Beberapa uji yang menahan proyek ini tetap jujur:
 - **Setiap sesi kuliah punya minimal satu soal** — bank yang bolong akan menghasilkan latihan yang diam-diam melewatkan seluruh materi satu sesi.
 - **Sifat matematis, bukan hanya contoh** — posterior dan komplemennya diuji berjumlah satu pada **729 kombinasi** masukan.
 - **Faktor kemudahan SM-2 punya batas bawah** — tanpa itu, soal yang berkali-kali salah akan muncul terus-menerus sampai menutupi seluruh sesi, menghukum mahasiswa alih-alih membantunya.
+- **Prosa tiap soal benar-benar diterjemahkan, bukan disalin** — menyalin kolom Indonesia ke kolom Inggris lolos setiap pemeriksaan panjang, dan menghasilkan bank yang mengaku dwibahasa padahal menampilkan satu bahasa dua kali.
+- **Pilihan kembar diperiksa per bahasa** — dua pilihan yang berbeda dalam Bahasa Indonesia tetapi jatuh pada kalimat Inggris yang sama adalah soal dengan dua jawaban identik bagi yang membacanya dalam Bahasa Inggris.
+- **Judul tab diterapkan di fungsi yang sama dengan atribut `lang`** — judul tab tidak terlihat di halaman, jadi ia satu-satunya teks yang bisa tertinggal berbulan-bulan tanpa ada yang menyadarinya. Yang menjaganya bukan ingatan, melainkan letaknya.
 
 ---
 
@@ -211,10 +260,13 @@ Diperiksa di CI; build gagal bila terlampaui.
 
 | Berkas | Anggaran | Terukur |
 |---|---:|---:|
-| JavaScript | ≤ 60 KB | **31,5 KB** |
-| CSS | ≤ 20 KB | **2,2 KB** |
+| JavaScript (di muka) | ≤ 60 KB | **52,2 KB** |
+| JavaScript (pembahasan, saat sesi dimulai) | ≤ 60 KB | **8,1 KB** |
+| CSS | ≤ 20 KB | **3,6 KB** |
 | HTML | ≤ 12 KB | **1,5 KB** |
-| **Total** | **≤ 120 KB** | **35,7 KB** |
+| **Total** | **≤ 120 KB** | **65,9 KB** |
+
+Angkanya naik dibanding versi satu bahasa, dan memang harus: bank dwibahasa memuat dua kali teks. Yang dijaga bukan totalnya, melainkan **apa yang diunduh sebelum halaman bisa dipakai** — dan pembahasan tidak termasuk di dalamnya.
 
 ---
 
@@ -245,11 +297,16 @@ ind323-ai-lab/
 │   │   ├── Ujian.swift     Penyusun sesi, penilaian, ringkasan, SM-2
 │   │   └── Bank.swift      49 soal; kunci berhitungnya dihasilkan Inti
 │   └── aikit-cli/          conform · bank · sesi
-├── Tests/AIKitTests/       68 uji Swift
+├── Tests/AIKitTests/       70 uji Swift
 ├── conformance/vectors/    2.266 vektor berpola bit dari AI ATLAS
 ├── src/
-│   ├── generated/bank.json Dihasilkan Swift; dijaga CI agar tetap mutakhir
+│   ├── generated/
+│   │   ├── bank.json       Dihasilkan Swift; dijaga CI agar tetap mutakhir
+│   │   ├── bank-inti.json  Turunan tanpa pembahasan; dimuat di muka
+│   │   └── bank-pembahasan.json  Turunan; diunduh saat sesi dimulai
 │   ├── bank.ts             Salinan pengacak dan penilai, diikat uji ke Swift
+│   ├── pembahasan.ts       Pemuat pembahasan, sekali saja
+│   ├── i18n.ts             Kamus dwibahasa; pasangan, bukan kamus berkunci
 │   ├── materi.ts           Ringkasan 14 sesi kuliah
 │   ├── lib/Ujian.svelte    Sesi bertimer
 │   └── App.svelte          Kerangka dan perutean
@@ -257,8 +314,11 @@ ind323-ai-lab/
 │   │                       Windows yang tidak peka huruf besar-kecil, `tests/`
 │   │                       bertabrakan dengan `Tests/` milik Swift dan salah
 │   │                       satunya hilang tanpa peringatan.
-│   ├── bank.test.ts        34 uji sisi peramban
+│   ├── bank.test.ts        41 uji sisi peramban
+│   ├── dwibahasa.test.ts   Menolak teks yang tidak lewat kamus
+│   ├── pisah-bank.test.ts  Menyatukan kembali harus sama persis
 │   └── sesi-swift.txt      Sesi rujukan dari Swift, untuk uji kesepadanan
+├── scripts/pisah-bank.mjs  Menurunkan dua berkas dari bank.json
 └── .github/workflows/      Uji, adu, hasilkan, terbitkan
 ```
 
@@ -309,15 +369,70 @@ assertions.
 ```swift
 Soal(
     kode: "S03-01", sesi: 3, topik: "Certainty Factor",
-    pertanyaan: "Given MB = 0.8 and MD = 0.01, what is CF?",
+    pertanyaan: bi("Diketahui MB = 0,8 dan MD = 0,01. Berapa nilai CF-nya?",
+                   "Given MB = 0.8 and MD = 0.01, what is the CF?"),
     bentuk: angka(try CertaintyFactor.dariMbMd(0.8, 0.01)),   // ← not 0.79
-    pembahasan: "CF = MB − MD = 0.8 − 0.01 = 0.79. …")
+    pembahasan: bi("CF = MB − MD = 0,8 − 0,01 = 0,79. …",
+                   "CF = MB − MD = 0.8 − 0.01 = 0.79. …"))
 ```
 
 A hand-typed key is certain to drift from its algorithm sooner or later, and
 the drift is invisible: the question still reads sensibly, and the student who
 answers correctly is told they are wrong. A computed key cannot drift without
 failing conformance.
+
+### Bilingual all the way into the question bank
+
+All 49 questions, every option, and every explanation exist in Indonesian and
+English — not just the interface. Both are written **on the same line**, as a
+pair, so neither can be edited without seeing the other:
+
+```swift
+public struct Dwibahasa: Hashable, Sendable { public let id, en: String }
+public func bi(_ id: String, _ en: String) -> Dwibahasa { Dwibahasa(id, en) }
+```
+
+Pairs rather than a keyed dictionary, deliberately. A keyed dictionary always
+ends the same way: one side is fixed, the other is left behind — and the side
+left behind is almost always the language the author does not speak daily, so
+the author never sees it. Here a missing translation is a **compile error**,
+not a question that renders blank in the middle of an exam.
+
+Three things deliberately do **not** switch language: `kode` and `topik` (both
+are keys, and a grouping key that changes language produces two summaries that
+cannot be compared), the correct-answer index (it points at a position, not at
+text), and code comments (their readers are developers, not visitors).
+
+And one pair that no amount of code reading would reveal: **"Benar/Salah" on a
+statement button means True/False, while "Benar/Salah" on the result badge
+means Correct/Incorrect.** In Indonesian both happen to use the same word. One
+dictionary entry for both would offer a button labelled "Correct" as an answer
+to a statement nobody has answered yet.
+
+The test in `uji-web/dwibahasa.test.ts` **reads the markup itself** and rejects
+text that does not pass through the dictionary: literal text nodes, string
+literals inside rendered expressions, and human-readable attributes
+(`placeholder`, `title`, `alt`, `aria-label`). On its first run it found 20
+leaks that every earlier test had passed over.
+
+### Explanations are downloaded separately
+
+The explanations for 49 questions in two languages are **8.1 KB gzipped out of
+the bank's 14.1 KB** — more than half of it, and none of it is read by anyone
+before a single question has been answered.
+
+So they are a chunk of their own. `scripts/pisah-bank.mjs` derives two files
+from `bank.json`: `bank-inti.json`, loaded up front, and
+`bank-pembahasan.json`, fetched when a session starts — after the button is
+pressed, before the exam screen appears. The main bundle went from 58.3 KB to
+**52.2 KB**.
+
+The split is *derived* rather than emitted by Swift, so that Swift keeps
+writing the single file CI compares. And a derived split can be checked far
+more strongly than anything Swift could do: putting the two halves back
+together must produce a bank **identical** to the one that went in. That is
+what the test asserts, and it cannot pass while one explanation is missing,
+swapped, or shifted.
 
 ### What is new
 
@@ -342,8 +457,9 @@ with a maximum error of 0 ULP.
 
 SwiftWasm was deliberately rejected. The browser does not need a Swift runtime
 to display static data: Swift runs at **build time** as the question-bank
-generator and the conformance gate. The result is 44 KB gzip rather than
-several megabytes, and a Content Security Policy with no `wasm-unsafe-eval`.
+generator and the conformance gate. The result is 60.3 KB gzip of JavaScript —
+52.2 KB up front plus 8.1 KB of explanations on demand — rather than several
+megabytes, and a Content Security Policy with no `wasm-unsafe-eval`.
 
 ### Running it
 
@@ -359,8 +475,9 @@ swift run aikit-cli bank src/generated/bank.json
 swift run aikit-cli jadwal > uji-web/jadwal-swift.txt
 ```
 
+70 Swift tests and 77 browser-side tests, plus 3,796 conformance assertions.
 CI additionally verifies that the committed question bank is byte-identical to
-what Swift generates. If it differs, an answer key changed without anyone
+what Swift generates, and that both derived files are still in step with it. If it differs, an answer key changed without anyone
 noticing — and a page that tells a student they are wrong when they are right
 is a worse failure than a red build.
 

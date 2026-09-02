@@ -1,0 +1,198 @@
+{
+  "S01-01": {
+    "id": "Turing sengaja mengganti pertanyaan “apakah mesin bisa berpikir” dengan pertanyaan yang bisa diuji: apakah penanya bisa membedakannya. Kecepatan berhitung dan kemenangan catur bukan bagian dari ujinya, dan kesadaran justru pertanyaan yang dihindari Turing karena tidak bisa diperiksa dari luar.",
+    "en": "Turing deliberately replaced the question “can a machine think” with one that can actually be tested: can the questioner tell the difference. Arithmetic speed and chess victories are no part of the test, and consciousness is precisely the question Turing avoided, because it cannot be examined from outside."
+  },
+  "S01-02": {
+    "id": "ELIZA hanya mencocokkan kata kunci lalu memantulkan potongan kalimat dengan kata ganti ditukar. Tidak ada pemahaman sama sekali. Justru kesenjangan antara kesederhanaan mesinnya dan kuatnya kesan yang ditimbulkannya itulah pelajaran utamanya.",
+    "en": "ELIZA only matches keywords and reflects fragments back with the pronouns swapped. There is no understanding at all. The gap between how simple the machine is and how strong an impression it leaves is the whole lesson."
+  },
+  "S01-03": {
+    "id": "Weizenbaum terkejut mendapati sekretarisnya sendiri meminta privasi saat berbicara dengan ELIZA. Efek ini menjelaskan kenapa uji Turing lebih banyak berbicara tentang manusia yang menilai daripada tentang mesin yang dinilai.",
+    "en": "Weizenbaum was startled to find his own secretary asking for privacy while talking to ELIZA. The effect explains why the Turing test says more about the humans doing the judging than about the machine being judged."
+  },
+  "S02-01": {
+    "id": "Bedanya ingatan, bukan kecanggihan. Agen tanpa ingatan tidak punya cara mengetahui bahwa pekerjaannya sudah selesai, jadi ia terus bergerak sampai dihentikan paksa — dan itulah sebabnya biayanya hampir selalu paling besar.",
+    "en": "The difference is memory, not sophistication. An agent without memory has no way of knowing its work is finished, so it keeps moving until something stops it — which is why its cost is nearly always the highest."
+  },
+  "S02-02": {
+    "id": "PEAS adalah Performance, Environment, Actuators, Sensors. Ukuran keberhasilan diletakkan pertama karena ia yang menentukan sisanya: agen yang dinilai dari kebersihan akan berperilaku berbeda dari agen yang dinilai dari hemat energi.",
+    "en": "PEAS is Performance, Environment, Actuators, Sensors. The performance measure comes first because it determines everything else: an agent judged on cleanliness behaves differently from one judged on energy saved."
+  },
+  "S02-03": {
+    "id": "Menurut teorema Bézout, sasaran hanya bisa dicapai bila ia kelipatan pembagi bersama terbesar kedua kapasitas. FPB(3, 5) = 1, dan 4 kelipatan 1, jadi bisa. Memeriksanya di muka jauh lebih jujur daripada membiarkan pencarian berjalan lalu melaporkan “tidak ditemukan”.",
+    "en": "By Bézout's theorem, a target is reachable only if it is a multiple of the greatest common divisor of the two capacities. GCD(3, 5) = 1, and 4 is a multiple of 1, so it is. Checking that up front is far more honest than letting the search run and then reporting “not found”."
+  },
+  "S03-01": {
+    "id": "CF = MB − MD = 0,8 − 0,01 = 0,79. Ini soal Tugas Sesi 3 pada modul. Perhatikan MD ditulis positif; tanda negatifnya sudah ada di rumus.",
+    "en": "CF = MB − MD = 0.8 − 0.01 = 0.79. This is the Session 3 exercise from the course notes. Note that MD is written positive; the minus sign is already in the formula."
+  },
+  "S03-02": {
+    "id": "Keduanya positif, jadi dipakai CF₁ + CF₂ × (1 − CF₁) = 0,8 + 0,6 × 0,2 = 0,92. Bukti kedua hanya menggarap sisa keyakinan yang belum terpakai; itulah sebabnya hasilnya tidak pernah melewati 1.",
+    "en": "Both are positive, so CF₁ + CF₂ × (1 − CF₁) = 0.8 + 0.6 × 0.2 = 0.92. The second piece works only on the belief the first has not already claimed, which is why the result never passes 1."
+  },
+  "S03-03": {
+    "id": "Bukti dengan CF negatif tidak menyalakan aturan sama sekali, jadi hasilnya nol — bukan −0,45. Rumusnya CF_aturan × max(CF_bukti, 0).",
+    "en": "Evidence with a negative CF does not fire the rule at all, so the result is zero — not −0.45. The formula is CF_rule × max(CF_evidence, 0)."
+  },
+  "S03-04": {
+    "id": "CF bukan probabilitas dan tidak memenuhi aturannya: CF sebuah hipotesis dan ingkarannya tidak harus berjumlah satu. Ia hanya bisa dibandingkan dengan CF lain di sistem yang sama.",
+    "en": "A CF is not a probability and does not obey the probability axioms: the CF of a hypothesis and of its negation need not sum to one. It can only be compared against other CFs in the same system."
+  },
+  "S03-05": {
+    "id": "Premis DAN diambil nilai terkecilnya, yaitu 0,3. Alasannya sama seperti rantai: kekuatannya ditentukan mata rantai terlemah.",
+    "en": "An AND premise takes the smallest value, 0.3. The reasoning is the chain's: its strength is set by the weakest link."
+  },
+  "S04-01": {
+    "id": "P(E) = 0,9×0,2 + 0,3×0,8 = 0,42. P(H|E) = 0,9×0,2 / 0,42 = 3/7 ≈ 0,4286. Ini soal Tugas Pertemuan 5. Perhatikan jawabannya di bawah setengah meski 90% hoaks berjudul provokatif — karena hoaksnya sendiri hanya 20%.",
+    "en": "P(E) = 0.9×0.2 + 0.3×0.8 = 0.42. P(H|E) = 0.9×0.2 / 0.42 = 3/7 ≈ 0.4286. This is the Session 5 exercise. Note the answer is below one half even though 90% of hoaxes carry such a headline — because hoaxes are only 20% to begin with."
+  },
+  "S04-02": {
+    "id": "P(E) = P(E|H)×P(H) + P(E|¬H)×P(¬H) = 0,9×0,2 + 0,3×0,8 = 0,18 + 0,24 = 0,42. Bukti bisa muncul lewat dua jalan, dan keduanya harus dijumlahkan.",
+    "en": "P(E) = P(E|H)×P(H) + P(E|¬H)×P(¬H) = 0.9×0.2 + 0.3×0.8 = 0.18 + 0.24 = 0.42. The evidence can arise by two routes, and both must be added."
+  },
+  "S04-03": {
+    "id": "Keduanya sama sekali tidak berhubungan: yang satu tentang kelompok yang hipotesisnya benar, yang lain tentang kelompok yang hipotesisnya salah. Keduanya harus diketahui terpisah, dan menukarnya adalah salah satu kekeliruan paling umum.",
+    "en": "The two are unrelated: one concerns the group for which the hypothesis holds, the other the group for which it does not. Both must be known separately, and confusing them is among the most common errors of all."
+  },
+  "S04-04": {
+    "id": "Sekitar 0,0194 — di bawah 2 persen. Bukan tesnya yang buruk; priornya yang sangat kecil. Dari 1000 orang, sekitar 1 positif benar dan 50 positif palsu. Inilah kekeliruan mengabaikan laju dasar.",
+    "en": "About 0.0194 — under 2 per cent. The test is not bad; the prior is simply tiny. Among 1000 people there is roughly 1 true positive and 50 false ones. This is the base-rate fallacy."
+  },
+  "S04-05": {
+    "id": "LR = 0,9 / 0,3 = 3. Rasio kemungkinan tidak bergantung prior sama sekali, sehingga ia mengukur kekuatan bukti itu sendiri. Nilai 1 berarti buktinya tidak memberi tahu apa pun.",
+    "en": "LR = 0.9 / 0.3 = 3. The likelihood ratio does not depend on the prior at all, so it measures the strength of the evidence itself. A value of 1 means the evidence tells you nothing."
+  },
+  "S05-01": {
+    "id": "x berada di kaki kiri, jadi μ = (x − a)/(b − a) = 2,5/5 = 0,5. Setengah jalan menuju puncak berarti derajat keanggotaan setengah.",
+    "en": "x sits on the left leg, so μ = (x − a)/(b − a) = 2.5/5 = 0.5. Halfway to the peak means a membership of one half."
+  },
+  "S05-02": {
+    "id": "Jawabannya 1, bukan 0. Bahu datarnya membentang dari 8 sampai 10, dan x = 10 masih di dalamnya. Inilah bentuk yang paling sering salah dihitung: himpunan berkaki berimpit di tepi semesta.",
+    "en": "The answer is 1, not 0. The flat shoulder runs from 8 to 10, and x = 10 is still inside it. This is the shape most often got wrong: a set with a coincident leg at the edge of the universe."
+  },
+  "S05-03": {
+    "id": "Itu berlaku untuk probabilitas, bukan untuk derajat keanggotaan. Suhu 26 derajat bisa “sejuk” sebesar 0,4 dan “hangat” sebesar 0,7 sekaligus; jumlahnya 1,1 dan itu sah.",
+    "en": "That holds for probabilities, not for memberships. A temperature of 26 degrees can be “cool” to degree 0.4 and “warm” to degree 0.7 at once; they sum to 1.1, and that is perfectly valid."
+  },
+  "S06-01": {
+    "id": "Premis DAN diambil minimumnya, yaitu 0,4. Aturan hanya sekuat premis terlemahnya, persis seperti rantai yang putus di mata rantai terlemah.",
+    "en": "An AND premise takes the minimum, 0.4. A rule is only as strong as its weakest premise, exactly like a chain breaking at its weakest link."
+  },
+  "S06-02": {
+    "id": "Sugeno langsung memakai satu angka per aturan, sehingga jauh lebih murah dihitung. Itulah alasan ia lebih sering dipakai di sistem kendali tertanam, sementara Mamdani dipakai ketika bentuk keluarannya perlu ditafsirkan manusia.",
+    "en": "Sugeno uses one number per rule directly, which makes it far cheaper. That is why it is the more common choice in embedded control, while Mamdani is used when the shape of the output has to be interpreted by a person."
+  },
+  "S06-03": {
+    "id": "Aturannya hanya menentukan kekuatan penyalaan; yang berbeda adalah cara mengubah kekuatan itu menjadi satu angka. Perbedaan hasilnya bukan kesalahan melainkan konsekuensi definisi masing-masing.",
+    "en": "The rules only fix the firing strengths; what differs is how those strengths become one number. The difference is not an error but a consequence of each definition."
+  },
+  "S07-01": {
+    "id": "2⁵ = 32. Tiap proposisi baru melipatduakan barisnya, sehingga sepuluh proposisi sudah berarti 1.024 baris — dan itulah alasan pembuktian yang tidak perlu memeriksa semua baris jauh lebih berharga.",
+    "en": "2⁵ = 32. Each new proposition doubles the rows, so ten propositions already mean 1,024 — which is why a proof that avoids checking every row is worth so much more."
+  },
+  "S07-02": {
+    "id": "Resolusi menambahkan ingkaran kesimpulan ke basis pengetahuan lalu mencari klausa kosong. Kalau klausa kosong ditemukan, ingkarannya mustahil benar — jadi kesimpulannya pasti mengikuti.",
+    "en": "Resolution adds the negated conclusion to the knowledge base and searches for the empty clause. If the empty clause turns up, the negation cannot hold — so the conclusion must follow."
+  },
+  "S07-03": {
+    "id": "Itulah gunanya jaringan semantik: menuliskan bahwa hewan punya sel satu kali sudah cukup untuk seluruh turunannya. Pengecualian ditangani dengan menuliskan sifat yang berbeda langsung pada simpul turunannya.",
+    "en": "That is the point of a semantic network: writing once that animals have cells is enough for every descendant. Exceptions are handled by writing the differing property directly on the descendant node."
+  },
+  "S08-01": {
+    "id": "Heuristik yang tidak pernah menaksir berlebihan disebut admissible. Heuristik yang menaksir berlebihan bisa membuat A* melewatkan jalur terpendek — ia jadi lebih cepat tetapi berhenti menjamin apa pun.",
+    "en": "A heuristic that never overestimates is called admissible. One that does overestimate can make A* miss the shortest path — it becomes faster but stops guaranteeing anything."
+  },
+  "S08-02": {
+    "id": "BFS menelusuri lapis demi lapis, jadi simpul tujuan pertama yang ditemuinya pasti yang terdekat. DFS menelusuri sedalam mungkin lebih dulu dan bisa menemukan jalur panjang yang berputar-putar.",
+    "en": "BFS explores layer by layer, so the first goal node it meets must be the nearest. DFS goes as deep as it can first and may find a long, winding path."
+  },
+  "S08-03": {
+    "id": "|7−2| + |8−3| = 5 + 5 = 10. Jarak Manhattan dipakai sebagai heuristik pada peta berpetak yang gerakannya hanya empat arah, karena di sana ia tidak pernah menaksir berlebihan.",
+    "en": "|7−2| + |8−3| = 5 + 5 = 10. Manhattan distance is used as a heuristic on grid maps with four-way movement, because there it never overestimates."
+  },
+  "S09-01": {
+    "id": "XOR tidak terpisahkan secara linear, dan perceptron satu lapis hanya bisa menarik satu garis lurus. Temuan Minsky dan Papert tentang ini menghentikan penelitian jaringan syaraf hampir dua dekade, sampai perambatan balik ditemukan.",
+    "en": "XOR is not linearly separable, and a single-layer perceptron can only draw one straight line. Minsky and Papert's finding on this halted neural-network research for nearly two decades, until backpropagation arrived."
+  },
+  "S09-02": {
+    "id": "Langkah yang terlalu besar melewati titik terendah lalu memantul ke sisi seberang. Cirinya khas: kurva galatnya berayun dan tidak pernah mengecil, berbeda dari laju yang terlalu kecil yang menurun tetapi sangat lambat.",
+    "en": "Too large a step overshoots the minimum and bounces to the far side. The signature is distinctive: the error curve oscillates and never shrinks — unlike too small a rate, which falls but very slowly."
+  },
+  "S09-03": {
+    "id": "σ(0) = 1/(1 + e⁰) = 1/2 = 0,5. Sigmoid selalu bernilai setengah tepat di titik tengahnya, dan itulah sebabnya ia dipakai sebagai penggolong dua kelas dengan ambang 0,5.",
+    "en": "σ(0) = 1/(1 + e⁰) = 1/2 = 0.5. The sigmoid is always one half exactly at its midpoint, which is why it serves as a two-class classifier with a threshold of 0.5."
+  },
+  "S10-01": {
+    "id": "Awalan meny- meluluhkan huruf s pada kata dasarnya, sehingga “menyapu” berasal dari “sapu”, bukan “nyapu”. Tidak ada algoritma stemming Bahasa Inggris yang mengetahui aturan peluluhan ini.",
+    "en": "The prefix meny- absorbs the initial s of the root, so “menyapu” comes from “sapu”, not “nyapu”. No English stemming algorithm knows this assimilation rule."
+  },
+  "S10-02": {
+    "id": "“Beruang” sudah ada di kamus, jadi pengupasan harus berhenti. Tanpa pemeriksaan itu, aturan pengupasan akan tetap berjalan dan menghasilkan “uang” — kata yang sah tetapi maknanya sama sekali lain.",
+    "en": "“Beruang” is already in the dictionary, so stripping must stop. Without that check the rules keep going and produce “uang” — a valid word with an entirely different meaning."
+  },
+  "S10-03": {
+    "id": "Sebaliknya: IDF-nya paling rendah. Kata yang muncul di mana-mana tidak membedakan apa pun, dan itulah seluruh gagasan TF-IDF — yang sering muncul di semua tempat justru tidak informatif.",
+    "en": "The opposite: its IDF is the lowest possible. A word that appears everywhere distinguishes nothing, and that is the whole idea of TF-IDF — what is common everywhere carries no information."
+  },
+  "S11-01": {
+    "id": "Runut maju berangkat dari fakta menuju kesimpulan; runut mundur berangkat dari dugaan lalu mencari bukti pendukungnya. Keduanya memakai basis aturan yang sama persis, hanya arah penelusurannya berbeda.",
+    "en": "Forward chaining runs from facts to conclusions; backward chaining starts from a hypothesis and looks for supporting evidence. Both use exactly the same rule base; only the direction of travel differs."
+  },
+  "S11-02": {
+    "id": "Sistem pakar yang tidak bisa menjawab “kenapa” hanyalah tebakan bercangkang komputer. Fasilitas penjelasan bukan hiasan; ia yang membuat kesimpulannya bisa dipertanggungjawabkan.",
+    "en": "An expert system that cannot answer “why” is only a guess in a computer's shell. The explanation facility is not decoration; it is what makes the conclusion answerable for."
+  },
+  "S11-03": {
+    "id": "Justru tidak — dan di situlah bahayanya. Fakta seperti itu diam-diam dianggap tidak berlaku, sehingga aturannya tidak pernah menyala dan tidak ada pesan galat apa pun. Ini jenis cacat yang paling sulit ditemukan pada sistem pakar.",
+    "en": "It will not — and that is exactly the danger. Such a fact is quietly treated as false, so its rule never fires and no error appears at all. This is the hardest class of defect to find in an expert system."
+  },
+  "S12-01": {
+    "id": "Tiga V aslinya adalah Volume, Velocity, dan Variety. Veracity sering ditambahkan sebagai V keempat, tetapi Validity bukan bagian dari kerangka aslinya.",
+    "en": "The original three Vs are Volume, Velocity, and Variety. Veracity is often added as a fourth, but Validity was never part of the original framing."
+  },
+  "S13-01": {
+    "id": "Tepat 1 bit. Entropi mengukur berapa banyak pertanyaan ya-tidak yang dibutuhkan untuk memastikan jawabannya, dan dua kelas berimbang butuh tepat satu pertanyaan.",
+    "en": "Exactly 1 bit. Entropy measures how many yes-or-no questions are needed to pin down the answer, and two balanced classes need exactly one."
+  },
+  "S13-02": {
+    "id": "Nol. Tidak ada ketidakpastian sama sekali, jadi tidak ada pertanyaan yang perlu diajukan. Inilah keadaan yang dicari ID3 saat membentuk daun.",
+    "en": "Zero. There is no uncertainty at all, so no question needs asking. This is the state ID3 is looking for when it forms a leaf."
+  },
+  "S13-03": {
+    "id": "1 − (0,5² + 0,5²) = 0,5. Berbeda dengan entropi yang bernilai 1 pada keadaan yang sama, karena keduanya memakai skala yang berbeda. Gini lebih murah dihitung karena tidak memakai logaritma.",
+    "en": "1 − (0.5² + 0.5²) = 0.5. Different from entropy, which is 1 in the same situation, because the two use different scales. Gini is cheaper because it uses no logarithm."
+  },
+  "S13-04": {
+    "id": "Perolehan informasi tertinggi, yaitu yang paling banyak mengurangi ketidakpastian. Memilih menurut jumlah nilai terbanyak justru jebakan: kolom beridentitas unik memberi perolehan maksimum padahal tidak meramalkan apa pun.",
+    "en": "The highest information gain — the attribute that removes the most uncertainty. Choosing by the number of distinct values is a trap: an identifier column yields maximum gain while predicting nothing."
+  },
+  "S13-05": {
+    "id": "√(3² + 4²) = √25 = 5. Segitiga siku-siku 3-4-5 yang paling terkenal. Jarak Euclidean hanya memakai operasi yang dibulatkan tepat menurut IEEE-754, sehingga hasilnya identik di bahasa mana pun.",
+    "en": "√(3² + 4²) = √25 = 5 — the most famous right triangle of all. Euclidean distance uses only operations IEEE-754 requires to be correctly rounded, so the result is identical in any language."
+  },
+  "S13-06": {
+    "id": "Dengan k genap pada dua kelas, suaranya bisa imbang dan pemecah serinya menjadi sewenang-wenang. k ganjil menjamin selalu ada pemenang.",
+    "en": "With an even k over two classes the vote can tie, and the tie-break becomes arbitrary. An odd k guarantees a winner."
+  },
+  "S13-07": {
+    "id": "Inersia selalu turun saat k dinaikkan, dan mencapai nol ketika k sama dengan jumlah data. Yang dicari adalah titik sikunya pada grafik, bukan nilai terkecilnya.",
+    "en": "Inertia always falls as k rises, reaching zero when k equals the number of points. What you look for is the elbow on the graph, not the smallest value."
+  },
+  "S13-08": {
+    "id": "Ketepatan harus selalu dibandingkan dengan tebakan kelas terbanyak. Ketepatan yang tidak melampaui tebakan bukanlah pembelajaran, meski angkanya terlihat tinggi.",
+    "en": "Accuracy must always be compared against guessing the majority class. Accuracy that does not beat the guess is not learning, however high the number looks."
+  },
+  "S14-01": {
+    "id": "Bagian integral menumpuk galat sepanjang waktu, sehingga galat kecil yang menetap pun akhirnya menghasilkan koreksi. Bagian proporsional sendirian selalu menyisakan galat tunak.",
+    "en": "The integral term accumulates error over time, so even a small persistent error eventually produces a correction. The proportional term alone always leaves a steady-state error behind."
+  },
+  "S14-02": {
+    "id": "Kinematika maju: dari sudut ke posisi, dan jawabannya selalu tunggal. Kinematika balik sebaliknya, dan jawabannya bisa lebih dari satu atau tidak ada sama sekali.",
+    "en": "Forward kinematics goes from angles to position, and its answer is always unique. Inverse kinematics goes the other way, and may have several answers or none at all."
+  },
+  "S14-03": {
+    "id": "Sebaliknya. Penguatan proporsional yang terlalu besar membuat sistem berayun dan akhirnya tidak stabil. Yang membuatnya stabil bukan penguatan yang besar melainkan yang seimbang antara ketiga bagiannya.",
+    "en": "The opposite. Too much proportional gain makes the system oscillate and eventually go unstable. What brings stability is not a large gain but a balanced one across all three terms."
+  }
+}

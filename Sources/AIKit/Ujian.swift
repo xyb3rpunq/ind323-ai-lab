@@ -25,12 +25,43 @@
 // Model soal
 // ---------------------------------------------------------------------------
 
+/// Sepasang teks untuk kedua bahasa yang didukung situs ini.
+///
+/// # Kenapa pasangan, bukan kamus berkunci
+///
+/// Karena kedua bahasa ditulis di baris yang sama, sehingga tidak mungkin
+/// menyunting salah satunya tanpa melihat yang lain. Kamus berkunci selalu
+/// berakhir sama: yang satu diperbaiki, yang lain tertinggal — dan yang
+/// tertinggal hampir selalu bahasa yang tidak dipakai penulisnya sehari-hari,
+/// sehingga penulisnya sendiri tidak akan pernah melihatnya.
+///
+/// Di sini bentuk pasangan juga membuat terjemahan yang hilang menjadi
+/// **galat kompilasi**, bukan soal yang tampil kosong di tengah ujian.
+public struct Dwibahasa: Hashable, Sendable {
+    public let id: String
+    public let en: String
+
+    public init(_ id: String, _ en: String) {
+        self.id = id
+        self.en = en
+    }
+}
+
+/// Menyusun sepasang teks. Ditulis pendek karena dipakai ratusan kali.
+public func bi(_ id: String, _ en: String) -> Dwibahasa {
+    Dwibahasa(id, en)
+}
+
 /// Cara sebuah soal dinilai.
 public enum BentukSoal: Equatable, Sendable {
     /// Pilihan ganda; jawabannya indeks pilihan yang benar.
-    case pilihan(pilihan: [String], benar: Int)
+    ///
+    /// Indeksnya tetap, bukan teksnya. Menerjemahkan pilihan tidak bisa
+    /// menggeser kunci jawabannya, karena kuncinya sama sekali tidak menunjuk
+    /// ke teks mana pun.
+    case pilihan(pilihan: [Dwibahasa], benar: Int)
     /// Jawaban berupa angka; dinilai dengan toleransi.
-    case angka(jawaban: Double, toleransi: Double, satuan: String)
+    case angka(jawaban: Double, toleransi: Double, satuan: Dwibahasa)
     /// Benar atau salah.
     case benarSalah(benar: Bool)
 }
@@ -39,12 +70,18 @@ public enum BentukSoal: Equatable, Sendable {
 public struct Soal: Equatable, Sendable {
     public let kode: String
     public let sesi: Int
+    /// Kunci pengelompokan, **bukan** teks yang ditampilkan.
+    ///
+    /// Sengaja tetap satu untai. Ia dipakai mengelompokkan ketepatan per topik,
+    /// dan kunci yang ikut berganti bahasa akan menghasilkan pengelompokan yang
+    /// berbeda di tiap bahasa — dua ringkasan yang tidak bisa dibandingkan.
+    /// Nama yang dibaca manusia disusun sisi antarmuka dari kunci ini.
     public let topik: String
-    public let pertanyaan: String
+    public let pertanyaan: Dwibahasa
     public let bentuk: BentukSoal
     /// Penjelasan yang muncul setelah dijawab. Selalu ada — soal tanpa
     /// penjelasan hanya menguji, tidak mengajari.
-    public let pembahasan: String
+    public let pembahasan: Dwibahasa
     /// Tingkat kesulitan 1 sampai 3, dipakai menyusun sesi yang berimbang.
     public let tingkat: Int
 
@@ -52,9 +89,9 @@ public struct Soal: Equatable, Sendable {
         kode: String,
         sesi: Int,
         topik: String,
-        pertanyaan: String,
+        pertanyaan: Dwibahasa,
         bentuk: BentukSoal,
-        pembahasan: String,
+        pembahasan: Dwibahasa,
         tingkat: Int = 2
     ) {
         self.kode = kode
@@ -82,7 +119,7 @@ public struct Penilaian: Equatable, Sendable {
     public let benar: Bool
     /// Selisih terhadap jawaban seharusnya, untuk soal berangka.
     public let selisih: Double?
-    public let pembahasan: String
+    public let pembahasan: Dwibahasa
 }
 
 // ---------------------------------------------------------------------------

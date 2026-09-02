@@ -8,14 +8,15 @@
 -->
 <script lang="ts">
   import Ujian from "./lib/Ujian.svelte";
-  import { BANK, SESI, jam, rangkum } from "./bank";
+  import { BANK, SESI, jam, namaTopik, rangkum } from "./bank";
+  import { muatPembahasan, pembahasanDari } from "./pembahasan";
   import type { Penilaian, Ringkasan, Soal } from "./bank";
   import { MATERI } from "./materi";
   import BatangTopik from "./viz/BatangTopik.svelte";
   import KurvaJadwal from "./viz/KurvaJadwal.svelte";
   import PetaBank from "./viz/PetaBank.svelte";
   import Presentasi from "./lib/Presentasi.svelte";
-  import { T, aturBahasa, bahasa, pilih, pulihkanBahasa } from "./i18n.svelte";
+  import { T, aturBahasa, bahasa, bi, pilih, pulihkanBahasa } from "./i18n.svelte";
   import { unduhRapor } from "./ekspor";
 
   type Layar = "beranda" | "ujian" | "hasil" | "materi" | "presentasi";
@@ -86,7 +87,29 @@
 
   const ringkasan = $derived<Ringkasan>(rangkum(hasilSoal, hasilPenilaian));
 
-  function mulai() {
+  /** Sedang menunggu pembahasan diunduh. Menonaktifkan tombol mulai. */
+  let memuat = $state(false);
+
+  /**
+   * Memulai sesi, sesudah pembahasannya siap.
+   *
+   * Pembahasan diunduh terpisah dari banknya dan ditunggu di sini — bukan di
+   * layar ujian — supaya tidak pernah ada soal yang dijawab sebelum
+   * penjelasannya bisa ditampilkan. Pada titik ini penggunanya baru saja
+   * menekan tombol dan memang sedang menunggu; sesudah layar ujian terbuka,
+   * ia sudah membaca soal dan menunggu apa pun terasa seperti kerusakan.
+   *
+   * Seluruh jalan menuju layar ujian lewat sini, termasuk "ulangi sesi" dan
+   * tombol latihan di halaman materi. Satu jalan yang melewatinya sudah cukup
+   * untuk menghasilkan ujian tanpa pembahasan.
+   */
+  async function mulai() {
+    memuat = true;
+    try {
+      await muatPembahasan();
+    } finally {
+      memuat = false;
+    }
     layar = "ujian";
   }
 
@@ -128,7 +151,7 @@
   );
 </script>
 
-<a class="lewati" href="#isi">Lewati ke isi</a>
+<a class="lewati" href="#isi">{pilih(T.lewatiKeIsi)}</a>
 
 <header class="kepala">
   <div class="kepala__isi">
@@ -232,13 +255,13 @@
               class="tombol"
               aria-pressed={sesiTerpilih === s.nomor}
               onclick={() => (sesiTerpilih = s.nomor)}
-              title={s.nama}>{String(s.nomor).padStart(2, "0")}</button
+              title={pilih(s.nama)}>{String(s.nomor).padStart(2, "0")}</button
             >
           {/each}
         </div>
         {#if sesiTerpilih !== undefined}
           <p class="catatan">
-            {SESI.find((s) => s.nomor === sesiTerpilih)?.nama}
+            {pilih(SESI.find((s) => s.nomor === sesiTerpilih)?.nama ?? bi('', ''))}
           </p>
         {/if}
       </div>
@@ -247,7 +270,7 @@
         <button
           type="button"
           class="tombol tombol--utama"
-          disabled={tersedia === 0}
+          disabled={tersedia === 0 || memuat}
           onclick={mulai}
         >
           {pilih(T.mulai)} — {Math.min(banyak, tersedia)}
@@ -269,13 +292,15 @@
       <div class="baris baris--rapat">
         <label class="bidang">
           <span class="bidang__label">
-            Berapa kali dijawab <span class="angka-mono">{ulanganJadwal}</span>
+            {pilih(T.berapaKaliDijawab)}
+            <span class="angka-mono">{ulanganJadwal}</span>
           </span>
           <input type="range" min="4" max="14" step="1" bind:value={ulanganJadwal} />
         </label>
         <label class="bidang">
           <span class="bidang__label">
-            Salah di ulangan ke <span class="angka-mono"
+            {pilih(T.salahDiUlanganKe)}
+            <span class="angka-mono"
               >{salahDiUlangan === 0 ? pilih(T.tidakAda) : salahDiUlangan}</span
             >
           </span>
@@ -330,7 +355,10 @@
                 banyak = Math.max(1, jumlah);
               }}
             >
-              <div class="petak__nomor">SESI {String(s.nomor).padStart(2, "0")}</div>
+              <div class="petak__nomor">
+                {pilih(T.sesi).toUpperCase()}
+                {String(s.nomor).padStart(2, "0")}
+              </div>
               <div class="petak__nama">{s.nama}</div>
               <div class="petak__jumlah">{pilih(T.petakSoal).replace("%N", String(jumlah))}</div>
             </a>
@@ -378,10 +406,10 @@
           <div style="padding: 0.7rem 0; border-bottom: 1px solid var(--garis)">
             <div class="langkah-nomor">
               {pilih(T.sesi)}
-              {String(x.s!.sesi).padStart(2, "0")} · {x.s!.topik}
+              {String(x.s!.sesi).padStart(2, "0")} · {pilih(namaTopik(x.s!.topik))}
             </div>
-            <p style="margin: 0.3rem 0 0.4rem">{x.s!.pertanyaan}</p>
-            <div class="catatan">{x.s!.pembahasan}</div>
+            <p style="margin: 0.3rem 0 0.4rem">{pilih(x.s!.pertanyaan)}</p>
+            <div class="catatan">{pilih(pembahasanDari(x.p.kode))}</div>
           </div>
         {/each}
       </div>
@@ -411,17 +439,17 @@
       <button
         type="button"
         class="tombol tombol--utama"
-        onclick={() => {
-          layar = "ujian";
-        }}>{pilih(T.ulangiSesi)}</button
+        disabled={memuat}
+        onclick={mulai}>{pilih(T.ulangiSesi)}</button
       >
       <button
         type="button"
         class="tombol"
+        disabled={memuat}
         onclick={() => {
           benihTeks = String(Number(benihTeks || "0") + 1);
-          layar = "ujian";
-        }}>Sesi baru</button
+          void mulai();
+        }}>{pilih(T.sesiBaru)}</button
       >
       <button type="button" class="tombol" onclick={() => (layar = "beranda")}>
         {pilih(T.kembali)}
@@ -441,7 +469,7 @@
             class="tombol"
             aria-pressed={sesiMateri === s.nomor}
             onclick={() => (sesiMateri = s.nomor)}
-            title={s.nama}>{String(s.nomor).padStart(2, "0")}</button
+            title={pilih(s.nama)}>{String(s.nomor).padStart(2, "0")}</button
           >
         {/each}
       </div>
@@ -482,10 +510,11 @@
           <button
             type="button"
             class="tombol tombol--utama"
+            disabled={memuat}
             onclick={() => {
               sesiTerpilih = m.sesi;
               banyak = Math.max(1, BANK.filter((x) => x.sesi === m.sesi).length);
-              layar = "ujian";
+              void mulai();
             }}
           >
             {pilih(T.latihanSesiIni)} — {BANK.filter((x) => x.sesi === m.sesi).length}

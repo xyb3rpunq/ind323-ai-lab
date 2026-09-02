@@ -34,8 +34,10 @@ import {
   nilai,
   rangkum,
   susunSesi,
+  NAMA_TOPIK,
 } from "../src/bank";
 import type { Penilaian } from "../src/bank";
+import { muatPembahasan, pembahasanDari } from "../src/pembahasan";
 import { MATERI } from "../src/materi";
 
 // ---------------------------------------------------------------------------
@@ -130,7 +132,9 @@ describe("kesepadanan sesi dengan Swift", () => {
     (_benih, k) => {
       const sesi = susunSesi(12, BigInt(k.benih));
       const dapat = sesi.soal.map((s) =>
-        s.bentuk === "pilihan" ? `${s.kode} :: ${s.benar} :: ${s.pilihan.join("|")}` : s.kode,
+        s.bentuk === "pilihan"
+          ? `${s.kode} :: ${s.benar} :: ${s.pilihan.map((p) => p.id).join("|")}`
+          : s.kode,
       );
       expect(dapat).toEqual(k.baris);
     },
@@ -176,8 +180,12 @@ describe("penyusun sesi", () => {
         if (s.bentuk !== "pilihan") continue;
         const asli = BANK.find((x) => x.kode === s.kode);
         if (!asli || asli.bentuk !== "pilihan") continue;
-        expect(s.pilihan[s.benar], s.kode).toBe(asli.pilihan[asli.benar]);
-        expect([...s.pilihan].sort()).toEqual([...asli.pilihan].sort());
+        // Dibandingkan lewat sisi Indonesianya: yang diuji di sini letak
+        // pilihannya sesudah diacak, bukan isinya.
+        expect(s.pilihan[s.benar]?.id, s.kode).toBe(asli.pilihan[asli.benar]?.id);
+        expect([...s.pilihan].map((p) => p.id).sort()).toEqual(
+          [...asli.pilihan].map((p) => p.id).sort(),
+        );
         if (s.benar !== asli.benar) berpindah += 1;
       }
     }
@@ -301,11 +309,83 @@ describe("isi bank", () => {
     }
   });
 
-  it("setiap soal punya pembahasan yang benar-benar menjelaskan", () => {
+  it("setiap soal punya pembahasan yang benar-benar menjelaskan", async () => {
+    // Diperiksa di kedua bahasa dengan ambang yang sama. Terjemahan yang
+    // dipotong separuh tetap lolos setiap pemeriksaan lain, dan yang membaca
+    // separuhnya justru orang yang tidak bisa membaca yang satunya.
+    //
+    // Pembahasannya diunduh terpisah, jadi ia ditunggu lebih dulu — lewat
+    // jalan yang sama persis dengan yang dipakai layar ujian, bukan lewat
+    // pembacaan berkas yang hanya ada di uji.
+    await muatPembahasan();
     for (const s of BANK) {
-      expect(s.pertanyaan.length, s.kode).toBeGreaterThan(20);
-      // Soal tanpa pembahasan hanya menguji, tidak mengajari.
-      expect(s.pembahasan.length, s.kode).toBeGreaterThan(80);
+      const pem = pembahasanDari(s.kode);
+      for (const b of ["id", "en"] as const) {
+        expect(s.pertanyaan[b].length, `${s.kode} ${b}`).toBeGreaterThan(20);
+        // Soal tanpa pembahasan hanya menguji, tidak mengajari.
+        expect(pem[b].length, `${s.kode} ${b}`).toBeGreaterThan(80);
+      }
+    }
+  });
+
+  it("pembahasan yang belum dikenal tidak meruntuhkan apa pun", () => {
+    // Kode yang tidak ada mengembalikan pasangan kosong, bukan galat. Satu
+    // soal tanpa pembahasan adalah kekurangan; layar ujian yang runtuh di
+    // tengah menghapus seluruh jawaban yang sudah dikerjakan.
+    const kosong = pembahasanDari("tidak-ada-kode-seperti-ini");
+    expect(kosong.id).toBe("");
+    expect(kosong.en).toBe("");
+  });
+
+  it("setiap untai soal punya kedua bahasa, dan keduanya berbeda", async () => {
+    await muatPembahasan();
+    // Menyalin kolom Indonesia ke kolom Inggris lolos setiap pemeriksaan
+    // panjang di atas: ia menghasilkan bank yang mengaku dwibahasa padahal
+    // menampilkan satu bahasa dua kali.
+    //
+    // Sebagian pilihan memang sama di kedua bahasa — nama metode seperti
+    // "Sugeno", istilah seperti "Volume", dan kata Indonesia yang justru
+    // sedang diuji pada soal stemming. Yang diperiksa karena itu prosanya:
+    // pertanyaan dan pembahasan, yang tidak punya alasan sama.
+    for (const s of BANK) {
+      for (const bagian of [s.pertanyaan, pembahasanDari(s.kode)]) {
+        expect(bagian.id.trim(), s.kode).not.toBe("");
+        expect(bagian.en.trim(), s.kode).not.toBe("");
+        expect(bagian.id, s.kode).not.toBe(bagian.en);
+      }
+    }
+  });
+
+  it("setiap pilihan punya kedua bahasa", () => {
+    for (const s of BANK) {
+      if (s.bentuk !== "pilihan") continue;
+      for (const p of s.pilihan) {
+        expect(p.id.trim(), s.kode).not.toBe("");
+        expect(p.en.trim(), s.kode).not.toBe("");
+      }
+    }
+  });
+
+  it("setiap sesi kuliah punya nama dalam kedua bahasa", () => {
+    for (const x of SESI) {
+      expect(x.nama.id.trim(), `sesi ${x.nomor}`).not.toBe("");
+      expect(x.nama.en.trim(), `sesi ${x.nomor}`).not.toBe("");
+      expect(x.nama.id, `sesi ${x.nomor}`).not.toBe(x.nama.en);
+    }
+  });
+
+  it("setiap kunci topik punya nama yang bisa dibaca", () => {
+    // `topik` adalah kunci pengelompokan, bukan teks yang ditampilkan. Kunci
+    // baru yang tidak punya nama akan tampil apa adanya — terbaca, tetapi
+    // tidak pernah berganti bahasa, dan tidak ada yang memberitahunya.
+    for (const kunci of new Set(BANK.map((s) => s.topik))) {
+      expect(Object.keys(NAMA_TOPIK), kunci).toContain(kunci);
+    }
+    // Dan sebaliknya: nama topik yang tidak dipakai soal mana pun adalah
+    // terjemahan yang dirawat tanpa satu pun halaman yang menampilkannya.
+    const dipakai = new Set(BANK.map((s) => s.topik));
+    for (const kunci of Object.keys(NAMA_TOPIK)) {
+      expect(dipakai.has(kunci), kunci).toBe(true);
     }
   });
 

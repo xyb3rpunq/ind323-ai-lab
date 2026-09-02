@@ -11,7 +11,8 @@
     "typecheck": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run --config vitest.config.ts",
     "budget": "node scripts/budget.mjs",
-    "audit:all": "npm run typecheck && npm run test && npm run build && npm run budget"
+    "audit:all": "npm run pisah && npm run typecheck && npm run test && npm run build && npm run budget",
+    "pisah": "node scripts/pisah-bank.mjs"
   },
   "author": "Daniel Hutajulu (.Deckyx)",
   "license": "MIT",

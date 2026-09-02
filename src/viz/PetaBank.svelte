@@ -17,12 +17,16 @@
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
   import { T as KAMUS, pilih } from "../i18n.svelte";
+  import { potong } from "./dasar";
   import { BANK, SESI } from "../bank";
 
+  // Namanya lewat kamus, bukan ditulis di sini. Judul kolom yang tetap
+  // berbahasa Indonesia di halaman berbahasa Inggris adalah bocoran yang
+  // paling sulit terlihat: gambarnya tetap terbaca, hanya salah bahasa.
   const TINGKAT = [
-    { nilai: 1, nama: "ingatan" },
-    { nilai: 2, nama: "pemahaman" },
-    { nilai: 3, nama: "penerapan" },
+    { nilai: 1, nama: KAMUS.tingkatIngatan },
+    { nilai: 2, nama: KAMUS.tingkatPemahaman },
+    { nilai: 3, nama: KAMUS.tingkatPenerapan },
   ];
 
   const L = 640;
@@ -77,7 +81,7 @@
       y={ATAS - 12}
       text-anchor="middle"
       font-size="10"
-      fill="var(--teks-3)">{t.nama}</text
+      fill="var(--teks-3)">{pilih(t.nama)}</text
     >
   {/each}
 
@@ -89,9 +93,7 @@
       font-size="10"
       fill="var(--teks-2)"
     >
-      {String(s.nomor).padStart(2, "0")} · {s.nama.length > 22
-        ? `${s.nama.slice(0, 21)}…`
-        : s.nama}
+      {String(s.nomor).padStart(2, "0")} · {potong(pilih(s.nama), 22)}
     </text>
 
     {#each TINGKAT as t, kolom (t.nilai)}

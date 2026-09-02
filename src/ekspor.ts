@@ -23,6 +23,8 @@
  * .Deckyx
  */
 
+import { namaTopik } from "./bank";
+import { pembahasanDari } from "./pembahasan";
 import type { Penilaian, Ringkasan, Soal } from "./bank";
 import { bi, type Bilingual } from "./i18n";
 
@@ -125,7 +127,12 @@ export function barisRapor(rapor: Rapor, pilih: (p: Bilingual) => string): Sel[]
   baris.push([pilih(L.perTopik)]);
   baris.push([pilih(L.topik), pilih(L.benar), pilih(L.total), pilih(L.bagian)]);
   for (const t of rapor.ringkasan.perTopik) {
-    baris.push([t.topik, t.benar, t.total, t.total > 0 ? t.benar / t.total : 0]);
+    baris.push([
+      pilih(namaTopik(t.topik)),
+      t.benar,
+      t.total,
+      t.total > 0 ? t.benar / t.total : 0,
+    ]);
   }
   baris.push([]);
 
@@ -149,10 +156,10 @@ export function barisRapor(rapor: Rapor, pilih: (p: Bilingual) => string): Sel[]
       i + 1,
       s.kode,
       s.sesi,
-      s.topik,
-      s.pertanyaan,
+      pilih(namaTopik(s.topik)),
+      pilih(s.pertanyaan),
       p === undefined ? "" : pilih(p.benar ? L.ya : L.tidak),
-      s.pembahasan,
+      pilih(pembahasanDari(s.kode)),
     ]);
   });
   baris.push([]);

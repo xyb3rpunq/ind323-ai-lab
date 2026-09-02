@@ -12,7 +12,7 @@
  * .Deckyx
  */
 
-import type { Bilingual, Lang } from "./i18n";
+import { T, type Bilingual, type Lang } from "./i18n";
 
 export { T, bi, type Bilingual, type Lang } from "./i18n";
 
@@ -29,8 +29,21 @@ export function pulihkanBahasa(): Lang {
   } catch {
     /* Penyimpanan bisa diblokir di jendela penyamaran; bawaan tetap dipakai. */
   }
-  document.documentElement.lang = sekarang;
+  terapkanKepala(sekarang);
   return sekarang;
+}
+
+/**
+ * Menerapkan bahasa pada kepala dokumen.
+ *
+ * `lang` bukan hiasan: ia menentukan suara pembaca layar, pemenggalan kata,
+ * dan tanda kutip yang dipilih peramban. Judul tab ikut karena ia satu-satunya
+ * teks yang tidak terlihat di halaman — sehingga ia juga satu-satunya yang
+ * bisa tertinggal berbulan-bulan tanpa ada yang menyadarinya.
+ */
+function terapkanKepala(b: Lang): void {
+  document.documentElement.lang = b;
+  document.title = T.judulTab[b];
 }
 
 /** Bahasa yang sedang aktif. */
@@ -42,9 +55,7 @@ export function bahasa(): Lang {
 export function aturBahasa(berikut: Lang): void {
   if (berikut === sekarang) return;
   sekarang = berikut;
-  // Atribut `lang` bukan hiasan: ia menentukan suara pembaca layar,
-  // pemenggalan kata, dan tanda kutip yang dipilih peramban.
-  document.documentElement.lang = berikut;
+  terapkanKepala(berikut);
   try {
     localStorage.setItem(KUNCI, berikut);
   } catch {

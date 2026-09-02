@@ -125,6 +125,18 @@ export function tandaLog(minimum: number, maksimum: number): number[] {
  * warna, sementara tiga tingkat yang jelas langsung menjawab pertanyaan yang
  * sebenarnya ditanyakan — sudah dikuasai, setengah, atau belum.
  */
+/**
+ * Memotong teks yang terlalu panjang untuk bidangnya, dengan elipsis.
+ *
+ * Ada di sini dan bukan di tiap gambar karena panjang yang muat berbeda-beda
+ * per gambar, tetapi cara memotongnya tidak. Dipanggil **setelah** bahasanya
+ * dipilih: memotong pasangan dwibahasa lalu memilih akan memotong pada panjang
+ * yang salah untuk salah satu bahasanya.
+ */
+export function potong(teks: string, batasPanjang: number): string {
+  return teks.length > batasPanjang ? `${teks.slice(0, batasPanjang - 1)}…` : teks;
+}
+
 export function warnaKetepatan(bagian: number): string {
   if (bagian >= 0.8) return "var(--benar)";
   if (bagian >= 0.5) return "var(--aksen)";
