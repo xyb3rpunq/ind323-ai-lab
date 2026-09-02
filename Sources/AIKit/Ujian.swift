@@ -119,7 +119,7 @@ public struct Penilaian: Equatable, Sendable {
     public let benar: Bool
     /// Selisih terhadap jawaban seharusnya, untuk soal berangka.
     public let selisih: Double?
-    public let pembahasan: String
+    public let pembahasan: Dwibahasa
 }
 
 // ---------------------------------------------------------------------------
