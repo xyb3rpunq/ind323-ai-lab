@@ -148,7 +148,7 @@ docker run --rm -v "$PWD":/w -w /w swift:6.2 bash -c \
 | Perintah | Fungsi |
 |---|---|
 | `npm run dev` | Peladen pengembangan |
-| `npm run test` | 34 uji sisi peramban |
+| `npm run test` | 58 uji sisi peramban |
 | `npm run build` | Build produksi ke `dist/` |
 | `npm run budget` | Memeriksa anggaran ukuran |
 | `swift test` | 68 uji mesin |
@@ -166,13 +166,23 @@ docker run --rm -v "$PWD":/w -w /w swift:6.2 bash -c \
 | `Sources/AIKit/Inti.swift` | 21 | 24 |
 | `Sources/AIKit/Ujian.swift` | 9 | 24 |
 | `Sources/AIKit/Bank.swift` | 3 | 6 |
-| `src/bank.ts` | 8 | 22 |
-| `src/materi.ts` | 1 | 3 |
-| **Total** | **50** | **93** |
+| `src/bank.ts` | 8 | 31 |
+| `src/materi.ts` | 1 | 5 |
+| `src/jadwal.ts` | 3 | 9 |
+| `src/ekspor.ts` | 5 | 13 |
+| **Total** | **58** | **126** |
 
-Ditambah **3.796 pernyataan konformansi**. Angka itu bukan bagian dari 93 di atas: uji unit membuktikan Swift konsisten dengan dirinya sendiri, konformansi membuktikan ia sepakat dengan empat implementasi lain — dan hanya yang kedua yang bisa menangkap rumus yang salah tetapi konsisten.
+Ditambah **3.796 pernyataan konformansi**. Angka itu bukan bagian dari 126 di atas: uji unit membuktikan Swift konsisten dengan dirinya sendiri, konformansi membuktikan ia sepakat dengan empat implementasi lain — dan hanya yang kedua yang bisa menangkap rumus yang salah tetapi konsisten.
 
 Beberapa uji yang menahan proyek ini tetap jujur:
+
+- **Rapor mencatat bahasanya sendiri** — rapor yang beredar lepas dari
+  halamannya tetap bisa ditelusuri asalnya, termasuk bahasa mana yang dipakai
+  saat ia dibuat.
+- **Penilaian dicocokkan lewat kode, bukan urutan** — sesi yang ditinggalkan di
+  tengah menghasilkan penilaian yang lebih pendek daripada soalnya, dan
+  mencocokkan berdasar indeks akan menggeser seluruh baris sesudahnya tanpa
+  satu pun galat muncul.
 
 - **Kunci jawaban benar-benar dihitung** — beberapa kunci diperiksa ulang terhadap modul yang menghasilkannya. Kalau seseorang menggantinya dengan angka tetap, uji ini yang memberitahunya.
 - **Sesi Swift dan peramban identik** — termasuk urutan pilihan dan letak kunci setelah diacak.

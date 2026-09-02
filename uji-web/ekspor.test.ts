@@ -120,6 +120,17 @@ describe("barisRapor", () => {
     expect(en).not.toContain("RINGKASAN");
   });
 
+  it("mencatat bahasa rapornya di kepala berkas", () => {
+    // Rapor yang beredar lepas dari halamannya tetap harus bisa ditelusuri
+    // asalnya, termasuk bahasa mana yang dipakai saat ia dibuat.
+    const rapor = contohRapor();
+    for (const kode of ["id", "en"] as const) {
+      const baris = barisRapor(rapor, pilihDengan(kode));
+      const cap = baris.find((b) => b[0] === LABEL.bahasa[kode]);
+      expect(cap?.[1], kode).toBe(kode);
+    }
+  });
+
   it("setiap label punya kedua bahasa dan keduanya berbeda", () => {
     for (const [kunci, pasangan] of Object.entries(LABEL)) {
       expect(pasangan.id.trim(), kunci).not.toBe("");

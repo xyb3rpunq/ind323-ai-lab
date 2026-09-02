@@ -58,6 +58,7 @@ export const LABEL = {
   total: bi("total soal", "total questions"),
   waktu: bi("waktu terpakai (detik)", "time taken (seconds)"),
   benih: bi("benih sesi", "session seed"),
+  bahasa: bi("bahasa rapor", "report language"),
   perTopik: bi("KETEPATAN PER TOPIK", "ACCURACY PER TOPIC"),
   topik: bi("topik", "topic"),
   bagian: bi("bagian benar", "share correct"),
@@ -106,6 +107,11 @@ export function barisRapor(rapor: Rapor, pilih: (p: Bilingual) => string): Sel[]
 
   baris.push([pilih(L.judul)]);
   baris.push([pilih(L.dihasilkan), "xyb3rpunq.github.io/ind323-ai-lab (.Deckyx)"]);
+  // Bahasanya dicatat supaya rapor yang beredar lepas dari halamannya tetap
+  // bisa ditelusuri asalnya. Kodenya diambil dari `pilih` itu sendiri: ia
+  // memang fungsi yang memilih salah satu dari sepasang, jadi memberinya
+  // pasangan berisi kedua kode bahasa mengembalikan yang sedang aktif.
+  baris.push([pilih(L.bahasa), pilih(bi("id", "en"))]);
   baris.push([]);
 
   baris.push([pilih(L.ringkasan)]);

@@ -642,6 +642,29 @@ td.num {
     border: 1px solid #ccc;
   }
 
+  /* Tabel rumus dan rincian jawaban bisa melewati batas halaman. Kepala
+     kolomnya harus ikut berulang: angka tanpa nama kolom tidak berarti
+     apa-apa, dan halaman kedua rapor justru yang paling sering dibaca. */
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table {
+    font-size: 9pt;
+  }
+
+  /* Di layar isinya bisa digulir; di atas kertas tidak ada yang menggulir,
+     jadi tabelnya dibiarkan melebar dan mengecil sendiri. Tanpa ini, kolom
+     yang keluar dari bidang cetak hilang tanpa satu pun tanda. */
+  .gulir-x {
+    overflow: visible !important;
+  }
+
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 8pt;
