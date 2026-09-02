@@ -8,13 +8,47 @@ Mesin dan kunci jawabannya ditulis dalam Swift.
 [**Buka situsnya**](https://xyb3rpunq.github.io/ind323-ai-lab/) ·
 [Lapor masalah](https://github.com/xyb3rpunq/ind323-ai-lab/issues)
 
-`Swift 6.2` · `Svelte 5` · `TypeScript` · `35,7 KB gzip` · `0 permintaan jaringan saat mengerjakan`
+`Swift 6.2` · `Svelte 5` · `TypeScript` · `44 KB gzip` · `0 permintaan jaringan saat mengerjakan`
 
 *Dibuat oleh* **`.Deckyx`**
+
+[🇮🇩 Bahasa Indonesia](#-bahasa-indonesia) · [🇬🇧 English](#-english)
 
 </div>
 
 ---
+
+## 🇮🇩 Bahasa Indonesia
+
+### Ini apa, sih?
+
+Ini seperti buku latihan soal — tapi yang memeriksa jawabannya bukan orang.
+
+Kalau sebuah soal bertanya "berapa hasilnya?", jawaban yang benar **tidak
+diketik siapa pun**. Ia dihitung ulang oleh program setiap kali situsnya
+dibangun. Kenapa begitu penting? Karena kunci jawaban yang diketik tangan pasti
+salah suatu hari — dan yang rugi adalah mahasiswa yang jawabannya benar tapi
+dinyatakan salah.
+
+Ada juga **mode Ajar**: 71 salindia siap diproyeksikan di kelas, lengkap dengan
+catatan untuk pengajar yang tidak ikut terlihat di layar proyektor.
+
+Semuanya berjalan di peramban. Tidak ada data yang dikirim ke mana pun.
+
+### Yang baru
+
+| Modul | Yang diperlihatkan |
+|---|---|
+| **Mode Ajar** | 71 salindia dari materi yang sudah ada. Panah untuk berpindah, `F` layar penuh, `N` catatan pengajar, `D` daftar sesi. Nomor salindia masuk ke alamat — proyektor mati di tengah kuliah tidak berarti kehilangan tempat. |
+| **Peta cakupan bank soal** | 14 sesi × 3 tingkat kesulitan. Daftar angka menjawab "berapa banyak"; peta ini menjawab "yang mana", dan lubangnya langsung terlihat. |
+| **Kurva penjadwalan SM-2** | Kapan sebuah soal kembali muncul, dengan sumbu logaritmik karena jaraknya bergerak dari satu hari ke belasan ribu. Geser kendalinya untuk melihat harga satu kesalahan. |
+| **Ketepatan per topik** | Sebagai gambar, dengan jumlah soal di tiap ujung dan garis ambang 80%. Bilah tanpa jumlah menyembunyikan bahwa 1/1 dan 8/10 adalah dua hal yang sangat berbeda. |
+
+Algoritma SM-2 kini ada dua kali: **Swift sebagai sumber kebenaran**,
+TypeScript supaya kurvanya bisa digambar di peramban. Perintah
+`aikit-cli jadwal` menghasilkan jejaknya, dan uji mengadu keduanya pola bit
+demi pola bit termasuk faktor kemudahannya. Kurva yang digambar dari salinan
+yang menyimpang akan mengajarkan algoritma yang bukan algoritma situs ini.
 
 ## Apa ini
 
@@ -231,5 +265,104 @@ Modul kuliah **IND323 Kecerdasan Buatan**, Universitas Esa Unggul, oleh Dr. Ir. 
 <div align="center">
 
 **`.Deckyx`** — Daniel Hutajulu
+
+</div>
+
+---
+
+## 🇬🇧 English
+
+### What is this?
+
+Think of it as a practice workbook — except the answers are not checked by a
+person.
+
+When a question asks "what is the result?", the correct answer is **not typed
+by anyone**. It is recomputed by a program every time the site is built. Why
+does that matter? Because a hand-typed answer key will be wrong one day — and
+the person who pays for it is the student whose correct answer is marked wrong.
+
+There is also a **Teach mode**: 71 slides ready to project in class, complete
+with presenter notes that never appear on the projector.
+
+Everything runs in the browser. No data leaves your machine.
+
+### Answer keys are computed, not typed
+
+49 questions across 14 course sessions, with a timer, an explanation that
+appears immediately after answering, and a summary of each session's material.
+18 of the 49 are calculations. Not one stores its answer as a fixed number —
+what is stored is **how to compute it**, and the answer is produced by the same
+Swift module that is checked against 3,796 cross-language bit-pattern
+assertions.
+
+```swift
+Soal(
+    kode: "S03-01", sesi: 3, topik: "Certainty Factor",
+    pertanyaan: "Given MB = 0.8 and MD = 0.01, what is CF?",
+    bentuk: angka(try CertaintyFactor.dariMbMd(0.8, 0.01)),   // ← not 0.79
+    pembahasan: "CF = MB − MD = 0.8 − 0.01 = 0.79. …")
+```
+
+A hand-typed key is certain to drift from its algorithm sooner or later, and
+the drift is invisible: the question still reads sensibly, and the student who
+answers correctly is told they are wrong. A computed key cannot drift without
+failing conformance.
+
+### What is new
+
+| Module | What it shows |
+|---|---|
+| **Teach mode** | 71 slides generated from the existing material. Arrow keys to move, `F` for fullscreen, `N` for presenter notes, `D` for the session index. The slide number lives in the URL — a projector dying mid-lecture no longer means losing your place. |
+| **Question-bank coverage map** | 14 sessions × 3 difficulty levels. A list of counts answers "how many"; this map answers "which", and the gaps are immediately visible. |
+| **SM-2 scheduling curve** | When a question comes back, on a logarithmic axis because the interval moves from one day to tens of thousands. Drag the controls to see the cost of a single mistake. |
+| **Per-topic accuracy** | As a figure, with question counts at each end and an 80% threshold line. A bar without counts hides that 1/1 and 8/10 are very different things. |
+
+SM-2 now exists twice: **Swift as the source of truth**, TypeScript so the
+curve can be drawn in the browser. `aikit-cli jadwal` emits the trace, and a
+test compares the two bit pattern by bit pattern, including the easiness
+factor. A curve drawn from a drifting copy would teach an algorithm that is not
+this site's algorithm.
+
+### Why Swift, and why not SwiftWasm
+
+Swift is the **fifth** independent implementation of this project's core
+algorithms, after Rust, Go, Oracle PL/SQL, and Lua. All 3,796 assertions match
+with a maximum error of 0 ULP.
+
+SwiftWasm was deliberately rejected. The browser does not need a Swift runtime
+to display static data: Swift runs at **build time** as the question-bank
+generator and the conformance gate. The result is 44 KB gzip rather than
+several megabytes, and a Content Security Policy with no `wasm-unsafe-eval`.
+
+### Running it
+
+```bash
+npm install
+npm run dev        # http://localhost:5175/ind323-ai-lab/
+npm run audit:all  # typecheck, tests, build, budget
+
+# The Swift side, if you have Swift 6.2 (or Docker):
+swift test
+swift run aikit-cli conform conformance/vectors
+swift run aikit-cli bank src/generated/bank.json
+swift run aikit-cli jadwal > uji-web/jadwal-swift.txt
+```
+
+CI additionally verifies that the committed question bank is byte-identical to
+what Swift generates. If it differs, an answer key changed without anyone
+noticing — and a page that tells a student they are wrong when they are right
+is a worse failure than a red build.
+
+---
+
+<div align="center">
+
+**Bagian dari empat situs IND323** · *Part of the four IND323 sites*
+
+[ai-atlas](https://xyb3rpunq.github.io/ai-atlas/) (Rust → WASM) ·
+[kecerdasan-buatan](https://xyb3rpunq.github.io/kecerdasan-buatan/) (Lua) ·
+**ind323-ai-lab** (Swift) ·
+[neuronusa](https://xyb3rpunq.github.io/neuronusa/) (Brython)
 
 </div>
