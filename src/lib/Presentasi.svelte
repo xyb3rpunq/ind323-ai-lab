@@ -28,6 +28,7 @@
   import KurvaJadwal from "../viz/KurvaJadwal.svelte";
   import PetaBank from "../viz/PetaBank.svelte";
   import { penandaSesi, susunSalindia, type Salindia } from "./slide";
+  import { T, pilih } from "../i18n.svelte";
 
   interface Props {
     onKeluar: () => void;
@@ -133,7 +134,7 @@
     yang diharapkan penyaji. Ia tetap `button` supaya papan tik dan pembaca
     layar memperlakukannya sebagai kendali, bukan sebagai hiasan.
   -->
-  <button class="deck__bidang" type="button" onclick={maju} aria-label="Salindia berikutnya">
+  <button class="deck__bidang" type="button" onclick={maju} aria-label={pilih(T.salindiaBerikutnya)}>
     <article class="salindia salindia--{sekarang.jenis}" aria-live="polite">
       {#if sekarang.kaki}
         <p class="salindia__kaki">{sekarang.kaki}</p>
@@ -166,25 +167,25 @@
 
   {#if catatanTampil && sekarang.catatan}
     <aside class="catatan-pengajar">
-      <h3>Catatan pengajar</h3>
+      <h3>{pilih(T.catatanPengajar)}</h3>
       <p>{sekarang.catatan}</p>
     </aside>
   {/if}
 
-  <nav class="deck__kaki" aria-label="Kendali presentasi">
+  <nav class="deck__kaki" aria-label={pilih(T.kendaliPresentasi)}>
     <div class="deck__kiri">
-      <button type="button" class="tombol-kecil" onclick={onKeluar}>Keluar</button>
+      <button type="button" class="tombol-kecil" onclick={onKeluar}>{pilih(T.keluar)}</button>
       <button type="button" class="tombol-kecil" onclick={() => (daftarTampil = !daftarTampil)}>
-        Daftar sesi
+        {pilih(T.daftarSesi)}
       </button>
       <button
         type="button"
         class="tombol-kecil"
         aria-pressed={catatanTampil}
-        onclick={() => (catatanTampil = !catatanTampil)}>Catatan</button
+        onclick={() => (catatanTampil = !catatanTampil)}>{pilih(T.catatan)}</button
       >
       <button type="button" class="tombol-kecil" onclick={togelLayarPenuh}>
-        {layarPenuh ? "Keluar layar penuh" : "Layar penuh"}
+        {layarPenuh ? pilih(T.keluarLayarPenuh) : pilih(T.layarPenuh)}
       </button>
     </div>
 
@@ -208,7 +209,7 @@
   {#if daftarTampil}
     <div class="lapis">
       <div class="lapis__kotak">
-        <h3>Daftar sesi</h3>
+        <h3>{pilih(T.daftarSesi)}</h3>
         <ul class="daftar-sesi">
           {#each penanda as p (p.sesi)}
             <li>
@@ -220,7 +221,7 @@
           {/each}
         </ul>
         <button type="button" class="tombol-kecil" onclick={() => (daftarTampil = false)}>
-          Tutup
+          {pilih(T.tutup)}
         </button>
       </div>
     </div>
@@ -229,7 +230,7 @@
   {#if bantuanTampil}
     <div class="lapis">
       <div class="lapis__kotak">
-        <h3>Pintasan papan tik</h3>
+        <h3>{pilih(T.pintasan)}</h3>
         <dl class="pintasan">
           <dt>→ · spasi · PageDown</dt>
           <dd>salindia berikutnya</dd>
@@ -251,7 +252,7 @@
           halamannya dan presentasi lanjut dari tempatnya berhenti.
         </p>
         <button type="button" class="tombol-kecil" onclick={() => (bantuanTampil = false)}>
-          Tutup
+          {pilih(T.tutup)}
         </button>
       </div>
     </div>

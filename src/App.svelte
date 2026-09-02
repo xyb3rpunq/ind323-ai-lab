@@ -15,6 +15,7 @@
   import KurvaJadwal from "./viz/KurvaJadwal.svelte";
   import PetaBank from "./viz/PetaBank.svelte";
   import Presentasi from "./lib/Presentasi.svelte";
+  import { T, aturBahasa, bahasa, pilih, pulihkanBahasa } from "./i18n.svelte";
 
   type Layar = "beranda" | "ujian" | "hasil" | "materi" | "presentasi";
 
@@ -27,6 +28,12 @@
   let hasilPenilaian = $state<Penilaian[]>([]);
   let terpakai = $state(0);
   let sesiMateri = $state<number>(1);
+
+  // Bahasa dipulihkan sebelum apa pun tergambar. Menyetelnya setelah render
+  // pertama membuat halaman berkedip dari satu bahasa ke bahasa lain, dan
+  // kedipan itu paling terlihat justru bagi pembaca yang memang memilih
+  // bahasa kedua.
+  pulihkanBahasa();
 
   // Kendali gambar penjadwalan. Dibiarkan bisa digeser karena pertanyaan
   // "berapa harga satu kesalahan" jawabannya berbeda-beda tergantung kapan
@@ -92,21 +99,40 @@
         type="button"
         class="tombol"
         aria-pressed={layar === "beranda" || layar === "ujian" || layar === "hasil"}
-        onclick={() => (layar = "beranda")}>Latihan</button
+        onclick={() => (layar = "beranda")}>{pilih(T.latihan)}</button
       >
       <button
         type="button"
         class="tombol"
         aria-pressed={layar === "materi"}
-        onclick={() => (layar = "materi")}>Materi</button
+        onclick={() => (layar = "materi")}>{pilih(T.materi)}</button
       >
       <button
         type="button"
         class="tombol"
         aria-pressed={layar === "presentasi"}
-        title="Salindia siap proyektor, dengan catatan pengajar"
-        onclick={() => (layar = "presentasi")}>Ajar</button
+        title={pilih(T.ajarJudul)}
+        onclick={() => (layar = "presentasi")}>{pilih(T.ajar)}</button
       >
+      <!--
+        Pemilih bahasa memakai nama bahasanya sendiri, bukan bendera. Bendera
+        menandai negara, bukan bahasa — dan bahasa Inggris tidak dimiliki satu
+        negara pun.
+      -->
+      <div class="pilih-bahasa" role="group" aria-label={pilih(T.bahasa)}>
+        <button
+          type="button"
+          class="tombol"
+          aria-pressed={bahasa() === "id"}
+          onclick={() => aturBahasa("id")}>ID</button
+        >
+        <button
+          type="button"
+          class="tombol"
+          aria-pressed={bahasa() === "en"}
+          onclick={() => aturBahasa("en")}>EN</button
+        >
+      </div>
     </div>
   </div>
 </header>
@@ -118,7 +144,7 @@
 <main class="wadah" id="isi" hidden={layar === "presentasi"}>
   {#if layar === "beranda"}
     <header style="margin-bottom: 1.6rem">
-      <h1>Bank soal IND323 dengan pewaktu</h1>
+      <h1>{pilih(T.judulBeranda)}</h1>
       <p style="color: var(--teks-2); max-width: 60ch">
         {BANK.length} soal dari 14 sesi kuliah. Kunci jawaban soal berhitung
         <strong>dihitung mesin</strong>, bukan diketik tangan — mesinnya ditulis dalam
@@ -131,28 +157,28 @@
     </header>
 
     <div class="kartu">
-      <h2 class="kartu__judul">Susun sesi</h2>
+      <h2 class="kartu__judul">{pilih(T.susunSesi)}</h2>
 
       <label class="bidang">
-        <span class="bidang__label">Jumlah soal — {tersedia} tersedia</span>
+        <span class="bidang__label"
+          >{pilih(T.jumlahSoal)} — {tersedia} {pilih(T.tersedia)}</span
+        >
         <input type="number" min="1" max={Math.max(1, tersedia)} bind:value={banyak} />
       </label>
 
       <label class="bidang">
-        <span class="bidang__label">
-          Benih acak — sesi dengan benih sama selalu identik
-        </span>
+        <span class="bidang__label">{pilih(T.benihAcak)}</span>
         <input type="text" inputmode="numeric" bind:value={benihTeks} />
       </label>
 
       <div class="bidang">
-        <span class="bidang__label">Batasi ke satu sesi kuliah</span>
+        <span class="bidang__label">{pilih(T.batasiSesi)}</span>
         <div class="baris">
           <button
             type="button"
             class="tombol"
             aria-pressed={sesiTerpilih === undefined}
-            onclick={() => (sesiTerpilih = undefined)}>Semua sesi</button
+            onclick={() => (sesiTerpilih = undefined)}>{pilih(T.semuaSesi)}</button
           >
           {#each SESI as s (s.nomor)}
             <button
@@ -178,7 +204,8 @@
           disabled={tersedia === 0}
           onclick={mulai}
         >
-          Mulai — {Math.min(banyak, tersedia)} soal, {jam(Math.min(banyak, tersedia) * 90)}
+          {pilih(T.mulai)} — {Math.min(banyak, tersedia)}
+          {pilih(T.soal)}, {jam(Math.min(banyak, tersedia) * 90)}
         </button>
       </div>
       <p class="catatan">
@@ -189,12 +216,12 @@
     </div>
 
     <div class="kartu">
-      <h2 class="kartu__judul">Apa yang sebenarnya diuji bank ini</h2>
+      <h2 class="kartu__judul">{pilih(T.cakupanBank)}</h2>
       <PetaBank />
     </div>
 
     <div class="kartu">
-      <h2 class="kartu__judul">Kapan sebuah soal kembali muncul</h2>
+      <h2 class="kartu__judul">{pilih(T.kapanMuncul)}</h2>
       <p class="catatan">
         Situs ini memakai penjadwal SM-2 — algoritma pengulangan berjarak yang
         sama dengan yang dipakai SuperMemo dan Anki. Ia menunda soal yang sudah
@@ -241,7 +268,7 @@
     </div>
 
     <div class="kartu">
-      <h2 class="kartu__judul">Sebaran soal per sesi</h2>
+      <h2 class="kartu__judul">{pilih(T.sebaranSesi)}</h2>
       <ul class="petak">
         {#each SESI as s (s.nomor)}
           {@const jumlah = BANK.filter((x) => x.sesi === s.nomor).length}
@@ -271,7 +298,7 @@
     />
   {:else if layar === "hasil"}
     <div class="kartu" style="text-align: center">
-      <div class="kartu__judul">Nilai akhir</div>
+      <div class="kartu__judul">{pilih(T.nilaiAkhir)}</div>
       <div class="nilai-besar">{ringkasan.nilai.toFixed(0)}</div>
       <p class="catatan">
         {ringkasan.benar} benar dari {ringkasan.total} soal, dikerjakan dalam {jam(terpakai)}.
@@ -281,14 +308,14 @@
 
     {#if ringkasan.perTopik.length > 0}
       <div class="kartu">
-        <h2 class="kartu__judul">Ketepatan per topik — yang terlemah lebih dulu</h2>
+        <h2 class="kartu__judul">{pilih(T.ketepatanTopik)}</h2>
         <BatangTopik perTopik={ringkasan.perTopik} />
       </div>
     {/if}
 
     {#if salahDijawab.length > 0}
       <div class="kartu">
-        <h2 class="kartu__judul">Yang perlu diulang</h2>
+        <h2 class="kartu__judul">{pilih(T.perluDiulang)}</h2>
         {#each salahDijawab as x (x.p.kode)}
           <div style="padding: 0.7rem 0; border-bottom: 1px solid var(--garis)">
             <div class="langkah-nomor">
@@ -307,7 +334,7 @@
         class="tombol tombol--utama"
         onclick={() => {
           layar = "ujian";
-        }}>Ulangi sesi yang sama</button
+        }}>{pilih(T.ulangiSesi)}</button
       >
       <button
         type="button"

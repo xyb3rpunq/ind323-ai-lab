@@ -272,6 +272,23 @@ code {
   display: none !important;
 }
 
+/* Pemilih bahasa dipisahkan garis tipis dari navigasi lain: ia mengubah
+   seluruh halaman, bukan berpindah ke satu bagian saja, dan menaruhnya di
+   deretan yang sama membuat keduanya terlihat sederajat padahal tidak. */
+.pilih-bahasa {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  padding-left: 0.6rem;
+  border-left: 1px solid var(--garis);
+}
+
+.pilih-bahasa .tombol {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.28rem 0.5rem;
+}
+
 /* ------------------------------------------------------------------ isian */
 
 .bidang {
