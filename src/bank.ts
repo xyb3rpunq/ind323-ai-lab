@@ -4,7 +4,9 @@
  * # Yang di sini bukan sumber kebenaran
  *
  * Soal beserta kunci jawabannya datang dari `src/generated/bank.json`, yang
- * dihasilkan paket Swift saat build. Kunci soal berhitung **dihitung** modul
+ * dihasilkan paket Swift saat build — di sini dibaca lewat `bank-inti.json`,
+ * turunannya tanpa pembahasan. Pembahasannya diunduh terpisah; lihat
+ * `pembahasan.svelte.ts`. Kunci soal berhitung **dihitung** modul
  * Swift yang sama yang diadu terhadap 3.796 pernyataan berpola bit — bukan
  * diketik tangan.
  *
@@ -20,7 +22,7 @@
  * .Deckyx
  */
 
-import mentah from "./generated/bank.json";
+import mentah from "./generated/bank-inti.json";
 import { bi, type Bilingual } from "./i18n";
 
 /**
@@ -41,7 +43,6 @@ export type Soal =
       bentuk: "pilihan";
       pilihan: Bilingual[];
       benar: number;
-      pembahasan: Bilingual;
     }
   | {
       kode: string;
@@ -53,7 +54,6 @@ export type Soal =
       jawaban: number;
       toleransi: number;
       satuan: Bilingual;
-      pembahasan: Bilingual;
     }
   | {
       kode: string;
@@ -63,7 +63,6 @@ export type Soal =
       pertanyaan: Bilingual;
       bentuk: "benarSalah";
       benar: boolean;
-      pembahasan: Bilingual;
     };
 
 export interface Sesi {

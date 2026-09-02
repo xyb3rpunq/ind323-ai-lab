@@ -17,7 +17,8 @@
   .Deckyx
 -->
 <script lang="ts">
-  import { bacaAngka, jam, nilai, susunSesi } from "../bank";
+  import { pembahasanDari } from "../pembahasan";
+  import { bacaAngka, jam, namaTopik, nilai, susunSesi } from "../bank";
   import { T, pilih } from "../i18n.svelte";
   import type { Jawaban, Penilaian, Soal } from "../bank";
 
@@ -124,12 +125,12 @@
     <span
       class="pewaktu__angka{kritis ? ' pewaktu__angka--kritis' : ''}"
       aria-live="off"
-      aria-label="Sisa waktu {jam(tersisa)}">{jam(tersisa)}</span
+      aria-label="{pilih(T.sisaWaktu)} {jam(tersisa)}">{jam(tersisa)}</span
     >
     <div
       class="pewaktu__bilah"
       role="progressbar"
-      aria-label="Sisa waktu"
+      aria-label={pilih(T.sisaWaktu)}
       aria-valuenow={Math.max(0, tersisa)}
       aria-valuemin="0"
       aria-valuemax={sesi.batasDetik}
@@ -147,7 +148,10 @@
 {#if soal}
   <div class="kartu">
     <div class="langkah-nomor">
-      Sesi {String(soal.sesi).padStart(2, "0")} · {soal.topik} · tingkat {soal.tingkat}
+      {pilih(T.sesi)}
+      {String(soal.sesi).padStart(2, "0")} · {pilih(namaTopik(soal.topik))} ·
+      {pilih(T.tingkatSoal)}
+      {soal.tingkat}
     </div>
     <p class="soal">{pilih(soal.pertanyaan)}</p>
 
@@ -167,7 +171,7 @@
         {/each}
       </div>
     {:else if soal.bentuk === "benarSalah"}
-      <div class="baris" role="group" aria-label="Pilihan jawaban">
+      <div class="baris" role="group" aria-label={pilih(T.pilihanJawaban)}>
         {#each [true, false] as v (v)}
           <button
             type="button"
@@ -176,7 +180,7 @@
             disabled={sudahDinilai}
             onclick={() => (jawabanSekarang = { jenis: "benarSalah", nilai: v })}
           >
-            {v ? "Benar" : "Salah"}
+            {pilih(v ? T.nilaiBenar : T.nilaiSalah)}
           </button>
         {/each}
       </div>
@@ -193,7 +197,7 @@
           inputmode="decimal"
           bind:value={teksAngka}
           disabled={sudahDinilai}
-          placeholder="mis. 0,79"
+          placeholder={pilih(T.contohAngka)}
           onkeydown={(e) => {
             if (e.key === "Enter" && !sudahDinilai) jawab();
           }}
@@ -204,7 +208,7 @@
     {#if sudahDinilai && hasilSekarang}
       <div class="pembahasan">
         <span class="lencana lencana--{hasilSekarang.benar ? 'benar' : 'salah'}">
-          {hasilSekarang.benar ? "Benar" : "Salah"}
+          {pilih(hasilSekarang.benar ? T.hasilBenar : T.hasilSalah)}
         </span>
         {#if soal.bentuk === "angka" && !hasilSekarang.benar}
           <span class="catatan">
@@ -213,7 +217,7 @@
               .replace("%E", String(soal.toleransi))}
           </span>
         {/if}
-        <p style="margin: 0.5rem 0 0">{pilih(soal.pembahasan)}</p>
+        <p style="margin: 0.5rem 0 0">{pilih(pembahasanDari(soal.kode))}</p>
       </div>
     {/if}
 
@@ -225,7 +229,7 @@
           disabled={soal.bentuk === "angka"
             ? teksAngka.trim().length === 0
             : jawabanSekarang.jenis === "kosong"}
-          onclick={jawab}>Kunci jawaban</button
+          onclick={jawab}>{pilih(T.kunciJawaban)}</button
         >
         <button
           type="button"
@@ -233,11 +237,11 @@
           onclick={() => {
             jawabanSekarang = { jenis: "kosong" };
             jawab();
-          }}>Lewati</button
+          }}>{pilih(T.lewati)}</button
         >
       {:else}
         <button type="button" class="tombol tombol--utama" onclick={lanjut}>
-          {indeks + 1 >= sesi.soal.length ? "Lihat hasil" : "Soal berikutnya"}
+          {pilih(indeks + 1 >= sesi.soal.length ? T.lihatHasil : T.soalBerikutnya)}
         </button>
       {/if}
     </div>

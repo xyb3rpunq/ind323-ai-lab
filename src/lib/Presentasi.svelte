@@ -232,7 +232,7 @@
       <div class="lapis__kotak">
         <h3>{pilih(T.pintasan)}</h3>
         <dl class="pintasan">
-          <dt>→ · spasi · PageDown</dt>
+          <dt>→ · {pilih(T.tutsSpasi)} · PageDown</dt>
           <dd>{pilih(T.pintasBerikut)}</dd>
           <dt>← · PageUp</dt>
           <dd>{pilih(T.pintasSebelum)}</dd>

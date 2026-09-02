@@ -24,6 +24,7 @@
  */
 
 import { namaTopik } from "./bank";
+import { pembahasanDari } from "./pembahasan";
 import type { Penilaian, Ringkasan, Soal } from "./bank";
 import { bi, type Bilingual } from "./i18n";
 
@@ -158,7 +159,7 @@ export function barisRapor(rapor: Rapor, pilih: (p: Bilingual) => string): Sel[]
       pilih(namaTopik(s.topik)),
       pilih(s.pertanyaan),
       p === undefined ? "" : pilih(p.benar ? L.ya : L.tidak),
-      pilih(s.pembahasan),
+      pilih(pembahasanDari(s.kode)),
     ]);
   });
   baris.push([]);

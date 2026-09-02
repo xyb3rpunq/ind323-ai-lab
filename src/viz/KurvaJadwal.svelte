@@ -125,7 +125,7 @@
     y={ATAS + 6}
     font-size="10"
     fill="var(--teks-3)"
-    transform="rotate(-90 14 {ATAS + 6})">hari</text
+    transform="rotate(-90 14 {ATAS + 6})">{pilih(KAMUS.sumbuHari)}</text
   >
 
   {#each mulus as t (t.ulanganKe)}
@@ -144,7 +144,7 @@
     y={T - 10}
     text-anchor="middle"
     font-size="10"
-    fill="var(--teks-3)">ulangan ke-</text
+    fill="var(--teks-3)">{pilih(KAMUS.sumbuUlangan)}</text
   >
 
   {#if salahDiUlangan > 0}

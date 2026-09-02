@@ -46,6 +46,14 @@ export const T = {
     "Projector-ready slides, with presenter notes",
   ),
   bahasa: bi("Bahasa", "Language"),
+  // Judul tab peramban. Ia tidak terlihat di halaman, tetapi ikut menjadi
+  // nama penanda buku, judul jendela, dan yang dibacakan pembaca layar saat
+  // tabnya berpindah — dan ia satu-satunya teks yang tetap berbahasa
+  // Indonesia sesudah seluruh halaman berbahasa Inggris.
+  judulTab: bi(
+    "IND323 AI Lab — Bank Soal Bertimer & Ringkasan Materi",
+    "IND323 AI Lab — Timed Question Bank & Course Summaries",
+  ),
 
   // Beranda
   judulBeranda: bi("Bank soal IND323 dengan pewaktu", "IND323 question bank with a timer"),
@@ -76,6 +84,12 @@ export const T = {
   cakupanBank: bi("Apa yang sebenarnya diuji bank ini", "What this bank actually tests"),
   kapanMuncul: bi("Kapan sebuah soal kembali muncul", "When a question comes back"),
   sebaranSesi: bi("Sebaran soal per sesi", "Questions per session"),
+  // Tiga tingkat kesulitan bank soal, dipakai sebagai judul kolom peta
+  // cakupan. Namanya mengikuti tiga tingkat pertama taksonomi Bloom.
+  tingkatIngatan: bi("ingatan", "recall"),
+  tingkatPemahaman: bi("pemahaman", "understanding"),
+  tingkatPenerapan: bi("penerapan", "application"),
+  sumbuUlangan: bi("ulangan ke-", "repetition no."),
 
   // Layar materi
   judulMateri: bi("Ringkasan materi per sesi", "Per-session material summary"),
@@ -147,6 +161,32 @@ export const T = {
   ),
   merekSub: bi("Pendamping kuliah & bank soal", "Course companion & question bank"),
   pilihanJawaban: bi("Pilihan jawaban", "Answer options"),
+
+  // Layar ujian
+  lewatiKeIsi: bi("Lewati ke isi", "Skip to content"),
+  sisaWaktu: bi("Sisa waktu", "Time remaining"),
+  tingkatSoal: bi("tingkat", "level"),
+  // Tombol benar/salah menawarkan nilai kebenaran sebuah pernyataan, sedangkan
+  // lencana sesudahnya menilai jawaban pesertanya. Dalam Bahasa Indonesia
+  // keduanya kebetulan memakai kata yang sama; dalam Bahasa Inggris tidak, dan
+  // menyatukannya akan menghasilkan tombol "Correct/Incorrect" untuk
+  // pernyataan yang belum dijawab siapa pun.
+  nilaiBenar: bi("Benar", "True"),
+  nilaiSalah: bi("Salah", "False"),
+  hasilBenar: bi("Benar", "Correct"),
+  hasilSalah: bi("Salah", "Incorrect"),
+  // Titik desimalnya ikut berganti: yang menulis 0.79 di antarmuka berbahasa
+  // Indonesia sedang menebak, bukan menjawab.
+  contohAngka: bi("mis. 0,79", "e.g. 0.79"),
+  kunciJawaban: bi("Kunci jawaban", "Lock in answer"),
+  lewati: bi("Lewati", "Skip"),
+  lihatHasil: bi("Lihat hasil", "See results"),
+  soalBerikutnya: bi("Soal berikutnya", "Next question"),
+  sesiBaru: bi("Sesi baru", "New session"),
+  berapaKaliDijawab: bi("Berapa kali dijawab", "Times answered"),
+  salahDiUlanganKe: bi("Salah di ulangan ke", "Wrong at repetition no."),
+  sumbuHari: bi("hari", "days"),
+  tutsSpasi: bi("spasi", "space"),
   jawabanAngka: bi(
     "Jawaban berupa angka%S — koma maupun titik sama-sama diterima",
     "A numeric answer%S — a comma or a full stop are both accepted",

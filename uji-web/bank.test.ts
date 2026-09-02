@@ -37,6 +37,7 @@ import {
   NAMA_TOPIK,
 } from "../src/bank";
 import type { Penilaian } from "../src/bank";
+import { muatPembahasan, pembahasanDari } from "../src/pembahasan";
 import { MATERI } from "../src/materi";
 
 // ---------------------------------------------------------------------------
@@ -308,20 +309,36 @@ describe("isi bank", () => {
     }
   });
 
-  it("setiap soal punya pembahasan yang benar-benar menjelaskan", () => {
+  it("setiap soal punya pembahasan yang benar-benar menjelaskan", async () => {
     // Diperiksa di kedua bahasa dengan ambang yang sama. Terjemahan yang
     // dipotong separuh tetap lolos setiap pemeriksaan lain, dan yang membaca
     // separuhnya justru orang yang tidak bisa membaca yang satunya.
+    //
+    // Pembahasannya diunduh terpisah, jadi ia ditunggu lebih dulu — lewat
+    // jalan yang sama persis dengan yang dipakai layar ujian, bukan lewat
+    // pembacaan berkas yang hanya ada di uji.
+    await muatPembahasan();
     for (const s of BANK) {
+      const pem = pembahasanDari(s.kode);
       for (const b of ["id", "en"] as const) {
         expect(s.pertanyaan[b].length, `${s.kode} ${b}`).toBeGreaterThan(20);
         // Soal tanpa pembahasan hanya menguji, tidak mengajari.
-        expect(s.pembahasan[b].length, `${s.kode} ${b}`).toBeGreaterThan(80);
+        expect(pem[b].length, `${s.kode} ${b}`).toBeGreaterThan(80);
       }
     }
   });
 
-  it("setiap untai soal punya kedua bahasa, dan keduanya berbeda", () => {
+  it("pembahasan yang belum dikenal tidak meruntuhkan apa pun", () => {
+    // Kode yang tidak ada mengembalikan pasangan kosong, bukan galat. Satu
+    // soal tanpa pembahasan adalah kekurangan; layar ujian yang runtuh di
+    // tengah menghapus seluruh jawaban yang sudah dikerjakan.
+    const kosong = pembahasanDari("tidak-ada-kode-seperti-ini");
+    expect(kosong.id).toBe("");
+    expect(kosong.en).toBe("");
+  });
+
+  it("setiap untai soal punya kedua bahasa, dan keduanya berbeda", async () => {
+    await muatPembahasan();
     // Menyalin kolom Indonesia ke kolom Inggris lolos setiap pemeriksaan
     // panjang di atas: ia menghasilkan bank yang mengaku dwibahasa padahal
     // menampilkan satu bahasa dua kali.
@@ -331,7 +348,7 @@ describe("isi bank", () => {
     // sedang diuji pada soal stemming. Yang diperiksa karena itu prosanya:
     // pertanyaan dan pembahasan, yang tidak punya alasan sama.
     for (const s of BANK) {
-      for (const bagian of [s.pertanyaan, s.pembahasan]) {
+      for (const bagian of [s.pertanyaan, pembahasanDari(s.kode)]) {
         expect(bagian.id.trim(), s.kode).not.toBe("");
         expect(bagian.en.trim(), s.kode).not.toBe("");
         expect(bagian.id, s.kode).not.toBe(bagian.en);
