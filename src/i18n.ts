@@ -95,6 +95,30 @@ export const T = {
   latihanSesiIni: bi("Latihan sesi ini", "Practise this session"),
   kembali: bi("Kembali", "Back"),
 
+  ringkasHasil: bi(
+    "%B benar dari %T soal, dikerjakan dalam %W.",
+    "%B of %T questions correct, completed in %W.",
+  ),
+  ringkasBenih: bi(
+    "Benih %S — pakai benih yang sama untuk mengulang sesi ini persis.",
+    "Seed %S — use the same seed to repeat this session exactly.",
+  ),
+
+  // Ekspor
+  simpanHasil: bi("Simpan hasil", "Save your result"),
+  catatanEkspor: bi(
+    "Unduh rapor lengkapnya — nilai, ketepatan tiap topik, dan setiap soal " +
+      "beserta pembahasannya — sebagai satu berkas yang bisa dibuka Excel, " +
+      "atau cetak halamannya menjadi PDF.",
+    "Download the full report — score, per-topic accuracy, and every question " +
+      "with its explanation — as one file Excel can open, or print the page to " +
+      "PDF.",
+  ),
+  unduhCsv: bi("Unduh CSV (Excel)", "Download CSV (Excel)"),
+  cetakPdf: bi("Cetak / simpan PDF", "Print / save as PDF"),
+  diunduh: bi("Diunduh", "Downloaded"),
+  unduhanDitolak: bi("Peramban menolak unduhan", "The browser refused the download"),
+
   // Kaki
   dibuatOleh: bi("Dibuat oleh", "Built by"),
   mesinSwift: bi(

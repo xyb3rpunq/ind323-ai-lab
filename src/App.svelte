@@ -16,6 +16,7 @@
   import PetaBank from "./viz/PetaBank.svelte";
   import Presentasi from "./lib/Presentasi.svelte";
   import { T, aturBahasa, bahasa, pilih, pulihkanBahasa } from "./i18n.svelte";
+  import { unduhRapor } from "./ekspor";
 
   type Layar = "beranda" | "ujian" | "hasil" | "materi" | "presentasi";
 
@@ -39,6 +40,32 @@
   // "berapa harga satu kesalahan" jawabannya berbeda-beda tergantung kapan
   // kesalahannya terjadi — dan itu jauh lebih meyakinkan kalau bisa dicoba
   // sendiri daripada kalau hanya dibaca.
+  let kabarEkspor = $state<{ teks: string; benar: boolean } | null>(null);
+
+  function padaUnduhRapor() {
+    try {
+      const nama = unduhRapor(
+        {
+          ringkasan,
+          soal: hasilSoal,
+          penilaian: hasilPenilaian,
+          detik: terpakai,
+          benih: benihTeks,
+        },
+        pilih,
+      );
+      kabarEkspor = { teks: `${pilih(T.diunduh)}: ${nama}`, benar: true };
+    } catch (galat) {
+      // Unduhan bisa ditolak peramban atau kebijakan perangkat. Diam bukan
+      // pilihan: pengguna yang menekan tombol dan tidak melihat apa pun akan
+      // menekannya lagi, lalu menyimpulkan situsnya rusak.
+      kabarEkspor = {
+        teks: `${pilih(T.unduhanDitolak)}: ${String(galat)}`,
+        benar: false,
+      };
+    }
+  }
+
   let ulanganJadwal = $state(10);
   let salahDiUlangan = $state(5);
 
@@ -301,8 +328,17 @@
       <div class="kartu__judul">{pilih(T.nilaiAkhir)}</div>
       <div class="nilai-besar">{ringkasan.nilai.toFixed(0)}</div>
       <p class="catatan">
-        {ringkasan.benar} benar dari {ringkasan.total} soal, dikerjakan dalam {jam(terpakai)}.
-        Benih {benihTeks} — pakai benih yang sama untuk mengulang sesi ini persis.
+        <!--
+          Kalimatnya dirakit dari satu untai bertanda, bukan dari potongan yang
+          disambung di templat. Urutan kata bahasa Inggris dan Indonesia
+          berbeda, dan potongan yang disambung memaksa keduanya memakai urutan
+          yang sama — sehingga salah satunya pasti terbaca janggal.
+        -->
+        {pilih(T.ringkasHasil)
+          .replace("%B", String(ringkasan.benar))
+          .replace("%T", String(ringkasan.total))
+          .replace("%W", jam(terpakai))}
+        {pilih(T.ringkasBenih).replace("%S", benihTeks)}
       </p>
     </div>
 
@@ -327,6 +363,26 @@
         {/each}
       </div>
     {/if}
+
+    <div class="kartu">
+      <h2 class="kartu__judul">{pilih(T.simpanHasil)}</h2>
+      <p class="catatan">{pilih(T.catatanEkspor)}</p>
+      <div class="baris">
+        <button type="button" class="tombol" onclick={padaUnduhRapor}>
+          {pilih(T.unduhCsv)}
+        </button>
+        <button type="button" class="tombol" onclick={() => globalThis.print()}>
+          {pilih(T.cetakPdf)}
+        </button>
+      </div>
+      <div class="ekspor__kabar" aria-live="polite">
+        {#if kabarEkspor}
+          <span class={kabarEkspor.benar ? "kabar kabar--benar" : "kabar"}>
+            {kabarEkspor.teks}
+          </span>
+        {/if}
+      </div>
+    </div>
 
     <div class="baris">
       <button

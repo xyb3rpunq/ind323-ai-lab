@@ -577,3 +577,74 @@ td.num {
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
+
+
+/* ------------------------------------------------------------------ ekspor */
+
+.ekspor__kabar {
+  min-height: 1.4rem;
+  margin-top: 0.5rem;
+}
+
+.kabar {
+  font-size: 0.84rem;
+  color: var(--teks-3);
+}
+
+.kabar--benar {
+  color: var(--benar);
+}
+
+/* ------------------------------------------------------------------- cetak */
+/*
+ * Dialog cetak peramban juga yang menghasilkan PDF-nya, jadi aturan di bawah
+ * menentukan bentuk berkas PDF yang disimpan pengguna.
+ *
+ * Yang dibuang: navigasi dan seluruh tombol. Di atas kertas semuanya tidak
+ * bisa ditekan, dan yang tidak bisa ditekan hanya memakan tempat yang
+ * seharusnya jadi milik rapornya.
+ */
+@media print {
+  .kepala,
+  .kaki,
+  .tombol,
+  .baris,
+  .ekspor__kabar,
+  .pilih-bahasa,
+  .deck {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 10pt;
+  }
+
+  .wadah {
+    max-width: none;
+    padding: 0;
+  }
+
+  .kartu {
+    background: #fff;
+    border: 1px solid #bbb;
+    box-shadow: none;
+    /* Judul di satu halaman dan angkanya di halaman berikutnya adalah rapor
+       yang lebih sulit dibaca daripada rapor tanpa halaman sama sekali. */
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.6rem;
+  }
+
+  .viz__svg {
+    background: #fff;
+    border: 1px solid #ccc;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #555;
+  }
+}
