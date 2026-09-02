@@ -11,6 +11,14 @@
  * disusun peramban — dan seluruh gagasan "sesi yang bisa diulang" runtuh tanpa
  * satu pun galat muncul.
  *
+ * # Kenapa direktorinya bernama `uji-web`, bukan `tests`
+ *
+ * Paket Swift menuntut ujinya berada di `Tests/` dengan T besar. Pada
+ * filesystem Windows yang tidak peka huruf besar-kecil, `tests/` dan `Tests/`
+ * adalah direktori yang sama — sehingga berkas ini tercatat di dalam `Tests/`
+ * dan lenyap dari pandangan Vitest begitu repositorinya diperiksa di Linux.
+ * Nama yang berbeda menghilangkan seluruh kelas kekeliruan itu.
+ *
  * .Deckyx
  */
 
@@ -99,7 +107,7 @@ describe("kesepadanan sesi dengan Swift", () => {
    * terpasang, dan uji yang butuh Docker 5 GB akan berhenti dijalankan orang
    * dalam hitungan hari.
    */
-  const rujukan = readFileSync("tests/sesi-swift.txt", "utf8");
+  const rujukan = readFileSync("uji-web/sesi-swift.txt", "utf8");
 
   const kelompok: { benih: string; baris: string[] }[] = [];
   for (const baris of rujukan.split(/\r?\n/)) {

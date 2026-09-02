@@ -4,7 +4,7 @@ import { defineConfig } from "vitest/config";
  *  bukan komponen. Menambah plugin yang tidak dipakai hanya memperlambat. */
 export default defineConfig({
   test: {
-    include: ["tests/**/*.test.ts"],
+    include: ["uji-web/**/*.test.ts"],
     environment: "node",
   },
 });

@@ -80,7 +80,7 @@ Kebijakan keamanan yang lebih sempit adalah keuntungan langsung keputusan itu, b
 
 Pengacakan sesi harus ada di kedua sisi — Swift menyusun sesi rujukan, peramban menyusun sesi yang dikerjakan. Dua salinan yang menyimpang akan membuat sesi berbenih sama berisi soal yang berbeda, **tanpa satu pun galat muncul**.
 
-Karena itu keduanya diikat uji: `aikit-cli sesi <benih> 12` menuliskan sesi rujukan ke `tests/sesi-swift.txt`, dan uji sisi peramban membandingkannya baris demi baris — termasuk urutan pilihan yang diacak dan letak kuncinya setelah berpindah.
+Karena itu keduanya diikat uji: `aikit-cli sesi <benih> 12` menuliskan sesi rujukan ke `uji-web/sesi-swift.txt`, dan uji sisi peramban membandingkannya baris demi baris — termasuk urutan pilihan yang diacak dan letak kuncinya setelah berpindah.
 
 ```
 4 sesi diperiksa, 0 berbeda.
@@ -201,7 +201,7 @@ ind323-ai-lab/
 │   │   ├── Ujian.swift     Penyusun sesi, penilaian, ringkasan, SM-2
 │   │   └── Bank.swift      49 soal; kunci berhitungnya dihasilkan Inti
 │   └── aikit-cli/          conform · bank · sesi
-├── Tests/AIKitTests/       68 uji
+├── Tests/AIKitTests/       68 uji Swift
 ├── conformance/vectors/    2.266 vektor berpola bit dari AI ATLAS
 ├── src/
 │   ├── generated/bank.json Dihasilkan Swift; dijaga CI agar tetap mutakhir
@@ -209,8 +209,11 @@ ind323-ai-lab/
 │   ├── materi.ts           Ringkasan 14 sesi kuliah
 │   ├── lib/Ujian.svelte    Sesi bertimer
 │   └── App.svelte          Kerangka dan perutean
-├── tests/
-│   ├── bank.test.ts        34 uji
+├── uji-web/                Dinamai begini, bukan `tests/`: pada filesystem
+│   │                       Windows yang tidak peka huruf besar-kecil, `tests/`
+│   │                       bertabrakan dengan `Tests/` milik Swift dan salah
+│   │                       satunya hilang tanpa peringatan.
+│   ├── bank.test.ts        34 uji sisi peramban
 │   └── sesi-swift.txt      Sesi rujukan dari Swift, untuk uji kesepadanan
 └── .github/workflows/      Uji, adu, hasilkan, terbitkan
 ```
