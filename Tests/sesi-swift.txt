@@ -1,0 +1,53 @@
+Build complete! (2.96s)
+=== benih 0
+S14-01 :: 2 :: Derivatif|ketiganya sama|Integral|Proporsional
+S04-01
+S14-02 :: 2 :: sudut sendi yang dibutuhkan untuk mencapai posisi tertentu|gaya yang dibutuhkan tiap sendi|posisi ujung lengan dari sudut tiap sendinya|lintasan tercepat menuju sasaran
+S08-02 :: 1 :: DFS menjamin jalur terpendek, BFS tidak|BFS menjamin jalur terpendek, DFS tidak|keduanya menjamin jalur terpendek|keduanya tidak menjamin apa pun
+S07-01
+S09-03
+S13-05
+S13-02
+S13-03
+S14-03
+S13-08 :: 0 :: modelnya belum tentu mempelajari apa pun; menebak kelas mayoritas memberi hasil sama|modelnya sangat baik|modelnya mengalami overfitting|datanya terlalu sedikit
+S01-03 :: 1 :: penurunan mutu jawaban setelah percakapan berlangsung lama|kecenderungan manusia menganggap program komputer memahami dirinya padahal tidak|kesalahan program saat memproses kalimat yang terlalu panjang|kemampuan program belajar dari percakapan sebelumnya
+=== benih 1
+S03-04
+S14-03
+S14-01 :: 1 :: Proporsional|Integral|Derivatif|ketiganya sama
+S05-02
+S02-02 :: 3 :: Planning — bagaimana agen menyusun rencana|Perception — apa yang bisa diindera agen|Probability — peluang agen berhasil|Performance measure — ukuran keberhasilan agen
+S04-04
+S13-05
+S13-06 :: 2 :: agar jaraknya lebih akurat|agar tidak perlu menyamakan skala fitur|agar suaranya tidak pernah imbang|agar perhitungannya lebih cepat
+S04-02
+S11-03
+S05-03
+S03-03
+=== benih 42
+S09-02 :: 1 :: pelatihan menjadi lebih cepat tanpa efek samping|galat berhenti menurun lalu melompat-lompat tanpa mengecil|galat menurun lebih halus daripada biasanya|jaringan pasti berhenti belajar sama sekali
+S09-01
+S04-04
+S11-01 :: 3 :: benarkah dugaan tertentu ini|berapa peluang kesimpulan benar|aturan mana yang paling sering dipakai|apa yang bisa disimpulkan dari fakta yang ada
+S08-01 :: 3 :: menaksir lebih besar agar pencariannya lebih cepat|selalu menaksir tepat sama dengan biaya sebenarnya|selalu bernilai nol|tidak pernah menaksir lebih besar daripada biaya sebenarnya
+S03-05
+S13-06 :: 1 :: agar perhitungannya lebih cepat|agar suaranya tidak pernah imbang|agar tidak perlu menyamakan skala fitur|agar jaraknya lebih akurat
+S13-02
+S02-02 :: 0 :: Performance measure — ukuran keberhasilan agen|Probability — peluang agen berhasil|Planning — bagaimana agen menyusun rencana|Perception — apa yang bisa diindera agen
+S06-03
+S03-03
+S10-02 :: 3 :: agar hasilnya selalu berupa kata benda|agar prosesnya berjalan lebih cepat|agar imbuhan yang dikupas bisa dikembalikan|agar kata seperti “beruang” tidak dikupas menjadi “uang”
+=== benih 2026
+S01-01 :: 0 :: penanya manusia tidak bisa membedakannya dari manusia lewat percakapan teks|mesin itu bisa mengalahkan juara dunia catur|mesin itu bisa menyelesaikan soal matematika lebih cepat daripada manusia|mesin itu punya kesadaran dan perasaan
+S02-02 :: 3 :: Planning — bagaimana agen menyusun rencana|Probability — peluang agen berhasil|Perception — apa yang bisa diindera agen|Performance measure — ukuran keberhasilan agen
+S10-02 :: 1 :: agar imbuhan yang dikupas bisa dikembalikan|agar kata seperti “beruang” tidak dikupas menjadi “uang”|agar prosesnya berjalan lebih cepat|agar hasilnya selalu berupa kata benda
+S13-04 :: 2 :: ketakmurnian Gini tertinggi|jumlah nilai berbeda terbanyak|perolehan informasi tertinggi|urutan kolom pada data
+S11-03
+S01-03 :: 1 :: kemampuan program belajar dari percakapan sebelumnya|kecenderungan manusia menganggap program komputer memahami dirinya padahal tidak|kesalahan program saat memproses kalimat yang terlalu panjang|penurunan mutu jawaban setelah percakapan berlangsung lama
+S13-01
+S04-02
+S08-01 :: 3 :: selalu bernilai nol|menaksir lebih besar agar pencariannya lebih cepat|selalu menaksir tepat sama dengan biaya sebenarnya|tidak pernah menaksir lebih besar daripada biaya sebenarnya
+S09-03
+S12-01 :: 1 :: Velocity|Validity|Volume|Variety
+S05-01

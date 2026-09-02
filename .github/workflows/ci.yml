@@ -1,0 +1,122 @@
+# ind323-ai-lab — uji, adu, hasilkan, terbitkan.
+#
+# Gerbang yang harus dilewati sebelum apa pun sampai ke pengguna:
+#
+#   1. Swift  — 68 uji mesin, lalu konformansi terhadap 3.796 pernyataan
+#               berpola bit yang dihasilkan implementasi Rust. Swift adalah
+#               implementasi kelima setelah Rust, Go, PL/SQL, dan Lua.
+#   2. Bank   — bank soal dihasilkan ulang dari Swift, lalu dibandingkan dengan
+#               yang tersimpan di repositori. Kalau berbeda, berarti kunci
+#               jawabannya berubah tanpa ada yang menyadarinya — dan perubahan
+#               seperti itu wajib disengaja.
+#   3. Web    — periksa tipe, uji, build, anggaran ukuran.
+#   4. Terbit — hanya bila ketiganya lolos, dan hanya dari `main`.
+#
+# .Deckyx
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "41 5 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift:
+    name: Swift — uji dan konformansi
+    runs-on: ubuntu-latest
+    container: swift:6.2
+    steps:
+      - uses: actions/checkout@v5
+
+      # Nama berkas vektornya ditulis tetap di dalam perkakasnya, tetapi
+      # jumlahnya diperiksa di sini juga. Berkas yang hilang akan menggagalkan
+      # konformansi dengan pesan yang jelas, bukan diam-diam mengurangi jumlah
+      # pernyataan yang diperiksa.
+      - name: Pastikan seluruh berkas vektor ada
+        run: |
+          jumlah=$(ls conformance/vectors/*.tsv | wc -l)
+          if [ "$jumlah" -ne 9 ]; then
+            echo "Diharapkan 9 berkas vektor, ditemukan $jumlah."
+            exit 1
+          fi
+
+      - name: Uji paket
+        run: swift test
+
+      - name: Bangun perkakas
+        run: swift build -c release
+
+      - name: Adu Swift lawan Rust
+        run: ./.build/release/aikit-cli conform conformance/vectors
+
+      # Bank soal yang tersimpan harus sama persis dengan yang dihasilkan
+      # Swift. Kalau berbeda, berarti kunci jawabannya bergeser — dan halaman
+      # yang menyatakan mahasiswa salah padahal ia benar adalah kegagalan yang
+      # jauh lebih buruk daripada build yang merah.
+      - name: Pastikan bank soal tersimpan masih mutakhir
+        run: |
+          ./.build/release/aikit-cli bank /tmp/bank.json
+          if ! diff -u src/generated/bank.json /tmp/bank.json; then
+            echo "Bank soal tersimpan tidak sepadan dengan keluaran Swift."
+            echo "Jalankan 'aikit-cli bank src/generated/bank.json' lalu komit hasilnya."
+            exit 1
+          fi
+
+  web:
+    name: Web — tipe, uji, build, anggaran
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Audit paket npm
+        run: npm audit --audit-level=high
+
+      - name: Periksa tipe
+        run: npm run typecheck
+
+      - name: Uji sisi peramban
+        run: npm run test
+
+      - name: Build produksi
+        run: npm run build
+
+      - name: Anggaran ukuran
+        run: npm run budget
+
+      - name: Simpan hasil build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  terbit:
+    name: Terbitkan ke GitHub Pages
+    needs: [swift, web]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.terbit.outputs.page_url }}
+    steps:
+      - name: Terbitkan
+        id: terbit
+        uses: actions/deploy-pages@v4

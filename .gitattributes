@@ -1,0 +1,7 @@
+# Akhiran baris dipaksa LF.
+#
+# Vektor uji dan berkas sesi rujukan dibandingkan baris demi baris; akhiran
+# baris yang berbeda antara mesin pengembang dan CI akan membuat uji
+# kesepadanan gagal di satu tempat dan lolos di tempat lain.
+* text=auto eol=lf
+*.png binary

@@ -1,0 +1,561 @@
+/*
+ * Gaya ind323-ai-lab.
+ *
+ * # Kenapa tampilannya sepekat ini
+ *
+ * Situs ini dipakai saat mengerjakan soal bertimer, sering menjelang ujian,
+ * sering malam hari. Latar pekat dengan satu warna aksen menahan perhatian
+ * pada satu hal: soal yang sedang dikerjakan. Tidak ada gambar hiasan dan
+ * tidak ada animasi yang bergerak sendiri — keduanya menarik mata menjauh
+ * dari teks, dan yang dikerjakan orang di sini justru teks.
+ *
+ * # Kenapa angkanya berlebar tetap
+ *
+ * Pewaktu yang hurufnya berlebar berubah akan bergeser tiap detik, dan
+ * pergeseran di sudut mata terbaca sebagai gerakan. Pada layar yang sedang
+ * dipakai berpikir, itu mengganggu.
+ *
+ * .Deckyx
+ */
+
+:root {
+  --latar: #0f1216;
+  --latar-2: #161b21;
+  --latar-3: #1d232b;
+  --garis: #272f39;
+  --garis-tegas: #384352;
+  --teks: #e8ecf1;
+  --teks-2: #9aa5b3;
+  --teks-3: #6b7684;
+  --aksen: #f0a828;
+  --aksen-pudar: #3a2c11;
+  --benar: #4ec97a;
+  --benar-pudar: #12301c;
+  --salah: #f0625c;
+  --salah-pudar: #331716;
+  --biru: #58a6ff;
+
+  --huruf: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Liberation Mono", Menlo, monospace;
+
+  --r: 10px;
+  --r-besar: 16px;
+  --lebar: 940px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-tema="gelap"]) {
+    --latar: #f6f7f9;
+    --latar-2: #ffffff;
+    --latar-3: #eef1f5;
+    --garis: #dfe4ea;
+    --garis-tegas: #c2cad4;
+    --teks: #151a20;
+    --teks-2: #4d5764;
+    --teks-3: #79838f;
+    --aksen: #a76a06;
+    --aksen-pudar: #fdf3e0;
+    --benar: #1f7a42;
+    --benar-pudar: #e6f5ec;
+    --salah: #b3312c;
+    --salah-pudar: #fbeceb;
+    --biru: #1f6feb;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--latar);
+  color: var(--teks);
+  font-family: var(--huruf);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0 0 0.8rem;
+}
+
+a {
+  color: var(--biru);
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+.lewati {
+  position: absolute;
+  left: -9999px;
+  background: var(--aksen);
+  color: #000;
+  padding: 0.6rem 1rem;
+  z-index: 100;
+}
+
+.lewati:focus {
+  left: 0;
+}
+
+:where(a, button, input, select, summary):focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------- kerangka */
+
+.kepala {
+  border-bottom: 1px solid var(--garis);
+  background: var(--latar-2);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.kepala__isi {
+  max-width: var(--lebar);
+  margin: 0 auto;
+  padding: 0.7rem clamp(0.9rem, 3vw, 1.6rem);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.merek {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--teks);
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: auto;
+  letter-spacing: -0.01em;
+}
+
+.merek__tanda {
+  width: 26px;
+  height: 26px;
+  color: var(--aksen);
+  flex: none;
+}
+
+.merek__sub {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 500;
+  color: var(--teks-3);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.wadah {
+  max-width: var(--lebar);
+  margin: 0 auto;
+  padding: clamp(1.1rem, 4vw, 2.2rem) clamp(0.9rem, 3vw, 1.6rem) 4rem;
+}
+
+/* ------------------------------------------------------------------ kartu */
+
+.kartu {
+  background: var(--latar-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-besar);
+  padding: clamp(0.95rem, 2.5vw, 1.4rem);
+  margin-bottom: 1.1rem;
+}
+
+.kartu__judul {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teks-3);
+  margin-bottom: 0.8rem;
+}
+
+.catatan {
+  font-size: 0.86rem;
+  color: var(--teks-2);
+  line-height: 1.7;
+}
+
+/* ---------------------------------------------------------------- tombol */
+
+.tombol {
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--r);
+  border: 1px solid var(--garis-tegas);
+  background: var(--latar-3);
+  color: var(--teks-2);
+  cursor: pointer;
+  text-align: left;
+}
+
+.tombol:hover:not(:disabled) {
+  border-color: var(--aksen);
+  color: var(--teks);
+}
+
+.tombol:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tombol--utama {
+  background: var(--aksen);
+  border-color: var(--aksen);
+  color: #14100a;
+  font-weight: 700;
+}
+
+.tombol--utama:hover:not(:disabled) {
+  filter: brightness(1.08);
+  color: #14100a;
+}
+
+.tombol[aria-pressed="true"] {
+  background: var(--aksen-pudar);
+  border-color: var(--aksen);
+  color: var(--aksen);
+  font-weight: 600;
+}
+
+.baris {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.7rem 0;
+}
+
+/* ------------------------------------------------------------------ isian */
+
+.bidang {
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.bidang__label {
+  display: block;
+  font-size: 0.84rem;
+  color: var(--teks-2);
+  margin-bottom: 0.3rem;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  width: 100%;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--teks);
+  background: var(--latar);
+  border: 1px solid var(--garis-tegas);
+  border-radius: var(--r);
+  padding: 0.55rem 0.7rem;
+}
+
+/* ------------------------------------------------------------------ ujian */
+
+.pewaktu {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pewaktu__angka {
+  font-family: var(--mono);
+  /* Angka berlebar tetap: tanpa ini pewaktunya bergeser tiap detik, dan
+     pergeseran di sudut mata terbaca sebagai gerakan. */
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pewaktu__angka--kritis {
+  color: var(--salah);
+}
+
+.pewaktu__bilah {
+  flex: 1 1 160px;
+  height: 6px;
+  background: var(--garis);
+  border-radius: 999px;
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.pewaktu__bilah span {
+  display: block;
+  height: 100%;
+  background: var(--aksen);
+  border-radius: 999px;
+  transition: width 0.9s linear;
+}
+
+.pewaktu__bilah span.kritis {
+  background: var(--salah);
+}
+
+.langkah-nomor {
+  font-size: 0.78rem;
+  color: var(--teks-3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.soal {
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0.6rem 0 1.1rem;
+}
+
+.pilihan {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pilihan__butir {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pilihan__huruf {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--teks-3);
+  flex: none;
+}
+
+.pilihan__butir[aria-pressed="true"] .pilihan__huruf {
+  color: var(--aksen);
+}
+
+.pilihan__butir--benar {
+  border-color: var(--benar);
+  background: var(--benar-pudar);
+  color: var(--teks);
+}
+
+.pilihan__butir--salah {
+  border-color: var(--salah);
+  background: var(--salah-pudar);
+  color: var(--teks);
+}
+
+.pembahasan {
+  border-left: 3px solid var(--aksen);
+  background: var(--latar-3);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 0.8rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--teks-2);
+}
+
+.lencana {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.lencana--benar {
+  background: var(--benar-pudar);
+  color: var(--benar);
+}
+
+.lencana--salah {
+  background: var(--salah-pudar);
+  color: var(--salah);
+}
+
+/* ------------------------------------------------------------------ hasil */
+
+.nilai-besar {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--aksen);
+}
+
+.topik-baris {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3.5rem 6rem;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--garis);
+  font-size: 0.88rem;
+}
+
+.topik-baris:last-child {
+  border-bottom: 0;
+}
+
+.topik-bilah {
+  height: 7px;
+  background: var(--garis);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.topik-bilah span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.angka-mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--teks-2);
+}
+
+/* ------------------------------------------------------------------ petak */
+
+.petak {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.petak a {
+  display: block;
+  background: var(--latar-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-besar);
+  padding: 0.9rem 1.05rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.petak a:hover {
+  border-color: var(--aksen);
+}
+
+.petak__nomor {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--teks-3);
+  letter-spacing: 0.06em;
+}
+
+.petak__nama {
+  font-weight: 600;
+  margin: 0.15rem 0 0.3rem;
+  font-size: 1rem;
+}
+
+.petak__jumlah {
+  font-size: 0.78rem;
+  color: var(--teks-3);
+}
+
+/* ------------------------------------------------------------------- kaki */
+
+.kaki {
+  border-top: 1px solid var(--garis);
+  background: var(--latar-2);
+  padding: 1.8rem clamp(0.9rem, 3vw, 1.6rem);
+  font-size: 0.8rem;
+  color: var(--teks-3);
+}
+
+.kaki__isi {
+  max-width: var(--lebar);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.8rem;
+}
+
+.kaki a {
+  color: var(--teks-2);
+}
+
+/* ------------------------------------------------------------------ tabel */
+
+.gulir-x {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4rem 0.65rem;
+  border-bottom: 1px solid var(--garis);
+}
+
+th {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--teks-3);
+}
+
+td.num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
