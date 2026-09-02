@@ -149,11 +149,11 @@
     <div class="langkah-nomor">
       Sesi {String(soal.sesi).padStart(2, "0")} · {soal.topik} · tingkat {soal.tingkat}
     </div>
-    <p class="soal">{soal.pertanyaan}</p>
+    <p class="soal">{pilih(soal.pertanyaan)}</p>
 
     {#if soal.bentuk === "pilihan"}
-      <div class="pilihan" role="group" aria-label="Pilihan jawaban">
-        {#each soal.pilihan as pilihan, i (pilihan)}
+      <div class="pilihan" role="group" aria-label={pilih(T.pilihanJawaban)}>
+        {#each soal.pilihan as opsi, i (opsi.id)}
           <button
             type="button"
             class="tombol pilihan__butir{kelasPilihan(i)}"
@@ -162,7 +162,7 @@
             onclick={() => (jawabanSekarang = { jenis: "pilihan", nilai: i })}
           >
             <span class="pilihan__huruf">{HURUF[i]}</span>
-            <span>{pilihan}</span>
+            <span>{pilih(opsi)}</span>
           </button>
         {/each}
       </div>
@@ -183,8 +183,10 @@
     {:else}
       <label class="bidang">
         <span class="bidang__label">
-          Jawaban berupa angka{soal.satuan ? ` (${soal.satuan})` : ""} — koma
-          maupun titik sama-sama diterima
+          {pilih(T.jawabanAngka).replace(
+            "%S",
+            soal.satuan.id ? ` (${pilih(soal.satuan)})` : "",
+          )}
         </span>
         <input
           type="text"
@@ -211,7 +213,7 @@
               .replace("%E", String(soal.toleransi))}
           </span>
         {/if}
-        <p style="margin: 0.5rem 0 0">{soal.pembahasan}</p>
+        <p style="margin: 0.5rem 0 0">{pilih(soal.pembahasan)}</p>
       </div>
     {/if}
 

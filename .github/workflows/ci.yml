@@ -79,12 +79,27 @@ jobs:
       # Swift. Kalau berbeda, berarti kunci jawabannya bergeser — dan halaman
       # yang menyatakan mahasiswa salah padahal ia benar adalah kegagalan yang
       # jauh lebih buruk daripada build yang merah.
+      - name: Hasilkan bank soal dari Swift
+        run: ./.build/release/aikit-cli bank "$RUNNER_TEMP/bank.json"
+
+      # Diunggah lebih dulu, sebelum dibandingkan. Swift tidak terpasang di
+      # mesin pengembangnya, jadi ketika bentuk banknya sengaja berubah —
+      # misalnya menjadi dwibahasa — keluaran yang benar hanya bisa datang dari
+      # sini. Mengunggahnya sesudah perbandingan berarti artefaknya tidak
+      # pernah ada justru pada jalan yang paling membutuhkannya.
+      - name: Unggah bank soal hasil Swift
+        uses: actions/upload-artifact@v4
+        with:
+          name: bank-soal
+          path: ${{ runner.temp }}/bank.json
+          retention-days: 30
+
       - name: Pastikan bank soal tersimpan masih mutakhir
         run: |
-          ./.build/release/aikit-cli bank /tmp/bank.json
-          if ! diff -u src/generated/bank.json /tmp/bank.json; then
+          if ! diff -u src/generated/bank.json "$RUNNER_TEMP/bank.json"; then
             echo "Bank soal tersimpan tidak sepadan dengan keluaran Swift."
-            echo "Jalankan 'aikit-cli bank src/generated/bank.json' lalu komit hasilnya."
+            echo "Ambil artefak 'bank-soal' dari jalan ini, simpan sebagai"
+            echo "src/generated/bank.json, lalu komit hasilnya."
             exit 1
           fi
 

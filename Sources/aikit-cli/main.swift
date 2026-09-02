@@ -450,11 +450,22 @@ func jsonAngka(_ v: Double) -> String {
     v.isFinite ? String(v) : "null"
 }
 
+/// Sepasang teks sebagai objek JSON.
+///
+/// Bentuknya `{"id": "…", "en": "…"}`, sama dengan bentuk `Dwibahasa` di sisi
+/// TypeScript. Menuliskannya sebagai dua bidang bersaudara — `pertanyaan` dan
+/// `pertanyaanEn` — akan membuat sisi antarmuka memilih bahasa dengan
+/// merangkai nama bidang, dan bidang yang tertinggal tidak akan pernah menjadi
+/// galat apa pun.
+func jsonDwibahasa(_ d: Dwibahasa) -> String {
+    "{ \"id\": \(jsonTeks(d.id)), \"en\": \(jsonTeks(d.en)) }"
+}
+
 func bankKeJson() -> String {
     var keluar = "{\n"
     keluar += "  \"sesi\": [\n"
     keluar += Bank.sesi.map { s in
-        "    { \"nomor\": \(s.nomor), \"nama\": \(jsonTeks(s.nama)) }"
+        "    { \"nomor\": \(s.nomor), \"nama\": \(jsonDwibahasa(s.nama)) }"
     }.joined(separator: ",\n")
     keluar += "\n  ],\n"
     keluar += "  \"soal\": [\n"
@@ -463,20 +474,20 @@ func bankKeJson() -> String {
         var bentuk = ""
         switch s.bentuk {
         case let .pilihan(pilihan, benar):
-            let daftar = pilihan.map(jsonTeks).joined(separator: ", ")
+            let daftar = pilihan.map(jsonDwibahasa).joined(separator: ", ")
             bentuk = "\"bentuk\": \"pilihan\", \"pilihan\": [\(daftar)], \"benar\": \(benar)"
         case let .angka(jawaban, toleransi, satuan):
             bentuk = "\"bentuk\": \"angka\", \"jawaban\": \(jsonAngka(jawaban)), "
-                + "\"toleransi\": \(jsonAngka(toleransi)), \"satuan\": \(jsonTeks(satuan))"
+                + "\"toleransi\": \(jsonAngka(toleransi)), \"satuan\": \(jsonDwibahasa(satuan))"
         case let .benarSalah(benar):
             bentuk = "\"bentuk\": \"benarSalah\", \"benar\": \(benar)"
         }
         return "    {\n"
             + "      \"kode\": \(jsonTeks(s.kode)), \"sesi\": \(s.sesi), "
             + "\"topik\": \(jsonTeks(s.topik)), \"tingkat\": \(s.tingkat),\n"
-            + "      \"pertanyaan\": \(jsonTeks(s.pertanyaan)),\n"
+            + "      \"pertanyaan\": \(jsonDwibahasa(s.pertanyaan)),\n"
             + "      \(bentuk),\n"
-            + "      \"pembahasan\": \(jsonTeks(s.pembahasan))\n"
+            + "      \"pembahasan\": \(jsonDwibahasa(s.pembahasan))\n"
             + "    }"
     }.joined(separator: ",\n")
 

@@ -19,8 +19,9 @@
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
   import { T as KAMUS, pilih } from "../i18n.svelte";
+  import { namaTopik } from "../bank";
   import type { RingkasanTopik } from "../bank";
-  import { warnaKetepatan } from "./dasar";
+  import { potong, warnaKetepatan } from "./dasar";
 
   interface Props {
     perTopik: RingkasanTopik[];
@@ -91,7 +92,7 @@
     {@const bagian = t.benar / t.total}
     {@const y = ATAS + i * TINGGI_BARIS}
     <text x={KIRI - 10} y={y + 14} text-anchor="end" font-size="11" fill="var(--teks-2)">
-      {t.topik.length > 26 ? `${t.topik.slice(0, 25)}…` : t.topik}
+      {potong(pilih(namaTopik(t.topik)), 26)}
     </text>
     <rect x={KIRI} y={y + 4} width={LEBAR} height="14" rx="3" fill="var(--latar-2)" />
     <rect

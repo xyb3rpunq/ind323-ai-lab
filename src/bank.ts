@@ -21,46 +21,113 @@
  */
 
 import mentah from "./generated/bank.json";
+import { bi, type Bilingual } from "./i18n";
 
-/** Bentuk soal sebagaimana tertulis di JSON. */
+/**
+ * Bentuk soal sebagaimana tertulis di JSON.
+ *
+ * `kode` dan `topik` sengaja tetap satu untai: keduanya kunci, bukan teks yang
+ * dibaca. `topik` dipakai mengelompokkan ketepatan, dan kunci yang ikut
+ * berganti bahasa menghasilkan dua ringkasan yang tidak bisa dibandingkan.
+ * Nama topik yang dibaca manusia ada di {@link NAMA_TOPIK}.
+ */
 export type Soal =
   | {
       kode: string;
       sesi: number;
       topik: string;
       tingkat: number;
-      pertanyaan: string;
+      pertanyaan: Bilingual;
       bentuk: "pilihan";
-      pilihan: string[];
+      pilihan: Bilingual[];
       benar: number;
-      pembahasan: string;
+      pembahasan: Bilingual;
     }
   | {
       kode: string;
       sesi: number;
       topik: string;
       tingkat: number;
-      pertanyaan: string;
+      pertanyaan: Bilingual;
       bentuk: "angka";
       jawaban: number;
       toleransi: number;
-      satuan: string;
-      pembahasan: string;
+      satuan: Bilingual;
+      pembahasan: Bilingual;
     }
   | {
       kode: string;
       sesi: number;
       topik: string;
       tingkat: number;
-      pertanyaan: string;
+      pertanyaan: Bilingual;
       bentuk: "benarSalah";
       benar: boolean;
-      pembahasan: string;
+      pembahasan: Bilingual;
     };
 
 export interface Sesi {
   nomor: number;
-  nama: string;
+  nama: Bilingual;
+}
+
+/**
+ * Nama topik yang dibaca manusia.
+ *
+ * Terpisah dari banknya karena `topik` di sana adalah **kunci**: ia dipakai
+ * mengelompokkan ketepatan, dan pengelompokan yang berbeda di tiap bahasa
+ * menghasilkan dua ringkasan yang tidak bisa dibandingkan satu sama lain.
+ *
+ * Ada di sisi antarmuka, bukan di Swift, karena nama yang dibaca manusia
+ * memang urusan tampilan — sama seperti nama pita tafsir dan nama himpunan
+ * kabur di ketiga situs saudara.
+ */
+export const NAMA_TOPIK: Record<string, Bilingual> = {
+  "Basis pengetahuan": bi("Basis pengetahuan", "Knowledge base"),
+  "Big data": bi("Big data", "Big data"),
+  "Certainty Factor": bi("Certainty Factor", "Certainty factor"),
+  Defuzzifikasi: bi("Defuzzifikasi", "Defuzzification"),
+  "Derajat keanggotaan": bi("Derajat keanggotaan", "Degree of membership"),
+  ELIZA: bi("ELIZA", "ELIZA"),
+  "Efek ELIZA": bi("Efek ELIZA", "The ELIZA effect"),
+  Entropi: bi("Entropi", "Entropy"),
+  Evaluasi: bi("Evaluasi", "Evaluation"),
+  "Fungsi aktivasi": bi("Fungsi aktivasi", "Activation function"),
+  Heuristik: bi("Heuristik", "Heuristics"),
+  "Inferensi kabur": bi("Inferensi kabur", "Fuzzy inference"),
+  "Jaringan semantik": bi("Jaringan semantik", "Semantic networks"),
+  "Jenis agen": bi("Jenis agen", "Agent types"),
+  "Keanggotaan kabur": bi("Keanggotaan kabur", "Fuzzy membership"),
+  "Kendali PID": bi("Kendali PID", "PID control"),
+  "Ketakmurnian Gini": bi("Ketakmurnian Gini", "Gini impurity"),
+  Kinematika: bi("Kinematika", "Kinematics"),
+  PEAS: bi("PEAS", "PEAS"),
+  Pelatihan: bi("Pelatihan", "Training"),
+  Pencarian: bi("Pencarian", "Search"),
+  Perceptron: bi("Perceptron", "Perceptron"),
+  "Pohon keputusan": bi("Pohon keputusan", "Decision trees"),
+  "Rasio kemungkinan": bi("Rasio kemungkinan", "Likelihood ratio"),
+  Resolusi: bi("Resolusi", "Resolution"),
+  "Ruang keadaan": bi("Ruang keadaan", "State spaces"),
+  "Sistem pakar": bi("Sistem pakar", "Expert systems"),
+  Stemming: bi("Stemming", "Stemming"),
+  "TF-IDF": bi("TF-IDF", "TF-IDF"),
+  "Tabel kebenaran": bi("Tabel kebenaran", "Truth tables"),
+  "Teorema Bayes": bi("Teorema Bayes", "Bayes' theorem"),
+  "Uji Turing": bi("Uji Turing", "The Turing test"),
+  "k-means": bi("k-means", "k-means"),
+  kNN: bi("kNN", "kNN"),
+};
+
+/**
+ * Nama sebuah topik, atau kuncinya sendiri bila belum punya terjemahan.
+ *
+ * Mengembalikan kuncinya alih-alih untai kosong: topik baru yang belum
+ * diterjemahkan tetap terbaca, dan uji yang menuntut tiap kunci punya nama
+ * yang akan memberitahunya — bukan halaman yang tiba-tiba kehilangan judul.
+ */
+export function namaTopik(kunci: string): Bilingual {
+  return NAMA_TOPIK[kunci] ?? bi(kunci, kunci);
 }
 
 const data = mentah as { sesi: Sesi[]; soal: Soal[] };

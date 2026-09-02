@@ -8,14 +8,14 @@
 -->
 <script lang="ts">
   import Ujian from "./lib/Ujian.svelte";
-  import { BANK, SESI, jam, rangkum } from "./bank";
+  import { BANK, SESI, jam, namaTopik, rangkum } from "./bank";
   import type { Penilaian, Ringkasan, Soal } from "./bank";
   import { MATERI } from "./materi";
   import BatangTopik from "./viz/BatangTopik.svelte";
   import KurvaJadwal from "./viz/KurvaJadwal.svelte";
   import PetaBank from "./viz/PetaBank.svelte";
   import Presentasi from "./lib/Presentasi.svelte";
-  import { T, aturBahasa, bahasa, pilih, pulihkanBahasa } from "./i18n.svelte";
+  import { T, aturBahasa, bahasa, bi, pilih, pulihkanBahasa } from "./i18n.svelte";
   import { unduhRapor } from "./ekspor";
 
   type Layar = "beranda" | "ujian" | "hasil" | "materi" | "presentasi";
@@ -232,13 +232,13 @@
               class="tombol"
               aria-pressed={sesiTerpilih === s.nomor}
               onclick={() => (sesiTerpilih = s.nomor)}
-              title={s.nama}>{String(s.nomor).padStart(2, "0")}</button
+              title={pilih(s.nama)}>{String(s.nomor).padStart(2, "0")}</button
             >
           {/each}
         </div>
         {#if sesiTerpilih !== undefined}
           <p class="catatan">
-            {SESI.find((s) => s.nomor === sesiTerpilih)?.nama}
+            {pilih(SESI.find((s) => s.nomor === sesiTerpilih)?.nama ?? bi('', ''))}
           </p>
         {/if}
       </div>
@@ -378,10 +378,10 @@
           <div style="padding: 0.7rem 0; border-bottom: 1px solid var(--garis)">
             <div class="langkah-nomor">
               {pilih(T.sesi)}
-              {String(x.s!.sesi).padStart(2, "0")} · {x.s!.topik}
+              {String(x.s!.sesi).padStart(2, "0")} · {pilih(namaTopik(x.s!.topik))}
             </div>
-            <p style="margin: 0.3rem 0 0.4rem">{x.s!.pertanyaan}</p>
-            <div class="catatan">{x.s!.pembahasan}</div>
+            <p style="margin: 0.3rem 0 0.4rem">{pilih(x.s!.pertanyaan)}</p>
+            <div class="catatan">{pilih(x.s!.pembahasan)}</div>
           </div>
         {/each}
       </div>
@@ -441,7 +441,7 @@
             class="tombol"
             aria-pressed={sesiMateri === s.nomor}
             onclick={() => (sesiMateri = s.nomor)}
-            title={s.nama}>{String(s.nomor).padStart(2, "0")}</button
+            title={pilih(s.nama)}>{String(s.nomor).padStart(2, "0")}</button
           >
         {/each}
       </div>

@@ -17,6 +17,7 @@
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
   import { T as KAMUS, pilih } from "../i18n.svelte";
+  import { potong } from "./dasar";
   import { BANK, SESI } from "../bank";
 
   const TINGKAT = [
@@ -89,9 +90,7 @@
       font-size="10"
       fill="var(--teks-2)"
     >
-      {String(s.nomor).padStart(2, "0")} · {s.nama.length > 22
-        ? `${s.nama.slice(0, 21)}…`
-        : s.nama}
+      {String(s.nomor).padStart(2, "0")} · {potong(pilih(s.nama), 22)}
     </text>
 
     {#each TINGKAT as t, kolom (t.nilai)}

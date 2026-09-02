@@ -146,6 +146,11 @@ export const T = {
     "The algorithm is written twice: once in Swift as the source of truth, once in TypeScript so this curve can be drawn in the browser. The two are checked against each other in CI — bit pattern by bit pattern, easiness factor included. A curve drawn from a copy that had drifted would teach an algorithm that is not this site's algorithm.",
   ),
   merekSub: bi("Pendamping kuliah & bank soal", "Course companion & question bank"),
+  pilihanJawaban: bi("Pilihan jawaban", "Answer options"),
+  jawabanAngka: bi(
+    "Jawaban berupa angka%S — koma maupun titik sama-sama diterima",
+    "A numeric answer%S — a comma or a full stop are both accepted",
+  ),
   tidakAda: bi("tidak ada", "none"),
   soalKeDari: bi("Soal %I dari %T", "Question %I of %T"),
   jawabanDiterima: bi(
