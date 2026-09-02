@@ -594,7 +594,12 @@ case "sesi":
         for soal in sesi.soal {
             var baris = soal.kode
             if case let .pilihan(pilihan, benar) = soal.bentuk {
-                baris += " :: " + String(benar) + " :: " + pilihan.joined(separator: "|")
+                // Sisi Indonesianya saja. Yang dibandingkan di sini letak
+                // pilihannya sesudah diacak, bukan isinya, dan satu bahasa
+                // sudah cukup untuk itu — memuat keduanya hanya menggandakan
+                // panjang barisnya tanpa menambah satu pun kemungkinan gagal.
+                baris += " :: " + String(benar) + " :: "
+                    + pilihan.map(\.id).joined(separator: "|")
             }
             print(baris)
         }
