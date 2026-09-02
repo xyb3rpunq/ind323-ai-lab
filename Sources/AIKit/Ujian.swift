@@ -37,7 +37,7 @@
 ///
 /// Di sini bentuk pasangan juga membuat terjemahan yang hilang menjadi
 /// **galat kompilasi**, bukan soal yang tampil kosong di tengah ujian.
-public struct Dwibahasa: Equatable, Sendable {
+public struct Dwibahasa: Hashable, Sendable {
     public let id: String
     public let en: String
 

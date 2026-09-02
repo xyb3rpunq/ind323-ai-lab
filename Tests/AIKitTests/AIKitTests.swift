@@ -493,7 +493,15 @@ struct UjiBank {
             if case let .pilihan(pilihan, benar) = s.bentuk {
                 #expect(pilihan.count >= 3, "\(s.kode)")
                 #expect(benar >= 0 && benar < pilihan.count, "\(s.kode)")
-                #expect(Set(pilihan).count == pilihan.count, "\(s.kode) punya pilihan kembar")
+                // Diperiksa per bahasa, bukan per pasang. Dua pilihan yang
+                // berbeda dalam bahasa Indonesia tetapi jatuh pada kalimat
+                // Inggris yang sama adalah soal yang rusak bagi yang
+                // membacanya dalam bahasa Inggris — dan pasangannya tetap
+                // berbeda, sehingga membandingkan pasangan tidak melihatnya.
+                let idSaja = pilihan.map(\.id)
+                let enSaja = pilihan.map(\.en)
+                #expect(Set(idSaja).count == idSaja.count, "\(s.kode) punya pilihan kembar (id)")
+                #expect(Set(enSaja).count == enSaja.count, "\(s.kode) punya pilihan kembar (en)")
             }
         }
     }
