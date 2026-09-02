@@ -16,6 +16,7 @@
 -->
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
+  import { T as KAMUS, pilih } from "../i18n.svelte";
   import { BANK, SESI } from "../bank";
 
   const TINGKAT = [
@@ -59,16 +60,17 @@
     return 0.28 + 0.62 * (jumlah / terbanyak);
   }
 
-  const terang =
-    `Tiap petak satu sesi pada satu tingkat kesulitan; makin pekat makin banyak ` +
-    `soalnya, dan petak kosong berarti tidak ada satu pun. Dari ` +
-    `${SESI.length * TINGKAT.length} kombinasi, ${kosong} masih kosong. ` +
-    `Angka di daftar sesi hanya menjawab berapa banyak soal yang ada; peta ini ` +
-    `menjawab soal yang mana — dan sesi yang tak punya satu pun soal penerapan ` +
-    `terlihat langsung sebagai baris yang habis di kolom kanan.`;
+  // $derived: keterangannya ikut berganti saat bahasanya berganti. Sebagai
+  // tetapan biasa ia akan membeku pada bahasa yang aktif waktu komponennya
+  // pertama digambar.
+  const terang = $derived(
+    pilih(KAMUS.petaTerang)
+      .replace("%K", String(SESI.length * TINGKAT.length))
+      .replace("%O", String(kosong)),
+  );
 </script>
 
-<Gambar judul="Cakupan bank soal" {terang} lebar={L} tinggi={T}>
+<Gambar judul={pilih(KAMUS.petaJudul)} {terang} lebar={L} tinggi={T}>
   {#each TINGKAT as t, i (t.nilai)}
     <text
       x={KIRI + i * LEBAR_KOLOM + LEBAR_KOLOM / 2}

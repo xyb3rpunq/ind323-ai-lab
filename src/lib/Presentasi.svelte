@@ -233,23 +233,22 @@
         <h3>{pilih(T.pintasan)}</h3>
         <dl class="pintasan">
           <dt>→ · spasi · PageDown</dt>
-          <dd>salindia berikutnya</dd>
+          <dd>{pilih(T.pintasBerikut)}</dd>
           <dt>← · PageUp</dt>
-          <dd>salindia sebelumnya</dd>
+          <dd>{pilih(T.pintasSebelum)}</dd>
           <dt>Home · End</dt>
-          <dd>awal · akhir</dd>
+          <dd>{pilih(T.pintasUjung)}</dd>
           <dt>F</dt>
-          <dd>layar penuh</dd>
+          <dd>{pilih(T.pintasLayarPenuh)}</dd>
           <dt>N</dt>
-          <dd>catatan pengajar</dd>
+          <dd>{pilih(T.pintasCatatan)}</dd>
           <dt>D</dt>
-          <dd>daftar sesi</dd>
+          <dd>{pilih(T.pintasDaftar)}</dd>
           <dt>Esc</dt>
-          <dd>tutup lapisan, atau keluar</dd>
+          <dd>{pilih(T.pintasTutup)}</dd>
         </dl>
         <p class="catatan">
-          Nomor salindia tersimpan di alamat. Kalau proyektornya mati, muat ulang
-          halamannya dan presentasi lanjut dari tempatnya berhenti.
+          {pilih(T.catatanAlamat)}
         </p>
         <button type="button" class="tombol-kecil" onclick={() => (bantuanTampil = false)}>
           {pilih(T.tutup)}

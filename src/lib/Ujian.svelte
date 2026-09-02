@@ -18,6 +18,7 @@
 -->
 <script lang="ts">
   import { bacaAngka, jam, nilai, susunSesi } from "../bank";
+  import { T, pilih } from "../i18n.svelte";
   import type { Jawaban, Penilaian, Soal } from "../bank";
 
   interface Props {
@@ -135,7 +136,11 @@
     >
       <span class={kritis ? "kritis" : ""} style="width: {bagianWaktu * 100}%"></span>
     </div>
-    <span class="langkah-nomor">Soal {indeks + 1} dari {sesi.soal.length}</span>
+    <span class="langkah-nomor"
+      >{pilih(T.soalKeDari)
+        .replace("%I", String(indeks + 1))
+        .replace("%T", String(sesi.soal.length))}</span
+    >
   </div>
 </div>
 
@@ -201,7 +206,9 @@
         </span>
         {#if soal.bentuk === "angka" && !hasilSekarang.benar}
           <span class="catatan">
-            &nbsp;Jawaban yang diterima: {soal.jawaban} (toleransi ±{soal.toleransi})
+            &nbsp;{pilih(T.jawabanDiterima)
+              .replace("%J", String(soal.jawaban))
+              .replace("%E", String(soal.toleransi))}
           </span>
         {/if}
         <p style="margin: 0.5rem 0 0">{soal.pembahasan}</p>

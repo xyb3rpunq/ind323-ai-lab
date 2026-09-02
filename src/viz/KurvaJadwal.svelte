@@ -23,6 +23,7 @@
 -->
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
+  import { T as KAMUS, pilih } from "../i18n.svelte";
   import { jejak, type TitikJadwal } from "../jadwal";
   import { lamanya, ribuan, skala, tandaLog } from "./dasar";
 
@@ -72,31 +73,29 @@
   const akhirTersandung = $derived(tersandung[tersandung.length - 1]);
 
   const terang = $derived(
-    salahDiUlangan > 0
-      ? `Sumbu tegaknya logaritmik: tiap garis sepuluh kali garis di bawahnya. ` +
-        `Setelah ${banyakUlangan} ulangan yang mulus, soalnya kembali ` +
-        `${lamanya(akhirMulus?.jarakHari ?? 0)} sekali. Satu jawaban salah di ulangan ` +
-        `ke-${salahDiUlangan} menjatuhkannya kembali ke satu hari — dan pada akhir ` +
-        `deret yang sama, jaraknya tinggal ${lamanya(akhirTersandung?.jarakHari ?? 0)}. ` +
-        `Itulah harga satu kesalahan, dan itulah sebabnya penjadwal ini menunda ` +
-        `soal yang sudah dikuasai alih-alih mengulanginya terus.`
-      : `Sumbu tegaknya logaritmik: tiap garis sepuluh kali garis di bawahnya. ` +
-        `Setelah ${banyakUlangan} ulangan yang mulus, soalnya kembali ` +
-        `${lamanya(akhirMulus?.jarakHari ?? 0)} sekali.`,
+    (salahDiUlangan > 0 ? pilih(KAMUS.kurvaTerangSalah) : pilih(KAMUS.kurvaTerang))
+      .replace("%U", String(banyakUlangan))
+      .replace("%M", lamanya(akhirMulus?.jarakHari ?? 0))
+      .replace("%S", String(salahDiUlangan))
+      .replace("%T", lamanya(akhirTersandung?.jarakHari ?? 0)),
   );
 
   const kunci = $derived(
     salahDiUlangan > 0
       ? [
-          { warna: "var(--benar)", label: "selalu benar" },
-          { warna: "var(--salah)", label: `salah sekali di ulangan ke-${salahDiUlangan}`, putus: true },
+          { warna: "var(--benar)", label: pilih(KAMUS.kurvaSelaluBenar) },
+          {
+            warna: "var(--salah)",
+            label: pilih(KAMUS.kurvaSalahDi).replace("%S", String(salahDiUlangan)),
+            putus: true,
+          },
         ]
-      : [{ warna: "var(--benar)", label: "selalu benar" }],
+      : [{ warna: "var(--benar)", label: pilih(KAMUS.kurvaSelaluBenar) }],
   );
 </script>
 
 <Gambar
-  judul="Jarak sampai soal itu muncul lagi"
+  judul={pilih(KAMUS.kurvaJudul)}
   {terang}
   lebar={L}
   tinggi={T}

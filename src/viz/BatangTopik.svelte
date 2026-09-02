@@ -18,6 +18,7 @@
 -->
 <script lang="ts">
   import Gambar from "./Gambar.svelte";
+  import { T as KAMUS, pilih } from "../i18n.svelte";
   import type { RingkasanTopik } from "../bank";
   import { warnaKetepatan } from "./dasar";
 
@@ -40,18 +41,15 @@
   const belum = $derived(perTopik.filter((t) => t.benar / t.total < ambang).length);
 
   const terang = $derived(
-    `Diurutkan menurut ketepatan menaik, bukan menurut nama — bagian yang paling ` +
-      `perlu diulang harus muncul lebih dulu, bukan tenggelam di tengah daftar. ` +
-      `Garis putus-putus di ${Math.round(ambang * 100)}% adalah batas yang dianggap ` +
-      `sudah dikuasai; ${belum} dari ${perTopik.length} topik masih di kirinya. ` +
-      `Angka di ujung tiap bilah adalah jumlah soalnya: dua dari dua dan delapan ` +
-      `dari sepuluh sama-sama tergambar penuh, tetapi hanya yang kedua yang benar-` +
-      `benar memberi tahu sesuatu.`,
+    pilih(KAMUS.batangTerang)
+      .replace("%A", String(Math.round(ambang * 100)))
+      .replace("%B", String(belum))
+      .replace("%C", String(perTopik.length)),
   );
 </script>
 
 <Gambar
-  judul="Ketepatan per topik"
+  judul={pilih(KAMUS.batangJudul)}
   {terang}
   lebar={L}
   tinggi={T}

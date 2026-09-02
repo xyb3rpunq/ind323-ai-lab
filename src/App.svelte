@@ -90,6 +90,28 @@
     layar = "ujian";
   }
 
+  /**
+   * Ketiga situs saudara, beserta bahasa yang dipakainya.
+   *
+   * Ada di antarmuka, bukan hanya di README: README dibaca orang yang sudah
+   * menemukan repositorinya. Pengunjung yang mendarat di sini tidak punya satu
+   * pun petunjuk bahwa tiga situs lain mengerjakan silabus yang sama dalam
+   * bahasa lain, atau bahwa mesin Swift di balik bank soal ini salah satu dari
+   * enam implementasi yang saling diadu.
+   *
+   * Bahasanya ikut disebut karena itulah yang membedakan keempatnya. Empat
+   * tautan tanpa keterangan hanya terbaca sebagai empat alamat.
+   */
+  const SAUDARA = [
+    { nama: "ai-atlas", bahasa: "Rust", alamat: "https://xyb3rpunq.github.io/ai-atlas/" },
+    {
+      nama: "kecerdasan-buatan",
+      bahasa: "Lua",
+      alamat: "https://xyb3rpunq.github.io/kecerdasan-buatan/",
+    },
+    { nama: "neuronusa", bahasa: "Python", alamat: "https://xyb3rpunq.github.io/neuronusa/" },
+  ];
+
   function selesai(soal: Soal[], penilaian: Penilaian[], detik: number) {
     hasilSoal = soal;
     hasilPenilaian = penilaian;
@@ -118,7 +140,7 @@
       </svg>
       <span>
         IND323 AI Lab
-        <span class="merek__sub">Pendamping kuliah &amp; bank soal</span>
+        <span class="merek__sub">{pilih(T.merekSub)}</span>
       </span>
     </a>
     <div class="baris" style="margin: 0">
@@ -173,13 +195,10 @@
     <header style="margin-bottom: 1.6rem">
       <h1>{pilih(T.judulBeranda)}</h1>
       <p style="color: var(--teks-2); max-width: 60ch">
-        {BANK.length} soal dari 14 sesi kuliah. Kunci jawaban soal berhitung
-        <strong>dihitung mesin</strong>, bukan diketik tangan — mesinnya ditulis dalam
-        Swift dan sudah diadu dengan empat implementasi lain sampai cocok bit demi bit.
+        {pilih(T.berandaIntro).replace("%N", String(BANK.length))}
       </p>
       <p style="color: var(--teks-3); font-size: 0.88rem; max-width: 60ch">
-        Sesi berbenih sama selalu berisi soal yang sama dalam urutan yang sama, jadi
-        Anda bisa mengulanginya setelah mempelajari kesalahannya.
+        {pilih(T.berandaBenih)}
       </p>
     </header>
 
@@ -235,11 +254,7 @@
           {pilih(T.soal)}, {jam(Math.min(banyak, tersedia) * 90)}
         </button>
       </div>
-      <p class="catatan">
-        Waktunya 90 detik per soal, dihitung untuk seluruh sesi sekaligus. Pewaktu
-        per soal memaksa ritme yang seragam, padahal soal berhitung memang butuh
-        lebih lama daripada soal ingatan.
-      </p>
+      <p class="catatan">{pilih(T.catatanPewaktu)}</p>
     </div>
 
     <div class="kartu">
@@ -249,13 +264,7 @@
 
     <div class="kartu">
       <h2 class="kartu__judul">{pilih(T.kapanMuncul)}</h2>
-      <p class="catatan">
-        Situs ini memakai penjadwal SM-2 — algoritma pengulangan berjarak yang
-        sama dengan yang dipakai SuperMemo dan Anki. Ia menunda soal yang sudah
-        dikuasai supaya waktunya bisa dipakai untuk soal yang belum, dan
-        menjatuhkan jaraknya kembali ke satu hari begitu sebuah soal terjawab
-        salah. Geser kendali di bawah untuk melihat harga satu kesalahan.
-      </p>
+      <p class="catatan">{pilih(T.catatanSm2)}</p>
 
       <div class="baris baris--rapat">
         <label class="bidang">
@@ -267,7 +276,7 @@
         <label class="bidang">
           <span class="bidang__label">
             Salah di ulangan ke <span class="angka-mono"
-              >{salahDiUlangan === 0 ? "tidak ada" : salahDiUlangan}</span
+              >{salahDiUlangan === 0 ? pilih(T.tidakAda) : salahDiUlangan}</span
             >
           </span>
           <input
@@ -285,12 +294,25 @@
         salahDiUlangan={Math.min(salahDiUlangan, ulanganJadwal)}
       />
 
+      <p class="catatan">{pilih(T.catatanDuaKali)}</p>
+    </div>
+
+    <div class="kartu saudara">
+      <h2 class="kartu__judul">{pilih(T.keluargaJudul)}</h2>
+      <p class="catatan">{pilih(T.keluargaIsi)}</p>
+      <div class="saudara__daftar">
+        {#each SAUDARA as x (x.nama)}
+          <a class="saudara__butir" href={x.alamat} rel="noopener">
+            <span class="saudara__nama">{x.nama}</span>
+            <span class="saudara__bahasa">{x.bahasa}</span>
+          </a>
+        {/each}
+      </div>
       <p class="catatan">
-        Algoritmanya ditulis dua kali: sekali di Swift sebagai sumber kebenaran,
-        sekali di TypeScript supaya kurva ini bisa digambar di peramban.
-        Keduanya diadu di CI — pola bit demi pola bit, termasuk faktor
-        kemudahannya. Kurva yang digambar dari salinan yang menyimpang akan
-        mengajarkan algoritma yang bukan algoritma situs ini.
+        {pilih(T.keluargaTaut)}
+        <a href="https://xyb3rpunq.github.io/ai-atlas/#/enam-bahasa" rel="noopener">
+          {pilih(T.keluargaHalaman)}</a
+        >.
       </p>
     </div>
 
@@ -310,7 +332,7 @@
             >
               <div class="petak__nomor">SESI {String(s.nomor).padStart(2, "0")}</div>
               <div class="petak__nama">{s.nama}</div>
-              <div class="petak__jumlah">{jumlah} soal</div>
+              <div class="petak__jumlah">{pilih(T.petakSoal).replace("%N", String(jumlah))}</div>
             </a>
           </li>
         {/each}
@@ -355,7 +377,8 @@
         {#each salahDijawab as x (x.p.kode)}
           <div style="padding: 0.7rem 0; border-bottom: 1px solid var(--garis)">
             <div class="langkah-nomor">
-              Sesi {String(x.s!.sesi).padStart(2, "0")} · {x.s!.topik}
+              {pilih(T.sesi)}
+              {String(x.s!.sesi).padStart(2, "0")} · {x.s!.topik}
             </div>
             <p style="margin: 0.3rem 0 0.4rem">{x.s!.pertanyaan}</p>
             <div class="catatan">{x.s!.pembahasan}</div>
