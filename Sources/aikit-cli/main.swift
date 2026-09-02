@@ -57,6 +57,41 @@ func baris(_ teks: String) -> [String] {
         .filter { !$0.isEmpty }
 }
 
+/// Versi kompilator yang membangun berkas ini.
+///
+/// Dibaca dari makro `#if swift(>=...)`, bukan dari `swift --version`:
+/// perkakas ini berjalan tanpa akses ke kompilatornya sendiri, dan versi yang
+/// dibaca saat berjalan belum tentu versi yang membangunnya.
+func versiSwift() -> String {
+    #if swift(>=6.2)
+    return "Swift 6.2 atau lebih baru"
+    #elseif swift(>=6.0)
+    return "Swift 6.0"
+    #elseif swift(>=5.9)
+    return "Swift 5.9"
+    #else
+    return "Swift sebelum 5.9"
+    #endif
+}
+
+/// Cap waktu UTC dalam bentuk ISO-8601, tanpa Foundation.
+///
+/// `time` dan `gmtime` datang dari pustaka C yang sudah diimpor berkas ini.
+/// Menarik Foundation hanya untuk satu cap waktu akan menambah ketergantungan
+/// yang sengaja dihindari seluruh paket ini.
+func capWaktuUtc() -> String {
+    var t = time_t()
+    time(&t)
+    guard let g = gmtime(&t) else { return "tidak diketahui" }
+    let w = g.pointee
+    func dua(_ n: Int32) -> String {
+        let s = String(n)
+        return s.count >= 2 ? s : "0" + s
+    }
+    return "\(w.tm_year + 1900)-\(dua(w.tm_mon + 1))-\(dua(w.tm_mday))"
+        + "T\(dua(w.tm_hour)):\(dua(w.tm_min)):\(dua(w.tm_sec))Z"
+}
+
 /// Memecah sebaris teks menurut tab.
 func kolom(_ b: String) -> [String] {
     b.split(separator: "\t", omittingEmptySubsequences: false).map(String.init)
@@ -83,8 +118,48 @@ struct Ketidakcocokan {
     var ulp: UInt64?
 }
 
+/// Satu pola bit yang dihitung Swift, siap ditulis sebagai baris TSV.
+struct Pancaran {
+    var berkas: String
+    var baris: Int
+    var kolom: String
+    var hasilHex: String
+    var konteks: String
+}
+
+/// Nama kolom hasil di berkas vektornya, menurut urutan pelaporannya.
+///
+/// Dipakai memancarkan pola bit untuk halaman "Enam bahasa, satu angka" di AI
+/// ATLAS, yang memasangkan hasil tiap bahasa lewat kunci (berkas, baris,
+/// kolom).
+///
+/// Urutannya, bukan nama yang diserahkan tiap pemeriksa. Sebuah baris
+/// `rng.tsv` selalu melaporkan bilangan bulatnya lebih dulu dan pecahannya
+/// kemudian; menambahkan argumen ke seluruh cabang `periksaBaris` hanya untuk
+/// menyebutkan urutan yang sudah tetap itu berarti sembilan tempat baru yang
+/// bisa salah tulis.
+let kolomHasil: [String: [String]] = [
+    "fx.tsv": ["hex"],
+    "rng.tsv": ["next_u64_hex", "next_f64_hex"],
+    "bayes.tsv": ["evidence_hex", "posterior_hex", "likelihood_ratio_hex"],
+    "certainty.tsv": ["result_hex"],
+    "fuzzy_linear.tsv": ["degree_hex"],
+    "fuzzy_transcendental.tsv": ["degree_hex"],
+    "ml_exact.tsv": ["result_hex"],
+    "ml_entropy.tsv": ["result_hex"],
+    "ml_gain.tsv": ["result_hex"],
+]
+
 /// Menjalankan seluruh berkas vektor di sebuah direktori.
-func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [Ketidakcocokan], total: Int) {
+///
+/// `pancar` yang bernilai benar membuat pola bit tiap pernyataan ikut
+/// dikumpulkan. Angkanya sama persis dengan yang dibandingkan — nilai yang
+/// sama, dari panggilan yang sama — sehingga tidak mungkin halaman
+/// menampilkan pola bit yang tidak pernah diperiksa siapa pun.
+func jalankanKonformansi(
+    direktori: String,
+    pancar: Bool = false
+) -> (berkas: [HasilBerkas], gagal: [Ketidakcocokan], total: Int, pancaran: [Pancaran]) {
     // Nama berkasnya ditulis tetap, bukan dipindai direktori. Berkas yang
     // hilang harus menggagalkan jalannya, bukan diam-diam mengurangi jumlah
     // pernyataan yang diperiksa — dan pemindaian direktori tidak bisa
@@ -97,6 +172,7 @@ func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [K
     var hasil: [HasilBerkas] = []
     var gagal: [Ketidakcocokan] = []
     var total = 0
+    var pancaran: [Pancaran] = []
 
     for nama in daftar {
         guard let isi = bacaBerkas("\(direktori)/\(nama)") else {
@@ -124,10 +200,23 @@ func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [K
         }
 
         var ringkas = HasilBerkas(nama: nama, keterbandingan: k.nama)
+        let daftarKolom = kolomHasil[nama] ?? []
+        // Urutannya dihitung per baris: kolom keberapa sebuah nilai dilaporkan
+        // hanya berarti di dalam barisnya sendiri.
+        var urut = 0
+
+        func catat(_ hasilHex: String, _ konteks: String, _ nomor: Int) {
+            urut += 1
+            let kolom = urut <= daftarKolom.count ? daftarKolom[urut - 1] : "result_hex"
+            pancaran.append(Pancaran(
+                berkas: nama, baris: nomor, kolom: kolom,
+                hasilHex: hasilHex, konteks: konteks))
+        }
 
         func nilai(_ harap: Double, _ dapat: Double, _ konteks: String, _ nomor: Int, skala: Double? = nil) {
             ringkas.diperiksa += 1
             total += 1
+            if pancar { catat(Fx.keHex(dapat), konteks, nomor) }
             if let d = Fx.jarakUlp(harap, dapat), d > ringkas.ulpMaks {
                 ringkas.ulpMaks = d
             }
@@ -145,6 +234,9 @@ func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [K
         func nilaiTeks(_ harap: String, _ dapat: String, _ konteks: String, _ nomor: Int) {
             ringkas.diperiksa += 1
             total += 1
+            // `dapat` di sini sudah berupa teks heksadesimal, bukan pecahan:
+            // berkas fx memang dibandingkan sebagai teks.
+            if pancar { catat(dapat, konteks, nomor) }
             if harap != dapat {
                 ringkas.gagal += 1
                 if gagal.count < 25 {
@@ -157,6 +249,7 @@ func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [K
 
         for (i, kol) in isiBaris.enumerated() {
             let nomor = i + 1
+            urut = 0
             do {
                 try periksaBaris(nama: nama, kol: kol, nomor: nomor, nilai: nilai, nilaiTeks: nilaiTeks)
             } catch {
@@ -168,7 +261,7 @@ func jalankanKonformansi(direktori: String) -> (berkas: [HasilBerkas], gagal: [K
         hasil.append(ringkas)
     }
 
-    return (hasil, gagal, total)
+    return (hasil, gagal, total, pancaran)
 }
 
 /// Memeriksa satu baris vektor.
@@ -399,14 +492,52 @@ let argumen = CommandLine.arguments
 
 guard argumen.count >= 2 else {
     print("Pemakaian: aikit-cli conform <direktori-vektor>")
+    print("           aikit-cli pancar <berkas-keluaran.tsv> [direktori-vektor]")
     print("           aikit-cli bank <berkas-keluaran.json>")
     exit(64)
 }
 
 switch argumen[1] {
+case "pancar":
+    guard argumen.count > 2 else {
+        Galat.tulis("pancar menuntut nama berkas keluaran\n")
+        exit(64)
+    }
+    let tujuan = argumen[2]
+    let dirPancar = argumen.count > 3 ? argumen[3] : "conformance/vectors"
+    let jalan = jalankanKonformansi(direktori: dirPancar, pancar: true)
+
+    guard !jalan.pancaran.isEmpty else {
+        Galat.tulis("tidak ada pola bit yang dipancarkan\n")
+        exit(1)
+    }
+
+    var keluar = [
+        "# ind323-ai-lab — pola bit yang dihitung Swift",
+        "# bahasa: swift",
+        "# versi: \(versiSwift())",
+        "# dihasilkan: \(capWaktuUtc())",
+        "# perintah: aikit-cli pancar",
+        "# kolom: berkas\tbaris\tkolom\thasil_hex\tkonteks",
+    ]
+    for p in jalan.pancaran {
+        keluar.append([p.berkas, String(p.baris), p.kolom, p.hasilHex, p.konteks]
+            .joined(separator: "\t"))
+    }
+    guard tulisBerkas(tujuan, keluar.joined(separator: "\n") + "\n") else {
+        Galat.tulis("Gagal menulis \(tujuan).\n")
+        exit(2)
+    }
+    print("Pola bit Swift: \(jalan.pancaran.count) pernyataan → \(tujuan)")
+    // Jalan yang gagal tetap dipancarkan: pola bit yang berbeda justru yang
+    // paling layak dilihat. Yang dilaporkan hanya jumlahnya.
+    if jalan.gagal.count > 0 {
+        print("Catatan: \(jalan.gagal.count) pernyataan tidak cocok pada jalan ini.")
+    }
+
 case "conform":
     let dir = argumen.count > 2 ? argumen[2] : "conformance/vectors"
-    let (berkas, gagal, total) = jalankanKonformansi(direktori: dir)
+    let (berkas, gagal, total, _) = jalankanKonformansi(direktori: dir)
 
     print("Konformansi Swift terhadap vektor Rust — ind323-ai-lab .Deckyx")
     print(String(repeating: "=", count: 74))

@@ -61,6 +61,20 @@ jobs:
       - name: Adu Swift lawan Rust
         run: ./.build/release/aikit-cli conform conformance/vectors
 
+      # Swift tidak terpasang di mesin tempat halaman "Enam bahasa, satu angka"
+      # disusun, jadi pola bitnya harus datang dari tempat Swift benar-benar
+      # berjalan. Mengarangnya di tempat lain akan menghasilkan tabel yang
+      # terlihat seperti bukti padahal tidak ada yang pernah menghitungnya.
+      - name: Pancarkan pola bit Swift
+        run: ./.build/release/aikit-cli pancar "$RUNNER_TEMP/swift.tsv" conformance/vectors
+
+      - name: Unggah pola bit Swift
+        uses: actions/upload-artifact@v4
+        with:
+          name: pola-bit-swift
+          path: ${{ runner.temp }}/swift.tsv
+          retention-days: 30
+
       # Bank soal yang tersimpan harus sama persis dengan yang dihasilkan
       # Swift. Kalau berbeda, berarti kunci jawabannya bergeser — dan halaman
       # yang menyatakan mahasiswa salah padahal ia benar adalah kegagalan yang
