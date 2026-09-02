@@ -11,8 +11,12 @@
   import { BANK, SESI, jam, rangkum } from "./bank";
   import type { Penilaian, Ringkasan, Soal } from "./bank";
   import { MATERI } from "./materi";
+  import BatangTopik from "./viz/BatangTopik.svelte";
+  import KurvaJadwal from "./viz/KurvaJadwal.svelte";
+  import PetaBank from "./viz/PetaBank.svelte";
+  import Presentasi from "./lib/Presentasi.svelte";
 
-  type Layar = "beranda" | "ujian" | "hasil" | "materi";
+  type Layar = "beranda" | "ujian" | "hasil" | "materi" | "presentasi";
 
   let layar = $state<Layar>("beranda");
   let banyak = $state(10);
@@ -23,6 +27,13 @@
   let hasilPenilaian = $state<Penilaian[]>([]);
   let terpakai = $state(0);
   let sesiMateri = $state<number>(1);
+
+  // Kendali gambar penjadwalan. Dibiarkan bisa digeser karena pertanyaan
+  // "berapa harga satu kesalahan" jawabannya berbeda-beda tergantung kapan
+  // kesalahannya terjadi — dan itu jauh lebih meyakinkan kalau bisa dicoba
+  // sendiri daripada kalau hanya dibaca.
+  let ulanganJadwal = $state(10);
+  let salahDiUlangan = $state(5);
 
   const benih = $derived.by(() => {
     // Benih diterima sebagai teks supaya angka besar tidak kehilangan
@@ -53,11 +64,6 @@
     globalThis.scrollTo({ top: 0 });
   }
 
-  function warnaTopik(bagian: number): string {
-    if (bagian >= 0.8) return "var(--benar)";
-    if (bagian >= 0.5) return "var(--aksen)";
-    return "var(--salah)";
-  }
 
   const salahDijawab = $derived(
     hasilPenilaian
@@ -94,11 +100,22 @@
         aria-pressed={layar === "materi"}
         onclick={() => (layar = "materi")}>Materi</button
       >
+      <button
+        type="button"
+        class="tombol"
+        aria-pressed={layar === "presentasi"}
+        title="Salindia siap proyektor, dengan catatan pengajar"
+        onclick={() => (layar = "presentasi")}>Ajar</button
+      >
     </div>
   </div>
 </header>
 
-<main class="wadah" id="isi">
+{#if layar === "presentasi"}
+  <Presentasi onKeluar={() => (layar = "materi")} />
+{/if}
+
+<main class="wadah" id="isi" hidden={layar === "presentasi"}>
   {#if layar === "beranda"}
     <header style="margin-bottom: 1.6rem">
       <h1>Bank soal IND323 dengan pewaktu</h1>
@@ -172,6 +189,58 @@
     </div>
 
     <div class="kartu">
+      <h2 class="kartu__judul">Apa yang sebenarnya diuji bank ini</h2>
+      <PetaBank />
+    </div>
+
+    <div class="kartu">
+      <h2 class="kartu__judul">Kapan sebuah soal kembali muncul</h2>
+      <p class="catatan">
+        Situs ini memakai penjadwal SM-2 — algoritma pengulangan berjarak yang
+        sama dengan yang dipakai SuperMemo dan Anki. Ia menunda soal yang sudah
+        dikuasai supaya waktunya bisa dipakai untuk soal yang belum, dan
+        menjatuhkan jaraknya kembali ke satu hari begitu sebuah soal terjawab
+        salah. Geser kendali di bawah untuk melihat harga satu kesalahan.
+      </p>
+
+      <div class="baris baris--rapat">
+        <label class="bidang">
+          <span class="bidang__label">
+            Berapa kali dijawab <span class="angka-mono">{ulanganJadwal}</span>
+          </span>
+          <input type="range" min="4" max="14" step="1" bind:value={ulanganJadwal} />
+        </label>
+        <label class="bidang">
+          <span class="bidang__label">
+            Salah di ulangan ke <span class="angka-mono"
+              >{salahDiUlangan === 0 ? "tidak ada" : salahDiUlangan}</span
+            >
+          </span>
+          <input
+            type="range"
+            min="0"
+            max={ulanganJadwal}
+            step="1"
+            bind:value={salahDiUlangan}
+          />
+        </label>
+      </div>
+
+      <KurvaJadwal
+        banyakUlangan={ulanganJadwal}
+        salahDiUlangan={Math.min(salahDiUlangan, ulanganJadwal)}
+      />
+
+      <p class="catatan">
+        Algoritmanya ditulis dua kali: sekali di Swift sebagai sumber kebenaran,
+        sekali di TypeScript supaya kurva ini bisa digambar di peramban.
+        Keduanya diadu di CI — pola bit demi pola bit, termasuk faktor
+        kemudahannya. Kurva yang digambar dari salinan yang menyimpang akan
+        mengajarkan algoritma yang bukan algoritma situs ini.
+      </p>
+    </div>
+
+    <div class="kartu">
       <h2 class="kartu__judul">Sebaran soal per sesi</h2>
       <ul class="petak">
         {#each SESI as s (s.nomor)}
@@ -213,20 +282,7 @@
     {#if ringkasan.perTopik.length > 0}
       <div class="kartu">
         <h2 class="kartu__judul">Ketepatan per topik — yang terlemah lebih dulu</h2>
-        {#each ringkasan.perTopik as t (t.topik)}
-          {@const bagian = t.benar / t.total}
-          <div class="topik-baris">
-            <span>{t.topik}</span>
-            <span class="angka-mono">{t.benar}/{t.total}</span>
-            <div class="topik-bilah">
-              <span style="width: {bagian * 100}%; background: {warnaTopik(bagian)}"></span>
-            </div>
-          </div>
-        {/each}
-        <p class="catatan">
-          Diurutkan menurut ketepatan menaik, bukan menurut nama. Bagian yang paling
-          perlu diulang harus muncul lebih dulu, bukan tenggelam di tengah daftar.
-        </p>
+        <BatangTopik perTopik={ringkasan.perTopik} />
       </div>
     {/if}
 

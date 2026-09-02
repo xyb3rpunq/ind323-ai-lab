@@ -264,6 +264,14 @@ code {
   margin: 0.7rem 0;
 }
 
+/* Atribut `hidden` wajib menang atas `display` apa pun yang disetel di
+   bawahnya. Tanpa aturan ini, sebuah `display: block` yang lebih spesifik
+   membuat elemen tetap memakan ruang meski dinyatakan tersembunyi — dan
+   perbedaannya tidak terlihat sampai ada yang menumpuk di atasnya. */
+[hidden] {
+  display: none !important;
+}
+
 /* ------------------------------------------------------------------ isian */
 
 .bidang {
@@ -276,6 +284,25 @@ code {
   font-size: 0.84rem;
   color: var(--teks-2);
   margin-bottom: 0.3rem;
+}
+
+/* Penggeser dipakai untuk besaran yang jawabannya paling meyakinkan kalau
+   dicoba sendiri, bukan dibaca. Warnanya mengikuti aksen situs lewat
+   `accent-color`, jadi ia ikut berpindah saat tema berganti tanpa satu baris
+   pun aturan tambahan. */
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--aksen);
+  margin: 0.1rem 0 0;
+}
+
+/* Dua kendali berdampingan di layar lebar, bertumpuk di layar sempit. */
+.baris--rapat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0 1rem;
+  align-items: end;
+  margin-bottom: 0.4rem;
 }
 
 input[type="number"],
@@ -429,32 +456,6 @@ select {
   color: var(--aksen);
 }
 
-.topik-baris {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 3.5rem 6rem;
-  gap: 0.6rem;
-  align-items: center;
-  padding: 0.45rem 0;
-  border-bottom: 1px solid var(--garis);
-  font-size: 0.88rem;
-}
-
-.topik-baris:last-child {
-  border-bottom: 0;
-}
-
-.topik-bilah {
-  height: 7px;
-  background: var(--garis);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.topik-bilah span {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-}
 
 .angka-mono {
   font-family: var(--mono);

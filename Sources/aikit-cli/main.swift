@@ -458,6 +458,57 @@ case "sesi":
         }
     }
 
+case "jadwal":
+    // Mencetak jejak penjadwal SM-2 sebagai TSV.
+    //
+    // Dipakai uji sisi peramban untuk memastikan penjadwal yang digambar
+    // halaman sepadan dengan penjadwal yang benar-benar dipakai. Kurva yang
+    // digambar dari salinan yang menyimpang mengajarkan algoritma yang bukan
+    // algoritma situs ini — dan justru kurva itulah yang akan dipercaya
+    // pembaca, karena kode Swift-nya tidak pernah ia lihat.
+    //
+    // Kolom: mutu  ulangan  jarakHari  kemudahan
+    do {
+        print("# jejak SM-2 dari Swift — ind323-ai-lab .Deckyx")
+        print("# jangan disunting tangan; hasilkan ulang dengan 'aikit-cli jadwal'")
+
+        // Deret mutu yang diuji dipilih untuk menyentuh tiap cabang: menaik
+        // mulus, satu kegagalan di tengah deret panjang, kegagalan beruntun
+        // sampai kemudahannya menyentuh batas bawah, dan mutu di kedua ujung
+        // rentang yang sah.
+        let deret: [(String, [Int])] = [
+            ("sempurna", Array(repeating: 5, count: 12)),
+            ("lancar", Array(repeating: 4, count: 12)),
+            ("pas-pasan", Array(repeating: 3, count: 12)),
+            ("tersandung", [5, 5, 5, 5, 2, 5, 5, 5, 5, 4, 4, 4]),
+            ("berkali-salah", Array(repeating: 0, count: 10) + [5, 5, 5, 5, 5, 5]),
+            ("selang-seling", [5, 0, 5, 0, 5, 0, 4, 3, 4, 3, 5, 2]),
+            ("di-luar-rentang", [7, -3, 5, 9, 0, 4]),
+        ]
+
+        for (nama, mutuDeret) in deret {
+            var h = Hafalan(kode: nama)
+            print("== \(nama)")
+            for mutu in mutuDeret {
+                h = Penjadwal.perbarui(h, mutu: mutu)
+                print("\(mutu)\t\(h.ulangan)\t\(h.jarakHari)\t\(Fx.keHex(h.kemudahan))")
+            }
+        }
+
+        // Pemetaan hasil penilaian menjadi mutu, dengan waktu di sekitar
+        // setiap ambangnya.
+        print("== mutu")
+        for batas in [90, 60, 1, 0] {
+            for detik in [0, 1, batas / 3, batas / 3 + 1, batas * 2 / 3,
+                          batas * 2 / 3 + 1, batas - 1, batas, batas + 5] {
+                for benar in [true, false] {
+                    let m = Penjadwal.mutu(benar: benar, detik: detik, batasDetik: batas)
+                    print("\(benar ? 1 : 0)\t\(detik)\t\(batas)\t\(m)")
+                }
+            }
+        }
+    }
+
 case "bank":
     guard argumen.count > 2 else {
         Galat.tulis("Sebutkan berkas keluarannya.\n")
